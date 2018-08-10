@@ -1,0 +1,15 @@
+> "a table is just a cache of the latest value for each key in a stream"
+
+* [Documentation](https://kafka.apache.org/documentation/streams)
+* [Introducing Kafka Streams: Stream Processing Made Simple](https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple)
+* [The world beyond batch: Streaming 101](https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-101)
+
+
+# UI
+https://github.com/Landoop/kafka-topics-ui
+https://github.com/Landoop/schema-registry-ui
+
+* publish latest version of kafka and zookeeper
+* refined
+* circe
+* cats
