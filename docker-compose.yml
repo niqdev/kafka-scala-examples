@@ -1,0 +1,12 @@
+version: '3'
+services:
+  application:
+    container_name: kafka-stream-demo
+    image: kafka-stream-demo:latest
+    environment:
+      - HTTP_PORT=8080
+    ports:
+      - 80:8080
+    volumes:
+      # verify permissions e.g. chmod 777 /vol/log/kafka-stream-demo
+      - /vol/log/kafka-stream-demo:/opt/docker/log

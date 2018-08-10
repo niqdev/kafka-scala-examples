@@ -1,0 +1,79 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: hseeberger/scala-sbt:8u151-2.12.5-1.1.2
+    environment:
+      JVM_OPTS: -Xms512m -Xmx2g
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.sbt" }}
+            - v1-dependencies-
+      - run:
+          name: compile
+          command: sbt clean compile
+      - save_cache:
+          key: v1-dependencies--{{ checksum "build.sbt" }}
+          paths:
+            - ~/.m2
+            - ~/.ivy2
+            - ~/.sbt
+      - run:
+          name: style
+          command: sbt scalastyle
+      - run:
+          name: test
+          command: sbt coverage test coverageReport coverageAggregate
+      - store_artifacts:
+          path: target/scala-2.12/scoverage-report
+          destination: scoverage-report
+      - run:
+          name: scaladoc
+          command: sbt makeSite packageSite
+      - store_artifacts:
+          path: target/scala-2.12/unidoc
+          destination: unidoc
+
+  publish-jar:
+    working_directory: ~/project
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run:
+          name: uber jar
+          command: sbt assembly
+      - store_artifacts:
+          path: app/target/scala-2.12/app-latest.jar
+          # ISSUE https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/20
+          destination: dist/app-latest.jar
+
+  publish-docker:
+    working_directory: ~/project
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build docker
+          command: sbt docker:publishLocal
+      - run:
+          name: publish
+          command: ./script/docker-registry.sh
+
+workflows:
+  version: 2
+  build-and-publish:
+    jobs:
+      - build
+      - publish-jar:
+          requires:
+            - build
+      - publish-docker:
+          requires:
+            - build
