@@ -13,3 +13,5 @@ https://github.com/Landoop/schema-registry-ui
 * refined
 * circe
 * cats
+
+TODO mount kafka state.dir

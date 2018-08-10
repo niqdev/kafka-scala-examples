@@ -33,7 +33,7 @@ object Settings {
       "-Ywarn-dead-code",
       "-Ywarn-infer-any",
       "-Ywarn-unused-import",
-      "-Xfatal-warnings",
+      //"-Xfatal-warnings",
       "-Ywarn-numeric-widen",
       "-Ywarn-value-discard",
       "-Ywarn-unused",
@@ -56,7 +56,11 @@ object Settings {
     coverageHighlighting := true,
 
     // uber jar
-    test in assembly := {}
+    test in assembly := {},
+
+    resolvers ++= Seq(
+      "confluent" at "https://packages.confluent.io/maven/"
+    )
   )
 
   lazy val commonSettings = baseSettings ++ Seq(

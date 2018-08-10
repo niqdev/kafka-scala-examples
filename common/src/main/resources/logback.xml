@@ -38,4 +38,6 @@
         <appender-ref ref="FILE"/>
     </root>
 
+    <logger name="org.apache.kafka" level="INFO" />
+
 </configuration>

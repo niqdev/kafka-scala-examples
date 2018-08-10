@@ -26,6 +26,7 @@ object Server extends Web with App {
 
   bindAndHandleHttp {
     log.debug("run server")
+    WordCountScalaExample.run
   }
 
 }
