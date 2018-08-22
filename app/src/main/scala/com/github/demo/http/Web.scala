@@ -1,19 +1,14 @@
 package com.github.demo
 package http
 
-import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.stream.ActorMaterializer
 import com.github.demo.config.AppSettings
 
 import scala.util.{Failure, Success, Try}
 
 trait Web extends Routes {
-
-  protected[this] implicit def actorSystem: ActorSystem
-  protected[this] implicit def materializer: ActorMaterializer
 
   def bindAndHandleHttp(onStart: => Unit): Unit = {
 

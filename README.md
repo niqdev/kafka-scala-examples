@@ -50,3 +50,11 @@ kafka-console-consumer.sh --topic streams-wordcount-output --from-beginning \
   --property print.key=true \
   --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
 ```
+
+```bash
+docker-compose up
+
+sbt app/run
+
+
+```

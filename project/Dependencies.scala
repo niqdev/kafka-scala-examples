@@ -41,6 +41,7 @@ object Dependencies {
     N.`typesafe-akka` %% "akka-stream" % V.akka,
     N.`typesafe-akka` %% "akka-http" % V.akkaHttp,
     N.`typesafe-akka` %% "akka-slf4j" % V.akka,
+    N.`typesafe-akka` %% "akka-stream-kafka" % "0.22",
 
     "org.typelevel" %% "cats-core" % "1.2.0",
 
@@ -56,7 +57,6 @@ object Dependencies {
     N.enumeratum %% "enumeratum" % V.enumeratum,
     N.enumeratum %% "enumeratum-circe" % V.enumeratum,
 
-    // ERROR javax.ws.rs#javax.ws.rs-api;2.1!javax.ws.rs-api.${packaging.type}
     "org.apache.kafka" %% "kafka-streams-scala" % "2.0.0" exclude("javax.ws.rs", "javax.ws.rs-api"),
 
     N.prometheus % "simpleclient" % V.prometheus,

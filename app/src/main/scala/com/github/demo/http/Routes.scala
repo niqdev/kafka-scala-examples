@@ -1,11 +1,11 @@
 package com.github.demo
 package http
 
-import akka.http.scaladsl.model.StatusCodes.ServiceUnavailable
-import akka.http.scaladsl.server.Directives.pathPrefix
+import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Route
+import akka.stream.ActorMaterializer
 import akka.util.Timeout
-import com.github.demo.http.route.{EnvRoute, MetricsRoute, StatusRoute}
+import com.github.demo.http.route.{EnvRoute, MetricsRoute, StatusRoute, WordCountRoute}
 
 import scala.concurrent.ExecutionContext
 
@@ -13,8 +13,10 @@ import scala.concurrent.ExecutionContext
 import akka.http.scaladsl.server.Directives._
 // scalastyle:on underscore.import
 
-trait Routes extends StatusRoute with MetricsRoute with EnvRoute {
+trait Routes extends StatusRoute with MetricsRoute with EnvRoute with WordCountRoute {
 
+  protected[this] implicit def actorSystem: ActorSystem
+  protected[this] implicit def materializer: ActorMaterializer
   protected[this] implicit def executionContext: ExecutionContext
   protected[this] implicit def timeout: Timeout
 
@@ -23,13 +25,8 @@ trait Routes extends StatusRoute with MetricsRoute with EnvRoute {
     *
     * @return Route
     */
-  def routes: Route = statusRoute ~ metricsRoute ~ envRoute ~ v1
-
-  private[this] def v1 =
-    pathPrefix("v1") {
-      get {
-        complete(ServiceUnavailable)
-      }
-    }
+  def routes: Route =
+    statusRoute ~ metricsRoute ~ envRoute ~
+      wordCountRoute ~ sse1(10) ~ sse2
 
 }

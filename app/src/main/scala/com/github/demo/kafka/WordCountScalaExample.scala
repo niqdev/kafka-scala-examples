@@ -1,16 +1,16 @@
-package com.github.demo
+package com.github.demo.kafka
 
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
 import org.apache.kafka.streams.scala.StreamsBuilder
-import org.apache.kafka.streams.scala.kstream._
+import org.apache.kafka.streams.scala.kstream.{KStream, KTable}
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 
 object WordCountScalaExample {
 
-  import org.apache.kafka.streams.scala.Serdes._
   import org.apache.kafka.streams.scala.ImplicitConversions._
+  import org.apache.kafka.streams.scala.Serdes._
 
   val config: Properties = {
     val p = new Properties()
