@@ -56,5 +56,7 @@ docker-compose up
 
 sbt app/run
 
-
+http :3000/sse1
+curl localhost:3000/sse2
+curl localhost:3000/wordCount
 ```
