@@ -11,7 +11,6 @@ lazy val V = new {
   val scalaLogging = "3.9.0"
 
   val scalatest = "3.0.5"
-  val scalacheck = "1.14.0"
 }
 
 lazy val app = project.in(file("app"))

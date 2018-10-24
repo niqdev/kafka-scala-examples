@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+
+  zookeeper:
+    container_name: my-local-zookeeper
+    image: niqdev/zookeeper:3.4.13
+    ports:
+      - 2181:2181
+    hostname: zookeeper
+    networks:
+      - my_local_network
+
+  kafka:
+    container_name: my-local-kafka
+    image: niqdev/kafka:2.0.0
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+      - 8083:8083
+    hostname: kafka
+    networks:
+      - my_local_network
+    environment:
+      - ZOOKEEPER_HOSTS="zookeeper:2181"
+
+  schema-registry:
+    container_name: my-local-schema-registry
+    image: confluentinc/cp-schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - 8081:8081
+    hostname: schema-registry
+    networks:
+      - my_local_network
+    environment:
+      - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
+      - SCHEMA_REGISTRY_HOST_NAME=schema-registry
+      - SCHEMA_REGISTRY_LISTENERS=http://schema-registry:8081
+
+  kafka-rest:
+    container_name: my-local-kafka-rest
+    image: confluentinc/cp-kafka-rest
+    depends_on:
+      - kafka
+      - schema-registry
+    ports:
+      - 8082:8082
+    hostname: kafka-rest
+    networks:
+      - my_local_network
+    environment:
+      - KAFKA_REST_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_REST_LISTENERS=http://kafka-rest:8082
+      - KAFKA_REST_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+      - KAFKA_REST_HOST_NAME=kafka-rest
+
+  kafka-ui:
+    container_name: my-local-kafka-ui
+    image: landoop/kafka-topics-ui
+    depends_on:
+      - kafka-rest
+    ports:
+      - 8000:8000
+    hostname: kafka-ui
+    networks:
+      - my_local_network
+    environment:
+      - KAFKA_REST_PROXY_URL=http://kafka-rest:8082
+      - PROXY=true
+
+  schema-registry-ui:
+    container_name: my-local-schema-registry-ui
+    image: landoop/schema-registry-ui
+    depends_on:
+      - schema-registry
+    ports:
+      - 8001:8000
+    hostname: schema-registry-ui
+    networks:
+      - my_local_network
+    environment:
+      - SCHEMAREGISTRY_URL=http://schema-registry:8081
+      - PROXY=true
+
+networks:
+  my_local_network:
