@@ -13,17 +13,23 @@ lazy val V = new {
   val scalatest = "3.0.5"
 }
 
-lazy val app = project.in(file("app"))
+lazy val common = project.in(file("common"))
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % V.logback,
       "com.typesafe.scala-logging" %% "scala-logging" % V.scalaLogging,
 
       "org.scalatest" %% "scalatest" % V.scalatest % Test
-  ))
+    ))
+
+lazy val avro = project.in(file("avro"))
+  .dependsOn(common)
+
+lazy val `schema-registry` = project.in(file("schema-registry"))
+  .dependsOn(common % "compile->compile;test->test")
 
 lazy val root = project.in(file("."))
-  .aggregate(app)
+  .aggregate(avro, `schema-registry`)
   .settings(
     inThisBuild(List(
       organization := I.organization,
