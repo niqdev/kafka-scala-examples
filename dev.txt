@@ -1,0 +1,60 @@
+# avro benefits
+https://docs.confluent.io/current/avro.html
+https://blog.cloudera.com/blog/2011/05/three-reasons-why-apache-avro-data-serialization-is-a-good-choice-for-openrtb
+http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html
+https://web.archive.org/web/20180321143507/http://cloudurable.com/blog/avro/index.html
+
+# gradle plugin to generate Java classes
+https://github.com/commercehub-oss/gradle-avro-plugin
+# scala lib
+https://github.com/sksamuel/avro4s
+
+---
+
+> Data Serialization and Evolution
+
+When sending data over the network or storing it in a file, we need a way to encode the data into bytes
+* programming language specific serialization such as Java serialization makes consuming the data in other languages inconvenient
+* language agnostic formats such as XML and JSON have two main drawbacks
+  - allowing fields to be arbitrarily added or removed with lack of structure may cause data corruption
+  - field names and type information are redundant, verbose and add overhead reducing performances
+* alternatives are Avro, Thrift and Protocol Buffers
+* Avro is recommended by Confluent, which provides enterprise support for Kafka ecosystem
+
+---
+
+> Avro Schema
+
+An Avro schema defines the data structure in a JSON format
+
+User.avsc
+{
+  "namespace": "com.kafka.demo",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "age",
+      "type": "int"
+    }
+  ]
+}
+
+* can be used to serialize a Java object (POJO) into bytes and deserialize these bytes back into the Java object
+* it requires a schema during both data serialization and deserialization
+* because the schema is provided at decoding time, metadata such as the field names don't have to be explicitly encoded in the data
+* provides schema evolution globally or for subjects
+  - Backward Compatibility means that data encoded with an older schema can be read with a newer schema
+    * adding a field requires to specify a default value
+  - Forward Compatibility means that data encoded with a newer schema can be read with an older schema
+  - Full Compatibility means schemas are backward and forward compatible
+
+---
+
+# schema registry
+https://docs.confluent.io/current/schema-registry/docs/index.html
+http://cloudurable.com/blog/kafka-avro-schema-registry/index.html
