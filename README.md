@@ -2,7 +2,20 @@
 
 > TODO
 
+## avro
+
+```bash
+# generate avro classes
+# avro/target/scala-2.12/classes/com/kafka/demo/User.class
+sbt clean avro/compile
+
+# tests
+sbt clean avro/test
 ```
+
+# schema-registry
+
+```bash
 sbt console
 sbt clean test
 sbt "test:testOnly *HelloSpec"

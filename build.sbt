@@ -23,7 +23,9 @@ lazy val common = project.in(file("common"))
     ))
 
 lazy val avro = project.in(file("avro"))
-  .dependsOn(common)
+  // test dependencies are excluded by default
+  .dependsOn(common % "compile->compile;test->test")
+  .enablePlugins(SbtAvro)
 
 lazy val `schema-registry` = project.in(file("schema-registry"))
   .dependsOn(common % "compile->compile;test->test")
