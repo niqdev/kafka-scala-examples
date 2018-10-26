@@ -1,14 +1,3 @@
-# avro benefits
-https://docs.confluent.io/current/avro.html
-https://blog.cloudera.com/blog/2011/05/three-reasons-why-apache-avro-data-serialization-is-a-good-choice-for-openrtb
-http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html
-https://web.archive.org/web/20180321143507/http://cloudurable.com/blog/avro/index.html
-
-# gradle plugin to generate Java classes
-https://github.com/commercehub-oss/gradle-avro-plugin
-# scala lib
-https://github.com/sksamuel/avro4s
-
 ---
 
 > Data Serialization and Evolution

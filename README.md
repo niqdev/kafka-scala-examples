@@ -9,6 +9,11 @@
 
 Examples of Avro, Schema Registry, Kafka Stream, KSQL in Scala
 
+**Further readings**
+
+* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
+* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
+
 ## avro
 
 **Description**
@@ -30,6 +35,15 @@ sbt clean avro/compile
 # tests
 sbt clean avro/test
 ```
+
+**Readings**
+
+* [Data Serialization and Evolution](https://docs.confluent.io/current/avro.html)
+* [Three Reasons Why Apache Avro Data Serialization is a Good Choice](https://blog.cloudera.com/blog/2011/05/three-reasons-why-apache-avro-data-serialization-is-a-good-choice-for-openrtb)
+* [Schema evolution in Avro, Protocol Buffers and Thrift](http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html)
+* [Avro Introduction for Big Data and Data Streaming Architectures](https://web.archive.org/web/20180321143507/http://cloudurable.com/blog/avro/index.html)
+* [Stream Avro Records into Kafka using Avro4s and Akka Streams Kafka](https://abhsrivastava.github.io/2017/10/02/Stream-Avro-Records-into-Kafka)
+* [Kafka, Spark and Avro](https://aseigneurin.github.io/2016/03/02/kafka-spark-avro-kafka-101.html)
 
 ## schema-registry
 
