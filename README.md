@@ -13,10 +13,11 @@ Examples of Avro, Schema Registry, Kafka Stream, KSQL in Scala
 
 **Description**
 
-[Avro](https://avro.apache.org/docs/current/gettingstartedjava.html) serialization and deserialization examples with
+[Avro](https://avro.apache.org/docs/current/gettingstartedjava.html) serialization and deserialization examples of
 * code generation with [sbt-avro](https://github.com/sbt/sbt-avro) [[source](avro/src/main/scala/com/kafka/demo/original/AvroCodeGeneration.scala)|[test](avro/src/test/scala/com/kafka/demo/original/AvroCodeGenerationSpec.scala)]
 * `GenericRecord` [[source](avro/src/main/scala/com/kafka/demo/original/AvroGenericRecord.scala)|[test](avro/src/test/scala/com/kafka/demo/original/AvroGenericRecordSpec.scala)]
 * [avro4s](https://github.com/sksamuel/avro4s) [[source](avro/src/main/scala/com/kafka/demo/avro4s/Avro4sExample.scala)|[test](avro/src/test/scala/com/kafka/demo/avro4s/Avro4sExampleSpec.scala)]
+* Java/Scala libraries compatibility [[test](avro/src/test/scala/com/kafka/demo/LibraryCompatibilitySpec.scala)]
 
 ```bash
 # console
