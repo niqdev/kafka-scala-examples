@@ -2,6 +2,7 @@
   "namespace": "com.kafka.demo",
   "type": "record",
   "name": "User",
+  "doc": "Original User Schema",
   "fields": [
     {
       "name": "name",
@@ -10,15 +11,15 @@
     {
       "name": "favorite_number",
       "type": [
-        "int",
-        "null"
+        "null",
+        "int"
       ]
     },
     {
       "name": "favorite_color",
       "type": [
-        "string",
-        "null"
+        "null",
+        "string"
       ]
     }
   ]
