@@ -7,13 +7,6 @@ import com.sksamuel.avro4s._
 import com.typesafe.scalalogging.Logger
 import org.apache.avro.Schema
 
-@AvroName("User")
-@AvroNamespace("com.kafka.demo")
-@AvroDoc("Avro4s User Schema")
-private[avro4s] case class User(name: String,
-                                @AvroName("favorite_number") favoriteNumber: Option[Int],
-                                @AvroName("favorite_color") favoriteColor: Option[String])
-
 object Avro4sExample {
   private[this] val logger = Logger(getClass.getSimpleName)
 
