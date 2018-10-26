@@ -5,6 +5,8 @@
 ## avro
 
 ```bash
+sbt avro/console
+
 # generate avro classes
 # avro/target/scala-2.12/classes/com/kafka/demo/User.class
 sbt clean avro/compile

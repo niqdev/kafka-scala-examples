@@ -2,13 +2,13 @@ package com.kafka.demo
 
 import org.scalatest.{Matchers, WordSpecLike}
 
-final class SimpleAvroSpec extends WordSpecLike with Matchers {
+final class AvroCodeGenerationSpec extends WordSpecLike with Matchers {
 
   private[this] def getUsers(): List[User] = {
+    // Leave favorite color null
     val user1 = new User()
     user1.setName("Alyssa")
     user1.setFavoriteNumber(256)
-    // Leave favorite color null
 
     // Alternate constructor
     val user2 = new User("Ben", 7, "red")
@@ -23,13 +23,14 @@ final class SimpleAvroSpec extends WordSpecLike with Matchers {
     List(user1, user2, user3)
   }
 
-  "SimpleAvro" should {
+  "AvroCodeGeneration" should {
 
     "serialize and deserialize" in {
+      val filePath = "data/users-code-generation.avro"
       val users = getUsers()
-      val path = "data/users.avro"
-      SimpleAvro.serializeUsers(users, path)
-      SimpleAvro.deserializeUsers(path) shouldBe users
+
+      AvroCodeGeneration.serializeUsers(users, filePath)
+      AvroCodeGeneration.deserializeUsers(filePath) shouldBe users
     }
 
   }
