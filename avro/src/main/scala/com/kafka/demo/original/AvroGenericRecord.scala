@@ -43,6 +43,8 @@ object AvroGenericRecord {
     val datumReader: DatumReader[GenericRecord] = new GenericDatumReader[GenericRecord](schema)
     val dataFileReader: DataFileReader[GenericRecord] = new DataFileReader[GenericRecord](file, datumReader)
     val genericRecords = dataFileReader.iterator().asScala.toList
+    dataFileReader.close()
+
     genericRecords.foreach { genericRecord =>
       logger.debug(s"deserialize genericRecord=[$genericRecord]")
     }
