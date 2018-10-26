@@ -46,7 +46,7 @@ object AvroGenericRecord {
     dataFileReader.close()
 
     genericRecords.foreach { genericRecord =>
-      logger.debug(s"deserialize genericRecord=[$genericRecord]")
+      logger.debug(s"deserialize GenericRecord=[$genericRecord]")
     }
     genericRecords
   }
