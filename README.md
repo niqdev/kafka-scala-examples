@@ -1,6 +1,7 @@
 # kafka-demo
 
 [![Build Status][travis-image]][travis-url]
+
 [travis-image]: https://travis-ci.org/niqdev/kafka-demo.svg?branch=master
 [travis-url]: https://travis-ci.org/niqdev/kafka-demo
 
