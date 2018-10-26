@@ -10,6 +10,8 @@ lazy val V = new {
   val logback = "1.2.3"
   val scalaLogging = "3.9.0"
 
+  val avro4s = "2.0.2"
+
   val scalatest = "3.0.5"
 }
 
@@ -23,9 +25,13 @@ lazy val common = project.in(file("common"))
     ))
 
 lazy val avro = project.in(file("avro"))
-  // test dependencies are excluded by default
+  // test dependencies are excluded by default otherwise
   .dependsOn(common % "compile->compile;test->test")
   .enablePlugins(SbtAvro)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
+    ))
 
 lazy val `schema-registry` = project.in(file("schema-registry"))
   .dependsOn(common % "compile->compile;test->test")

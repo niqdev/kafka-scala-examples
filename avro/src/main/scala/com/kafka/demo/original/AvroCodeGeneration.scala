@@ -1,4 +1,5 @@
 package com.kafka.demo
+package original
 
 import com.typesafe.scalalogging.Logger
 import org.apache.avro.file.{DataFileReader, DataFileWriter}

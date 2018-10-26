@@ -15,7 +15,7 @@ sbt clean avro/compile
 sbt clean avro/test
 ```
 
-# schema-registry
+## schema-registry
 
 ```bash
 sbt console

@@ -1,4 +1,5 @@
 package com.kafka.demo
+package original
 
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericData, GenericRecord}
