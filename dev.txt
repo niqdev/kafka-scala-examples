@@ -44,6 +44,30 @@ User.avsc
 
 ---
 
+# TODO
+
 # schema registry
 https://docs.confluent.io/current/schema-registry/docs/index.html
-http://cloudurable.com/blog/kafka-avro-schema-registry/index.html
+https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with-apache-avro-and-dealing-with-a-schema-registry
+https://web.archive.org/web/20180321112249/https://cloudurable.com/blog/kafka-avro-schema-registry/index.html
+https://msayag.github.io/Kafka
+http://bytepadding.com/big-data/spark/avro/avro-serialization-de-serialization-using-confluent-schema-registry
+
+# TODO
+
+Schema ID allocation always happen in the master node and they ensure that the Schema IDs are monotonically increasing
+
+Kafka is used as Schema Registry storage backend.
+The special Kafka topic <kafkastore.topic> (default _schemas), with a single partition, is used as a highly available write ahead log.
+All schemas, subject/version and ID metadata, and compatibility settings are appended as messages to this log.
+
+Schema Registry is designed to work as a distributed service using single master architecture
+Only the master is capable of publishing writes to the underlying Kafka log, but all nodes are capable of directly serving read requests.
+Slave nodes serve registration requests indirectly by simply forwarding them to the current master, and returning the response supplied by the master.
+
+---
+
+https://github.com/cakesolutions/scala-kafka-client
+https://github.com/lightbend/kafka-streams-scala
+https://github.com/lightbend/kafka-with-akka-streams-kafka-streams-tutorial
+https://github.com/Spinoco/fs2-kafka
