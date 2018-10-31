@@ -45,22 +45,59 @@ sbt clean avro/test
 * [Stream Avro Records into Kafka using Avro4s and Akka Streams Kafka](https://abhsrivastava.github.io/2017/10/02/Stream-Avro-Records-into-Kafka)
 * [Kafka, Spark and Avro](https://aseigneurin.github.io/2016/03/02/kafka-spark-avro-kafka-101.html)
 
-## schema-registry
+## kafka
 
 **Description**
 
 > TODO
 
 ```bash
-sbt console
+# start zookeeper + kafka + kafka-ui
+docker-compose up
+
+# (mac|linux) view kafka ui
+[open|xdg-open] http://localhost:8000
+
+# access kafka
+docker exec -it my-local-kafka bash
+
+# create topic
+# example [topic-no-schema-0|topic-no-schema-1]
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
+
+# view topic
+kafka-topics.sh --zookeeper zookeeper:2181 --list 
+kafka-topics.sh --zookeeper zookeeper:2181 --describe --topic <TOPIC_NAME>
+
+# console producer
+kafka-console-producer.sh --broker-list kafka:9092 --topic <TOPIC_NAME>
+kafkacat -P -b 0 -t <TOPIC_NAME>
+
+# console consumer
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic <TOPIC_NAME> --from-beginning
+kafkacat -C -b 0 -t <TOPIC_NAME>
+
+# producer example
+sbt "schema-registry/runMain com.kafka.demo.simple.Producer0"
+sbt "schema-registry/run com.kafka.demo.simple.Producer1"
+
+# consumer example
+sbt "schema-registry/runMain com.kafka.demo.simple.Consumer0"
+sbt "schema-registry/run com.kafka.demo.simple.Consumer1"
+
+>>> TODO
+
+# test
 sbt clean test
 sbt "test:testOnly *HelloSpec"
-
-sbt "schema-registry/runMain com.kafka.demo.Main"
-sbt "schema-registry/run com.kafka.demo.Main"
-
-docker-compose up
 ```
+
+## schema-registry
+
+**Description**
+
+> TODO
 
 ## stream
 

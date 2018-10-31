@@ -6,7 +6,7 @@ import java.time.Duration
 import cakesolutions.kafka.KafkaConsumer
 import cakesolutions.kafka.KafkaConsumer.Conf
 import com.typesafe.scalalogging.Logger
-import org.apache.kafka.clients.consumer.{ConsumerRecord, KafkaConsumer}
+import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer => JKafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import scala.util.Try
@@ -15,26 +15,26 @@ import scala.util.Try
 /*
  * https://github.com/cakesolutions/scala-kafka-client/wiki/Scala-Kafka-Client#consumer
  */
-object Consumer1 extends App {
+object Consumer1 {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "topic-1"
+  private[this] val TOPIC_NAME = "topic-no-schema-1"
   private[this] val GROUP_ID_VALUE = "consumer-1"
   private[this] val TIMEOUT_MILLS = 100
 
-  private[this] def newConsumer(): KafkaConsumer[String, String] = KafkaConsumer(
-    Conf(new StringDeserializer(), new StringDeserializer(), GROUP_ID_VALUE, bootstrapServers = BOOTSTRAP_SERVERS_VALUE)
+  private[this] def newConsumer(): JKafkaConsumer[String, String] = KafkaConsumer(
+    Conf(new StringDeserializer(), new StringDeserializer(), bootstrapServers = BOOTSTRAP_SERVERS_VALUE, GROUP_ID_VALUE)
   )
 
-  def main: Unit = {
+  def main(args: Array[String]): Unit = {
     logger.info(s"Started to consume from $TOPIC_NAME")
 
     val consumer = newConsumer()
     Try {
       while (true) {
-        val records = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
-        for (record: ConsumerRecord[String, String] <- records) {
+        val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
+        records.iterator().forEachRemaining { record: ConsumerRecord[String, String] =>
           logger.info(
             s"""
                |message
@@ -49,4 +49,5 @@ object Consumer1 extends App {
 
     logger.info(s"Finished to consume from $TOPIC_NAME")
   }
+
 }
