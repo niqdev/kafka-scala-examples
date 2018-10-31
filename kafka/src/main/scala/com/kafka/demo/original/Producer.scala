@@ -1,5 +1,4 @@
-package com.kafka.demo
-package simple
+package com.kafka.demo.original
 
 import java.time.LocalDateTime
 import java.util.Properties
@@ -12,7 +11,7 @@ import org.apache.kafka.common.serialization.StringSerializer
 /*
  * https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
  */
-object Producer0 {
+object Producer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"

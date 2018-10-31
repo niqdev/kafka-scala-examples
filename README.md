@@ -79,14 +79,17 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic <TOPIC_NAME> --f
 kafkacat -C -b 0 -t <TOPIC_NAME>
 
 # producer example
-sbt "schema-registry/runMain com.kafka.demo.simple.Producer0"
-sbt "schema-registry/run com.kafka.demo.simple.Producer1"
+sbt "kafka/runMain com.kafka.demo.original.Producer"
+sbt "kafka/runMain com.kafka.demo.cakesolutions.Producer"
 
 # consumer example
-sbt "schema-registry/runMain com.kafka.demo.simple.Consumer0"
-sbt "schema-registry/run com.kafka.demo.simple.Consumer1"
+sbt "kafka/runMain com.kafka.demo.original.Consumer"
+sbt "kafka/runMain com.kafka.demo.cakesolutions.Consumer"
 
->>> TODO
+# >>> TODO
+# * tests (embedded kafka?)
+# * refactor common
+# * open issue in wiki cakesolutions consumer
 
 # test
 sbt clean test

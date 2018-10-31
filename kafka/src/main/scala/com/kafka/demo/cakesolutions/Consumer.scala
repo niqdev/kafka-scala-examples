@@ -1,5 +1,4 @@
-package com.kafka.demo
-package simple
+package com.kafka.demo.cakesolutions
 
 import java.time.Duration
 
@@ -9,13 +8,13 @@ import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer => JKafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
 
-import scala.util.Try
+import scala.collection.JavaConverters.asJavaCollectionConverter
+import scala.util.{Failure, Success, Try}
 
-// TODO open issue typo groupId in Wiki
 /*
  * https://github.com/cakesolutions/scala-kafka-client/wiki/Scala-Kafka-Client#consumer
  */
-object Consumer1 {
+object Consumer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
@@ -31,6 +30,7 @@ object Consumer1 {
     logger.info(s"Started to consume from $TOPIC_NAME")
 
     val consumer = newConsumer()
+    consumer.subscribe(List(TOPIC_NAME).asJavaCollection)
     Try {
       while (true) {
         val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
@@ -45,7 +45,12 @@ object Consumer1 {
            """.stripMargin)
         }
       }
-    } map (_ => consumer.close())
+    } match {
+      case Success(_) =>
+        logger.info(s"Finished to consume from $TOPIC_NAME")
+      case Failure(exception) =>
+        logger.error(s"Finished to consume from $TOPIC_NAME with error", exception)
+    }
 
     logger.info(s"Finished to consume from $TOPIC_NAME")
   }

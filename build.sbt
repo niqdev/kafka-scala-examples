@@ -39,6 +39,14 @@ lazy val avro = project.in(file("avro"))
       "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
     ))
 
+lazy val kafka = project.in(file("kafka"))
+  .dependsOn(common % "compile->compile;test->test")
+  .settings(
+    libraryDependencies ++= Seq(
+      "net.cakesolutions" %% "scala-kafka-client" % V.kafkaClient
+    ))
+
+// TODO
 lazy val `schema-registry` = project.in(file("schema-registry"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
@@ -49,12 +57,11 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
 
     libraryDependencies ++= Seq(
       N.confluent % "kafka-schema-registry-client" % V.confluent,
-      N.confluent % "kafka-avro-serializer" % V.confluent,
-      "net.cakesolutions" %% "scala-kafka-client" % V.kafkaClient
+      N.confluent % "kafka-avro-serializer" % V.confluent
     ))
 
 lazy val root = project.in(file("."))
-  .aggregate(avro, `schema-registry`)
+  .aggregate(avro, kafka, `schema-registry`)
   .settings(
     inThisBuild(List(
       organization := I.organization,

@@ -1,5 +1,4 @@
-package com.kafka.demo
-package simple
+package com.kafka.demo.original
 
 import java.time.Duration
 import java.util.Properties
@@ -16,7 +15,7 @@ import scala.util.{Failure, Success, Try}
 /*
  * https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
  */
-object Consumer0 {
+object Consumer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
