@@ -1,9 +1,8 @@
 package com.kafka.demo.cakesolutions
 
-import java.time.LocalDateTime
-
 import cakesolutions.kafka.KafkaProducer.Conf
 import cakesolutions.kafka.{KafkaProducer, KafkaProducerRecord}
+import com.kafka.demo.KafkaHelper
 import com.typesafe.scalalogging.Logger
 import org.apache.kafka.common.serialization.StringSerializer
 
@@ -25,11 +24,8 @@ object Producer {
 
     val producer = newProducer()
 
-    (1 to 100)
-      .map { i =>
-        (i, s"Message $i @ ${LocalDateTime.now} on ${Thread.currentThread.getName}")
-      }
-      .map {
+    KafkaHelper
+      .produceMessages {
         case (i, message) => KafkaProducerRecord(TOPIC_NAME, s"$i", message)
       }
       .foreach(producer.send)

@@ -1,16 +1,13 @@
 package com.kafka.demo.original
 
-import java.time.Duration
 import java.util.Properties
 
+import com.kafka.demo.KafkaHelper
 import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.consumer.ConsumerConfig._
-import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringDeserializer
-
-import scala.collection.JavaConverters.asJavaCollectionConverter
-import scala.util.{Failure, Success, Try}
 
 /*
  * https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
@@ -34,33 +31,7 @@ object Consumer {
     new KafkaConsumer(props)
   }
 
-  def main(args: Array[String]): Unit = {
-    logger.info(s"Started to consume from $TOPIC_NAME")
-
-    val consumer = newConsumer()
-    consumer.subscribe(List(TOPIC_NAME).asJavaCollection)
-    Try {
-      while (true) {
-        val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
-        records.iterator().forEachRemaining { record: ConsumerRecord[String, String] =>
-          logger.info(
-            s"""
-               |message
-               |  offset=${record.offset}
-               |  partition=${record.partition}
-               |  key=${record.key}
-               |  value=${record.value}
-           """.stripMargin)
-        }
-      }
-    } match {
-      case Success(_) =>
-        logger.info(s"Finished to consume from $TOPIC_NAME")
-      case Failure(exception) =>
-        logger.error(s"Finished to consume from $TOPIC_NAME with error", exception)
-    }
-
-    consumer.close()
-  }
+  def main(args: Array[String]): Unit =
+    KafkaHelper.consume(newConsumer(), TOPIC_NAME, TIMEOUT_MILLS)
 
 }

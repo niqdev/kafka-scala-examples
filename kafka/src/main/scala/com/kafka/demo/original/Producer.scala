@@ -1,8 +1,8 @@
 package com.kafka.demo.original
 
-import java.time.LocalDateTime
 import java.util.Properties
 
+import com.kafka.demo.KafkaHelper
 import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.producer.ProducerConfig._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
@@ -35,11 +35,8 @@ object Producer {
 
     val producer = newProducer()
 
-    (1 to 100)
-      .map { i =>
-        (i, s"Message $i @ ${LocalDateTime.now} on ${Thread.currentThread.getName}")
-      }
-      .map {
+    KafkaHelper
+      .produceMessages {
         case (i, message) => new ProducerRecord(TOPIC_NAME, s"$i", message)
       }
       .foreach(producer.send)
