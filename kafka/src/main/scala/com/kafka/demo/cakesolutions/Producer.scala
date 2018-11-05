@@ -15,14 +15,13 @@ object Producer {
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val TOPIC_NAME = "topic-no-schema-cakesolutions"
 
-  private[this] def newProducer(): KafkaProducer[String, String] = KafkaProducer(
-    Conf(new StringSerializer(), new StringSerializer(), bootstrapServers = BOOTSTRAP_SERVERS_VALUE)
-  )
+  private[cakesolutions] def newProducer(bootstrapServers: String): KafkaProducer[String, String] =
+    KafkaProducer(Conf(new StringSerializer(), new StringSerializer(), bootstrapServers))
 
   def main(args: Array[String]): Unit = {
     logger.info(s"Started to produce on $TOPIC_NAME")
 
-    val producer = newProducer()
+    val producer = newProducer(BOOTSTRAP_SERVERS_VALUE)
 
     KafkaHelper
       .produceMessages {

@@ -3,7 +3,6 @@ package com.kafka.demo.original
 import java.util.Properties
 
 import com.kafka.demo.KafkaHelper
-import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.consumer.ConsumerConfig._
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
@@ -13,7 +12,6 @@ import org.apache.kafka.common.serialization.StringDeserializer
  * https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
  */
 object Consumer {
-  private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val TOPIC_NAME = "topic-no-schema-original"

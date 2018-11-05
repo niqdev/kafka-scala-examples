@@ -91,13 +91,12 @@ sbt "kafka/runMain com.kafka.demo.original.Consumer"
 sbt "kafka/runMain com.kafka.demo.cakesolutions.Consumer"
 
 # >>> TODO
-# * tests (embedded kafka?)
-# * refactor common
+# fix test
 # * open issue in wiki cakesolutions consumer and testkit bad formatting
 
 # test
 sbt clean test
-sbt "test:testOnly *HelloSpec"
+sbt "test:testOnly *KafkaSpec"
 ```
 
 ## schema-registry
