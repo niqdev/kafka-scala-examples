@@ -62,9 +62,13 @@ docker-compose up
 docker exec -it my-local-kafka bash
 
 # create topic
-# example [topic-no-schema-0|topic-no-schema-1]
+# example [topic-no-schema-original|topic-no-schema-cakesolutions]
 kafka-topics.sh --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
+
+# delete topic
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --delete --topic <TOPIC_NAME>
 
 # view topic
 kafka-topics.sh --zookeeper zookeeper:2181 --list 
@@ -89,7 +93,7 @@ sbt "kafka/runMain com.kafka.demo.cakesolutions.Consumer"
 # >>> TODO
 # * tests (embedded kafka?)
 # * refactor common
-# * open issue in wiki cakesolutions consumer
+# * open issue in wiki cakesolutions consumer and testkit bad formatting
 
 # test
 sbt clean test

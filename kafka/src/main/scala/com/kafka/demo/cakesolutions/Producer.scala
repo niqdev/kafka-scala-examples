@@ -14,7 +14,7 @@ object Producer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "topic-no-schema-1"
+  private[this] val TOPIC_NAME = "topic-no-schema-cakesolutions"
 
   private[this] def newProducer(): KafkaProducer[String, String] = KafkaProducer(
     Conf(new StringSerializer(), new StringSerializer(), bootstrapServers = BOOTSTRAP_SERVERS_VALUE)

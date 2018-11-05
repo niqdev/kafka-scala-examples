@@ -18,8 +18,8 @@ object Consumer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "topic-no-schema-1"
-  private[this] val GROUP_ID_VALUE = "consumer-1"
+  private[this] val TOPIC_NAME = "topic-no-schema-cakesolutions"
+  private[this] val GROUP_ID_VALUE = "consumer-cakesolutions"
   private[this] val TIMEOUT_MILLS = 100
 
   private[this] def newConsumer(): JKafkaConsumer[String, String] = KafkaConsumer(
