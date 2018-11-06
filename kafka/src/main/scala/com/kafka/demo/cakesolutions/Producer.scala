@@ -19,7 +19,7 @@ object Producer {
     KafkaProducer(Conf(new StringSerializer(), new StringSerializer(), bootstrapServers))
 
   def main(args: Array[String]): Unit = {
-    logger.info(s"Started to produce on $TOPIC_NAME")
+    logger.info(s"Start to produce on $TOPIC_NAME")
 
     val producer = newProducer(BOOTSTRAP_SERVERS_VALUE)
 
@@ -31,7 +31,7 @@ object Producer {
 
     producer.close()
 
-    logger.info(s"Finished to produce on $TOPIC_NAME")
+    logger.info(s"Finish to produce on $TOPIC_NAME")
   }
 
 }

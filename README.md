@@ -51,6 +51,8 @@ sbt clean avro/test
 
 > TODO
 
+* open issue in wiki cakesolutions consumer and testkit bad formatting
+
 ```bash
 # start zookeeper + kafka + kafka-ui
 docker-compose up
@@ -90,12 +92,8 @@ sbt "kafka/runMain com.kafka.demo.cakesolutions.Producer"
 sbt "kafka/runMain com.kafka.demo.original.Consumer"
 sbt "kafka/runMain com.kafka.demo.cakesolutions.Consumer"
 
-# >>> TODO
-# fix test
-# * open issue in wiki cakesolutions consumer and testkit bad formatting
-
 # test
-sbt clean test
+sbt clean kafka/test
 sbt "test:testOnly *KafkaSpec"
 ```
 

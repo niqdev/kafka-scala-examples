@@ -31,7 +31,7 @@ object Producer {
   }
 
   def main(args: Array[String]): Unit = {
-    logger.info(s"Started to produce on $TOPIC_NAME")
+    logger.info(s"Start to produce on $TOPIC_NAME")
 
     val producer = newProducer()
 
@@ -43,7 +43,7 @@ object Producer {
 
     producer.close()
 
-    logger.info(s"Finished to produce on $TOPIC_NAME")
+    logger.info(s"Finish to produce on $TOPIC_NAME")
   }
 
 }
