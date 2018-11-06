@@ -16,8 +16,9 @@ lazy val V = new {
   val scalaLogging = "3.9.0"
 
   val avro4s = "2.0.2"
-  val confluent = "5.0.0"
   val cakeSolutions = "2.0.0"
+  val kafka = "2.0.0"
+  val confluent = "5.0.0"
 
   val scalatest = "3.0.5"
 }
@@ -35,6 +36,7 @@ lazy val avro = project.in(file("avro"))
   // test dependencies are excluded by default otherwise
   .dependsOn(common % "compile->compile;test->test")
   .enablePlugins(SbtAvro)
+  .disablePlugins(SbtAvrohugger)
   .settings(
     libraryDependencies ++= Seq(
       "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
@@ -53,18 +55,25 @@ lazy val kafka = project.in(file("kafka"))
       N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions % Test
     ))
 
-// TODO
 lazy val `schema-registry` = project.in(file("schema-registry"))
   .dependsOn(common % "compile->compile;test->test")
+  .enablePlugins(SbtAvrohugger)
+  // avoid issue XXX is already defined as class XXX
+  .disablePlugins(SbtAvro)
   .settings(
     resolvers ++= Seq(
       "confluent" at "https://packages.confluent.io/maven/"
     ),
 
     libraryDependencies ++= Seq(
-      N.confluent % "kafka-schema-registry-client" % V.confluent,
-      N.confluent % "kafka-avro-serializer" % V.confluent
-    ))
+      "org.apache.kafka" % "kafka-clients" % V.kafka,
+      N.confluent % "kafka-avro-serializer" % V.confluent,
+      N.confluent % "kafka-schema-registry-client" % V.confluent
+    ),
+
+    // sbt-avrohugger
+    sourceGenerators in Compile += (avroScalaGenerate in Compile).taskValue
+  )
 
 lazy val root = project.in(file("."))
   .aggregate(avro, kafka, `schema-registry`)

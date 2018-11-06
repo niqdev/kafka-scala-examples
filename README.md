@@ -19,6 +19,8 @@ Examples of Avro, Kafka, Schema Registry, Kafka Stream, KSQL in Scala
 * [avro4s](https://github.com/sksamuel/avro4s) [[source](avro/src/main/scala/com/kafka/demo/avro4s/Avro4sExample.scala)|[test](avro/src/test/scala/com/kafka/demo/avro4s/Avro4sExampleSpec.scala)]
 * Java/Scala libraries compatibility [[test](avro/src/test/scala/com/kafka/demo/LibraryCompatibilitySpec.scala)]
 
+**Demo**
+
 ```bash
 # console
 sbt avro/console
@@ -53,8 +55,10 @@ clients
 and `KafkaConsumer` [[source](kafka/src/main/scala/com/kafka/demo/cakesolutions/Consumer.scala)|[test](kafka/src/test/scala/com/kafka/demo/cakesolutions/KafkaSpec.scala)]
 clients
 
+**Demo**
+
 ```bash
-# start zookeeper + kafka + kafka-ui
+# start zookeeper + kafka + kafka-rest + kafka-ui
 docker-compose up
 
 # (mac|linux) view kafka ui
@@ -146,6 +150,46 @@ http -v DELETE :8081/subjects/Example-value/versions/latest
 
 # stringify
 jq tostring avro/src/main/avro/user.avsc
+```
+
+**Demo**
+
+```bash
+# generate classes in "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
+sbt clean schema-registry/avroScalaGenerate
+
+# start zookeeper + kafka + kafka-rest + kafka-ui + schema-registry + schema-registry-ui
+docker-compose up
+
+# (mac|linux) view kafka ui
+[open|xdg-open] http://localhost:8000
+
+# (mac|linux) view kafka ui
+[open|xdg-open] http://localhost:8001
+
+# create schema from file
+http -v POST :8081/subjects/Payment-value/versions \
+  Accept:application/vnd.schemaregistry.v1+json \
+  schema=@schema-registry/src/main/avro/Payment.avsc
+
+# access kafka
+docker exec -it my-local-kafka bash
+
+# create topic
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic topic-schema-payment
+
+# console producer
+kafkacat -P -b 0 -t topic-schema-payment
+
+# console consumer
+kafkacat -C -b 0 -t topic-schema-payment
+
+# producer example
+sbt "schema-registry/runMain com.kafka.demo.specific.Producer"
+
+# consumer example
+sbt "schema-registry/runMain com.kafka.demo.specific.Consumer"
 ```
 
 **Tools**

@@ -1,0 +1,19 @@
+{
+  "namespace": "io.confluent.examples.clients.basicavro",
+  "type": "record",
+  "name": "Payment2a",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "double"
+    },
+    {
+      "name": "region",
+      "type": "string"
+    }
+  ]
+}

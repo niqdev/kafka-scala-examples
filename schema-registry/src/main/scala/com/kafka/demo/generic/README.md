@@ -1,0 +1,1 @@
+https://docs.confluent.io/current/streams/developer-guide/datatypes.html#avro

@@ -3,9 +3,8 @@ package com.kafka.demo.original
 import java.util.Properties
 
 import com.kafka.demo.KafkaHelper
-import org.apache.kafka.clients.consumer.ConsumerConfig._
+import org.apache.kafka.clients.consumer.ConsumerConfig.{BOOTSTRAP_SERVERS_CONFIG, _}
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringDeserializer
 
 /*

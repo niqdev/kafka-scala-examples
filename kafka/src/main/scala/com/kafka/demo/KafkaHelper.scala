@@ -48,8 +48,6 @@ object KafkaHelper {
     }
 
     consumer.close()
-
-    logger.info(s"Finish to consume from $topic")
   }
 
 }

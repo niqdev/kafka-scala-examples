@@ -57,8 +57,13 @@ https://aseigneurin.github.io/2018/08/02/kafka-tutorial-4-avro-and-schema-regist
 # bash import/export
 https://github.com/confluentinc/schema-registry/issues/789
 
-# alternative
+# more
 https://registry-project.readthedocs.io/en/latest/
+https://medium.com/@lukasgrasse/producing-and-consuming-avro-messages-over-kafka-in-scala-edc26d69298c
+
+# example
+https://github.com/confluentinc/examples/tree/5.0.0-post/clients/avro/src/main/java/io/confluent/examples/clients/basicavro
+https://github.com/confluentinc/schema-registry/blob/master/client/src/main/java/io/confluent/kafka/schemaregistry/client/MockSchemaRegistryClient.java
 
 # TODO
 
