@@ -49,9 +49,14 @@ sbt clean avro/test
 
 **Description**
 
-> TODO
-
-* open issue in wiki cakesolutions consumer and testkit bad formatting
+[Kafka](https://kafka.apache.org/documentation) apis example of
+* `KafkaProducer` [[docs](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Producer.scala)]
+and `KafkaConsumer` [[docs](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Consumer.scala)]
+clients
+* [CakeSolutions](https://github.com/cakesolutions/scala-kafka-client)
+`KafkaProducer` [[source](kafka/src/main/scala/com/kafka/demo/cakesolutions/Producer.scala)|[test](kafka/src/test/scala/com/kafka/demo/cakesolutions/KafkaSpec.scala)]
+and `KafkaConsumer` [[source](kafka/src/main/scala/com/kafka/demo/cakesolutions/Consumer.scala)|[test](kafka/src/test/scala/com/kafka/demo/cakesolutions/KafkaSpec.scala)]
+clients
 
 ```bash
 # start zookeeper + kafka + kafka-ui
