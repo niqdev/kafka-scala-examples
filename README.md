@@ -7,12 +7,7 @@
 
 > Work In Progress
 
-Examples of Avro, Schema Registry, Kafka Stream, KSQL in Scala
-
-**Further readings**
-
-* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
-* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
+Examples of Avro, Kafka, Schema Registry, Kafka Stream, KSQL in Scala
 
 ## avro
 
@@ -113,3 +108,10 @@ sbt "test:testOnly *KafkaSpec"
 **Description**
 
 > TODO
+
+## extra
+
+**Further readings**
+
+* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
+* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)

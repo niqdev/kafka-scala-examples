@@ -9,7 +9,6 @@ cache:
 language: scala
 
 jdk:
-  - oraclejdk8
   - openjdk8
 
 scala:
