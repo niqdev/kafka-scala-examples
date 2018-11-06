@@ -103,6 +103,56 @@ sbt "test:testOnly *KafkaSpec"
 
 > TODO
 
+* Schema Registry [API](https://docs.confluent.io/current/schema-registry/docs/api.html) and [examples](https://docs.confluent.io/current/schema-registry/docs/using.html#common-sr-usage-examples)
+
+```bash
+# register schema
+http -v POST :8081/subjects/Example-value/versions \
+  Accept:application/vnd.schemaregistry.v1+json \
+  schema='{"type":"string"}'
+
+# import schema from file
+http -v POST :8081/subjects/User-value/versions \
+  Accept:application/vnd.schemaregistry.v1+json \
+  schema=@avro/src/main/avro/user.avsc
+
+# export schema to file
+http :8081/subjects/User-value/versions/latest \
+  | jq -r '.schema|fromjson' \
+  | tee avro/src/main/avro/user-latest.avsc
+
+# list subjects
+http -v :8081/subjects
+
+# list subject's versions
+http -v :8081/subjects/Example-value/versions
+
+# list version
+http -v :8081/subjects/Example-value/versions/1
+
+# fetch by id
+http -v :8081/schemas/ids/1
+
+# test compatibility
+http -v POST :8081/compatibility/subjects/Example-value/versions/latest \
+  Accept:application/vnd.schemaregistry.v1+json \
+  schema='{"type":"string"}'
+
+# delete version
+http -v DELETE :8081/subjects/Example-value/versions/1
+
+# delete latest version
+http -v DELETE :8081/subjects/Example-value/versions/latest
+
+# stringify
+jq tostring avro/src/main/avro/user.avsc
+```
+
+**Tools**
+
+* [HTTPie](https://httpie.org)
+* [jq](https://stedolan.github.io/jq)
+
 ## stream
 
 **Description**

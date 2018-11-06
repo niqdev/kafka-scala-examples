@@ -52,6 +52,13 @@ https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with
 https://web.archive.org/web/20180321112249/https://cloudurable.com/blog/kafka-avro-schema-registry/index.html
 https://msayag.github.io/Kafka
 http://bytepadding.com/big-data/spark/avro/avro-serialization-de-serialization-using-confluent-schema-registry
+https://aseigneurin.github.io/2018/08/02/kafka-tutorial-4-avro-and-schema-registry.html
+
+# bash import/export
+https://github.com/confluentinc/schema-registry/issues/789
+
+# alternative
+https://registry-project.readthedocs.io/en/latest/
 
 # TODO
 
