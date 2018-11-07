@@ -71,8 +71,8 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
       N.confluent % "kafka-schema-registry-client" % V.confluent
     ),
 
-    // sbt-avrohugger
-    sourceGenerators in Compile += (avroScalaGenerate in Compile).taskValue
+    // sbt-avrohugger: SpecificRecord
+    sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
   )
 
 lazy val root = project.in(file("."))

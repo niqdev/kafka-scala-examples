@@ -26,7 +26,7 @@ object Producer {
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, classOf[StringSerializer].getName)
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, classOf[KafkaAvroSerializer].getName)
     props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
-    new KafkaProducer(props)
+    new KafkaProducer[String, Payment](props)
   }
 
   def main(args: Array[String]): Unit = {
