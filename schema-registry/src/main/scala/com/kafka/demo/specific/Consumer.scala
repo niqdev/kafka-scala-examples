@@ -6,7 +6,6 @@ import java.util.Properties
 import com.typesafe.scalalogging.Logger
 import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroDeserializer, KafkaAvroDeserializerConfig}
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
-import org.apache.kafka.common.serialization.StringDeserializer
 
 import scala.collection.JavaConverters.asJavaCollectionConverter
 import scala.util.{Failure, Success, Try}
@@ -19,7 +18,7 @@ object Consumer {
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
-  private[this] val TOPIC_NAME = "topic-schema-payment"
+  private[this] val TOPIC_NAME = "example.with-schema.payment"
   private[this] val GROUP_ID_VALUE = "consumer-specific"
   private[this] val TIMEOUT_MILLS = 100
 
@@ -30,7 +29,7 @@ object Consumer {
     props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true")
     props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000")
     props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[StringDeserializer].getName)
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
     props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
     props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "true")

@@ -47,8 +47,8 @@ sbt clean avro/test
 **Description**
 
 [Kafka](https://kafka.apache.org/documentation) apis example of
-* `KafkaProducer` [[docs](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Producer.scala)]
-and `KafkaConsumer` [[docs](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Consumer.scala)]
+* `KafkaProducer` [[doc](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Producer.scala)]
+and `KafkaConsumer` [[doc](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html)|[source](kafka/src/main/scala/com/kafka/demo/original/Consumer.scala)]
 clients
 * [CakeSolutions](https://github.com/cakesolutions/scala-kafka-client)
 `KafkaProducer` [[source](kafka/src/main/scala/com/kafka/demo/cakesolutions/Producer.scala)|[test](kafka/src/test/scala/com/kafka/demo/cakesolutions/KafkaSpec.scala)]
@@ -68,7 +68,8 @@ docker-compose up
 docker exec -it my-local-kafka bash
 
 # create topic
-# example [topic-no-schema-original|topic-no-schema-cakesolutions]
+# convention <MESSAGE_TYPE>.<DATASET_NAME>.<DATA_NAME>
+# example [example.no-schema.original|example.no-schema.cakesolutions]
 kafka-topics.sh --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
 
@@ -105,23 +106,24 @@ sbt "test:testOnly *KafkaSpec"
 
 **Description**
 
-> TODO
-
-* Schema Registry [API](https://docs.confluent.io/current/schema-registry/docs/api.html) and [examples](https://docs.confluent.io/current/schema-registry/docs/using.html#common-sr-usage-examples)
+* Schema Registry [API](https://docs.confluent.io/current/schema-registry/docs/api.html)
+* API [examples](https://docs.confluent.io/current/schema-registry/docs/using.html#common-sr-usage-examples)
+* Console [examples](https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html#formatter)
 
 ```bash
 # register schema
-http -v POST :8081/subjects/Example-value/versions \
+# convention <TOPIC_NAME>-key or <TOPIC_NAME>-value
+http -v POST :8081/subjects/example.with-schema.simple-value/versions \
   Accept:application/vnd.schemaregistry.v1+json \
   schema='{"type":"string"}'
 
 # import schema from file
-http -v POST :8081/subjects/User-value/versions \
+http -v POST :8081/subjects/example.with-schema.user-value/versions \
   Accept:application/vnd.schemaregistry.v1+json \
   schema=@avro/src/main/avro/user.avsc
 
 # export schema to file
-http :8081/subjects/User-value/versions/latest \
+http :8081/subjects/example.with-schema.user-value/versions/latest \
   | jq -r '.schema|fromjson' \
   | tee avro/src/main/avro/user-latest.avsc
 
@@ -129,24 +131,27 @@ http :8081/subjects/User-value/versions/latest \
 http -v :8081/subjects
 
 # list subject's versions
-http -v :8081/subjects/Example-value/versions
+http -v :8081/subjects/example.with-schema.simple-value/versions
 
-# list version
-http -v :8081/subjects/Example-value/versions/1
+# fetch by version
+http -v :8081/subjects/example.with-schema.simple-value/versions/1
 
 # fetch by id
 http -v :8081/schemas/ids/1
 
 # test compatibility
-http -v POST :8081/compatibility/subjects/Example-value/versions/latest \
+http -v POST :8081/compatibility/subjects/example.with-schema.simple-value/versions/latest \
   Accept:application/vnd.schemaregistry.v1+json \
   schema='{"type":"string"}'
 
 # delete version
-http -v DELETE :8081/subjects/Example-value/versions/1
+http -v DELETE :8081/subjects/example.with-schema.simple-value/versions/1
 
 # delete latest version
-http -v DELETE :8081/subjects/Example-value/versions/latest
+http -v DELETE :8081/subjects/example.with-schema.simple-value/versions/latest
+
+# delete subject
+http -v DELETE :8081/subjects/example.with-schema.simple-value
 
 # stringify
 jq tostring avro/src/main/avro/user.avsc
@@ -155,8 +160,8 @@ jq tostring avro/src/main/avro/user.avsc
 **Demo**
 
 ```bash
-# generate classes in "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
-sbt clean schema-registry/avroScalaGenerate
+# generate SpecificRecord classes under "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
+sbt clean schema-registry/avroScalaGenerateSpecific
 
 # start zookeeper + kafka + kafka-rest + kafka-ui + schema-registry + schema-registry-ui
 docker-compose up
@@ -164,26 +169,51 @@ docker-compose up
 # (mac|linux) view kafka ui
 [open|xdg-open] http://localhost:8000
 
-# (mac|linux) view kafka ui
+# (mac|linux) view schema-registry ui
 [open|xdg-open] http://localhost:8001
 
-# create schema from file
-http -v POST :8081/subjects/Payment-value/versions \
+# (optional) create schema
+http -v POST :8081/subjects/example.with-schema.payment-key/versions \
+  Accept:application/vnd.schemaregistry.v1+json \
+  schema='{"type":"string"}'
+http -v POST :8081/subjects/example.with-schema.payment-value/versions \
   Accept:application/vnd.schemaregistry.v1+json \
   schema=@schema-registry/src/main/avro/Payment.avsc
 
 # access kafka
 docker exec -it my-local-kafka bash
 
-# create topic
+# (optional) create topic
 kafka-topics.sh --zookeeper zookeeper:2181 \
-  --create --if-not-exists --replication-factor 1 --partitions 1 --topic topic-schema-payment
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic example.with-schema.payment
 
-# console producer
-kafkacat -P -b 0 -t topic-schema-payment
+# console producer (binary)
+kafkacat -P -b 0 -t example.with-schema.payment
 
-# console consumer
-kafkacat -C -b 0 -t topic-schema-payment
+# console consumer (binary)
+kafkacat -C -b 0 -t example.with-schema.payment
+
+# access schema-registry
+docker exec -it my-local-schema-registry bash
+
+# avro console producer
+# example "MyKey",{"id":"MyId","amount":10}
+kafka-avro-console-producer --broker-list kafka:9092 \
+  --topic example.with-schema.payment \
+  --property schema.registry.url=http://schema-registry:8081 \
+  --property parse.key=true \
+  --property key.separator=, \
+  --property key.schema='{"type":"string"}' \
+  --property value.schema='{"namespace":"io.confluent.examples.clients.basicavro","type":"record","name":"Payment","fields":[{"name":"id","type":"string"},{"name":"amount","type":"double"}]}'
+
+# avro console consumer
+kafka-avro-console-consumer --bootstrap-server kafka:9092 \
+  --topic example.with-schema.payment \
+  --property schema.registry.url=http://schema-registry:8081 \
+  --property schema.id.separator=: \
+  --property print.key=true \
+  --property print.schema.ids=true \
+  --property key.separator=,
 
 # producer example
 sbt "schema-registry/runMain com.kafka.demo.specific.Producer"

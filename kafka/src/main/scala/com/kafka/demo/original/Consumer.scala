@@ -13,7 +13,7 @@ import org.apache.kafka.common.serialization.StringDeserializer
 object Consumer {
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "topic-no-schema-original"
+  private[this] val TOPIC_NAME = "example.no-schema.original"
   private[this] val GROUP_ID_VALUE = "consumer-original"
   private[this] val TIMEOUT_MILLS = 100
 

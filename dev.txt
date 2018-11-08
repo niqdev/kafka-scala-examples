@@ -54,16 +54,27 @@ https://msayag.github.io/Kafka
 http://bytepadding.com/big-data/spark/avro/avro-serialization-de-serialization-using-confluent-schema-registry
 https://aseigneurin.github.io/2018/08/02/kafka-tutorial-4-avro-and-schema-registry.html
 
-# bash import/export
+# TODO add comment bash import/export
 https://github.com/confluentinc/schema-registry/issues/789
 
 # more
 https://registry-project.readthedocs.io/en/latest/
 https://medium.com/@lukasgrasse/producing-and-consuming-avro-messages-over-kafka-in-scala-edc26d69298c
+https://medium.com/@criccomini/how-to-paint-a-bike-shed-kafka-topic-naming-conventions-1b7259790073
 
 # example
 https://github.com/confluentinc/examples/tree/5.0.0-post/clients/avro/src/main/java/io/confluent/examples/clients/basicavro
 https://github.com/confluentinc/schema-registry/blob/master/client/src/main/java/io/confluent/kafka/schemaregistry/client/MockSchemaRegistryClient.java
+
+>>> https://github.com/ovotech/kafka-serialization
+>>> http://vectos.net/formulation/
+
+# TODO avro console example
+# https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html#formatter
+
+kafka-avro-console-producer --broker-list kafka:9092 --topic topic-schema-payment \
+  --property value.schema='{"type":"record","name":"Payment","fields":[{"name":"id","type":"string"}]}'
+
 
 # TODO
 
