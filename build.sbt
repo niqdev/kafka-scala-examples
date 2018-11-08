@@ -68,7 +68,9 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
     libraryDependencies ++= Seq(
       "org.apache.kafka" % "kafka-clients" % V.kafka,
       N.confluent % "kafka-avro-serializer" % V.confluent,
-      N.confluent % "kafka-schema-registry-client" % V.confluent
+      N.confluent % "kafka-schema-registry-client" % V.confluent,
+
+      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions % Test
     ),
 
     // sbt-avrohugger: SpecificRecord

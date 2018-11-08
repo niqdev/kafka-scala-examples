@@ -29,7 +29,7 @@ sbt avro/console
 # avro/target/scala-2.12/classes/com/kafka/demo/User.class
 sbt clean avro/compile
 
-# tests
+# test
 sbt clean avro/test
 ```
 
@@ -228,6 +228,9 @@ sbt "schema-registry/runMain com.kafka.demo.specific.Producer"
 
 # consumer example
 sbt "schema-registry/runMain com.kafka.demo.specific.Consumer"
+
+# tests
+sbt clean schema-registry/test
 ```
 
 > TODO
