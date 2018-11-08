@@ -14,7 +14,7 @@ Examples of Avro, Kafka, Schema Registry, Kafka Stream, KSQL in Scala
 **Description**
 
 [Avro](https://avro.apache.org/docs/current/gettingstartedjava.html) serialization and deserialization examples of
-* code generation with [sbt-avro](https://github.com/sbt/sbt-avro) [[source](avro/src/main/scala/com/kafka/demo/original/AvroCodeGeneration.scala)|[test](avro/src/test/scala/com/kafka/demo/original/AvroCodeGenerationSpec.scala)]
+* `SpecificRecord` code generation with [sbt-avro](https://github.com/sbt/sbt-avro) [[source](avro/src/main/scala/com/kafka/demo/original/AvroCodeGeneration.scala)|[test](avro/src/test/scala/com/kafka/demo/original/AvroCodeGenerationSpec.scala)]
 * `GenericRecord` [[source](avro/src/main/scala/com/kafka/demo/original/AvroGenericRecord.scala)|[test](avro/src/test/scala/com/kafka/demo/original/AvroGenericRecordSpec.scala)]
 * [avro4s](https://github.com/sksamuel/avro4s) [[source](avro/src/main/scala/com/kafka/demo/avro4s/Avro4sExample.scala)|[test](avro/src/test/scala/com/kafka/demo/avro4s/Avro4sExampleSpec.scala)]
 * Java/Scala libraries compatibility [[test](avro/src/test/scala/com/kafka/demo/LibraryCompatibilitySpec.scala)]
@@ -38,7 +38,7 @@ sbt clean avro/test
 * [Data Serialization and Evolution](https://docs.confluent.io/current/avro.html)
 * [Three Reasons Why Apache Avro Data Serialization is a Good Choice](https://blog.cloudera.com/blog/2011/05/three-reasons-why-apache-avro-data-serialization-is-a-good-choice-for-openrtb)
 * [Schema evolution in Avro, Protocol Buffers and Thrift](http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html)
-* [Avro Introduction for Big Data and Data Streaming Architectures](https://web.archive.org/web/20180321143507/http://cloudurable.com/blog/avro/index.html)
+* [Avro Introduction for Big Data and Data Streaming Architectures](http://cloudurable.com/blog/avro/index.html)
 * [Stream Avro Records into Kafka using Avro4s and Akka Streams Kafka](https://abhsrivastava.github.io/2017/10/02/Stream-Avro-Records-into-Kafka)
 * [Kafka, Spark and Avro](https://aseigneurin.github.io/2016/03/02/kafka-spark-avro-kafka-101.html)
 
@@ -102,12 +102,17 @@ sbt clean kafka/test
 sbt "test:testOnly *KafkaSpec"
 ```
 
+**Readings**
+
+* DevOps [Kafka](https://niqdev.github.io/devops/kafka)
+* [Kafka topic naming conventions](https://medium.com/@criccomini/how-to-paint-a-bike-shed-kafka-topic-naming-conventions-1b7259790073)
+
 ## schema-registry
 
 **Description**
 
-* Schema Registry [API](https://docs.confluent.io/current/schema-registry/docs/api.html)
-* API [examples](https://docs.confluent.io/current/schema-registry/docs/using.html#common-sr-usage-examples)
+* Confluent's Schema Registry [API](https://docs.confluent.io/current/schema-registry/docs/api.html)
+and [examples](https://docs.confluent.io/current/schema-registry/docs/using.html#common-sr-usage-examples)
 * Console [examples](https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html#formatter)
 
 ```bash
@@ -158,6 +163,9 @@ jq tostring avro/src/main/avro/user.avsc
 ```
 
 **Demo**
+
+`SpecificRecord` with [sbt-avrohugger](https://github.com/julianpeeters/sbt-avrohugger)
+[[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSpecificSpec.scala)]
 
 ```bash
 # generate SpecificRecord classes under "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
@@ -221,6 +229,26 @@ sbt "schema-registry/runMain com.kafka.demo.specific.Producer"
 # consumer example
 sbt "schema-registry/runMain com.kafka.demo.specific.Consumer"
 ```
+
+> TODO
+
+* generic
+* ovotech
+* multi-schema
+* formulation
+
+**Readings**
+
+* [Serializing data efficiently with Apache Avro and dealing with a Schema Registry](https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with-apache-avro-and-dealing-with-a-schema-registry)
+* [Kafka, Avro Serialization and the Schema Registry](http://cloudurable.com/blog/kafka-avro-schema-registry/index.html)
+* [Kafka, Streams and Avro serialization](https://msayag.github.io/Kafka)
+* [Avro and the Schema Registry](https://aseigneurin.github.io/2018/08/02/kafka-tutorial-4-avro-and-schema-registry.html)
+* [Producing and Consuming Avro Messages over Kafka in Scala](https://medium.com/@lukasgrasse/producing-and-consuming-avro-messages-over-kafka-in-scala-edc26d69298c)
+
+**Alternatives**
+
+* [schema-repo](https://github.com/schema-repo/schema-repo)
+* Hortonworks [Registry](https://registry-project.readthedocs.io/en/latest)
 
 **Tools**
 

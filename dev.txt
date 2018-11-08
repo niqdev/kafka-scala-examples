@@ -44,37 +44,16 @@ User.avsc
 
 ---
 
-# TODO
-
-# schema registry
-https://docs.confluent.io/current/schema-registry/docs/index.html
-https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with-apache-avro-and-dealing-with-a-schema-registry
-https://web.archive.org/web/20180321112249/https://cloudurable.com/blog/kafka-avro-schema-registry/index.html
-https://msayag.github.io/Kafka
-http://bytepadding.com/big-data/spark/avro/avro-serialization-de-serialization-using-confluent-schema-registry
-https://aseigneurin.github.io/2018/08/02/kafka-tutorial-4-avro-and-schema-registry.html
-
-# TODO add comment bash import/export
+# FIXME issue opened: update link if rename repo e.g. kafka-101
+https://github.com/cakesolutions/scala-kafka-client/issues/147
 https://github.com/confluentinc/schema-registry/issues/789
 
-# more
-https://registry-project.readthedocs.io/en/latest/
-https://medium.com/@lukasgrasse/producing-and-consuming-avro-messages-over-kafka-in-scala-edc26d69298c
-https://medium.com/@criccomini/how-to-paint-a-bike-shed-kafka-topic-naming-conventions-1b7259790073
+# TODO
+https://github.com/ovotech/kafka-serialization
+http://vectos.net/formulation
 
-# example
-https://github.com/confluentinc/examples/tree/5.0.0-post/clients/avro/src/main/java/io/confluent/examples/clients/basicavro
-https://github.com/confluentinc/schema-registry/blob/master/client/src/main/java/io/confluent/kafka/schemaregistry/client/MockSchemaRegistryClient.java
-
->>> https://github.com/ovotech/kafka-serialization
->>> http://vectos.net/formulation/
-
-# TODO avro console example
-# https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html#formatter
-
-kafka-avro-console-producer --broker-list kafka:9092 --topic topic-schema-payment \
-  --property value.schema='{"type":"record","name":"Payment","fields":[{"name":"id","type":"string"}]}'
-
+* multi-version on same topic
+* tests: https://github.com/confluentinc/schema-registry/blob/master/client/src/main/java/io/confluent/kafka/schemaregistry/client/MockSchemaRegistryClient.java
 
 # TODO
 
