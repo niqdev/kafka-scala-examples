@@ -165,7 +165,7 @@ jq tostring avro/src/main/avro/user.avsc
 **Demo**
 
 `SpecificRecord` with [sbt-avrohugger](https://github.com/julianpeeters/sbt-avrohugger)
-[[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSpecificSpec.scala)]
+[[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/specific/KafkaSpecificSpec.scala)]
 
 ```bash
 # generate SpecificRecord classes under "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
