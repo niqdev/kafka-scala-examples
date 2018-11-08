@@ -18,12 +18,13 @@ final class KafkaSpecificSpec extends WordSpecLike with Matchers with BaseKafkaS
     "produce and consume Payment" in {
       val topic = randomString
 
-      val records: Iterable[(Option[String], Payment)] = (1 to 10)
-        .map { i =>
-          val orderId = s"id-$i"
-          val payment = Payment(orderId, 100 + i)
-          (Some(orderId), payment)
-        }
+      val records: Iterable[(Option[String], Payment)] =
+        (1 to 10)
+          .map { i =>
+            val orderId = s"id-$i"
+            val payment = Payment(orderId, 100 + i)
+            (Some(orderId), payment)
+          }
 
       verifyConsumer(topic) {
         Seq.empty
