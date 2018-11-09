@@ -5,7 +5,7 @@ import cakesolutions.kafka.KafkaProducer.Conf
 import com.typesafe.scalalogging.Logger
 import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer}
 import org.apache.avro.Schema
-import org.apache.avro.generic.{GenericData, GenericRecord}
+import org.apache.avro.generic.{GenericData, GenericEnumSymbol, GenericRecord}
 import org.apache.kafka.clients.producer.{ProducerConfig, ProducerRecord}
 
 import scala.util.{Failure, Success}
@@ -51,10 +51,21 @@ object Producer {
         customer.put("name", "name-1")
         ("id-1", customer)
       },
+      // TODO should set default
       {
         val customer = new GenericData.Record(schemaCustomerV2)
         customer.put("name", "name-2")
         ("id-2", customer)
+      },
+      // TODO
+      {
+        val customer = new GenericData.Record(schemaCustomerV2)
+        customer.put("username", "name-3")
+        customer.put("age", 18)
+        val enumSymbol: GenericEnumSymbol =
+          new GenericData.EnumSymbol(schemaCustomerV2.getField("gender").schema(), "MALE")
+        customer.put("gender", enumSymbol)
+        ("id-3", customer)
       })
       .map {
         case (key: String, customer: GenericRecord) =>

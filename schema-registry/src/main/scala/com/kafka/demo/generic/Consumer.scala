@@ -18,7 +18,7 @@ object Consumer {
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
   private[this] val TOPIC_NAME = "example.with-schema.customer"
-  private[this] val GROUP_ID_VALUE = "consumer-specific"
+  private[this] val GROUP_ID_VALUE = "consumer-generic"
   private[this] val TIMEOUT_MILLS = 100
 
   private[this] def newConsumer(): KafkaConsumer[String, GenericRecord] =
