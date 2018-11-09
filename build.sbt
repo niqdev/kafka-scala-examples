@@ -70,6 +70,7 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
       N.confluent % "kafka-avro-serializer" % V.confluent,
       N.confluent % "kafka-schema-registry-client" % V.confluent,
 
+      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions,
       N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions % Test
     ),
 

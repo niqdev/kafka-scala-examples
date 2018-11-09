@@ -44,9 +44,11 @@ User.avsc
 
 ---
 
-# FIXME issue opened: update link if rename repo e.g. kafka-101
+# comments
 https://github.com/cakesolutions/scala-kafka-client/issues/147
 https://github.com/confluentinc/schema-registry/issues/789
+# TODO add answer
+https://stackoverflow.com/questions/39670691/how-to-have-kafkaproducer-to-use-a-mock-schema-registry-for-testing
 
 # TODO
 https://github.com/ovotech/kafka-serialization

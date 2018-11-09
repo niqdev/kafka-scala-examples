@@ -35,8 +35,8 @@ object Producer {
 
     (1 to 10)
       .map { i =>
-        val orderId = s"id$i"
-        val payment = Payment(orderId, 1000.00d)
+        val orderId = s"id-$i"
+        val payment = Payment(orderId, 100d + i)
         val record = new ProducerRecord[String, Payment](TOPIC_NAME, payment.id, payment)
         record
       }

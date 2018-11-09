@@ -164,14 +164,11 @@ jq tostring avro/src/main/avro/user.avsc
 
 **Demo**
 
-* `SpecificRecord` with [sbt-avrohugger](https://github.com/julianpeeters/sbt-avrohugger)
-[[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/specific/KafkaSpecificSpec.scala)]
-* [`BaseKafkaSpec`](schema-registry/src/test/scala/com/kafka/demo/BaseKafkaSpec.scala) to test Kafka with SchemaRegistry
+* [`BaseKafkaSchemaRegistrySpec`](schema-registry/src/test/scala/com/kafka/demo/BaseKafkaSchemaRegistrySpec.scala) to test Kafka with SchemaRegistry
+
+Setup
 
 ```bash
-# generate SpecificRecord classes under "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
-sbt clean schema-registry/avroScalaGenerateSpecific
-
 # start zookeeper + kafka + kafka-rest + kafka-ui + schema-registry + schema-registry-ui
 docker-compose up
 
@@ -180,6 +177,14 @@ docker-compose up
 
 # (mac|linux) view schema-registry ui
 [open|xdg-open] http://localhost:8001
+```
+
+* `SpecificRecord` with [sbt-avrohugger](https://github.com/julianpeeters/sbt-avrohugger)
+[[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSchemaRegistrySpecificSpec.scala)]
+
+```bash
+# generate SpecificRecord classes under "schema-registry/target/scala-2.12/src_managed/main/compiled_avro"
+sbt clean schema-registry/avroScalaGenerateSpecific
 
 # (optional) create schema
 http -v POST :8081/subjects/example.with-schema.payment-key/versions \
@@ -234,9 +239,20 @@ sbt "schema-registry/runMain com.kafka.demo.specific.Consumer"
 sbt clean schema-registry/test
 ```
 
+* `GenericRecord` with [CakeSolutions](https://github.com/cakesolutions/scala-kafka-client)
+[[Producer](schema-registry/src/main/scala/com/kafka/demo/generic/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/generic/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSchemaRegistryGenericSpec.scala)] and schema evolution
+
+```bash
+# producer example
+sbt "schema-registry/runMain com.kafka.demo.generic.Producer"
+
+# consumer example
+sbt "schema-registry/runMain com.kafka.demo.generic.Consumer"
+```
+
 > TODO
 
-* generic
+* generic + schema evolution
 * ovotech
 * multi-schema
 * formulation

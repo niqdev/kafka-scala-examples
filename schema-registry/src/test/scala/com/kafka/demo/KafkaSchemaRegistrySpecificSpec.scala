@@ -1,10 +1,9 @@
-package com.kafka.demo.specific
+package com.kafka.demo
 
-import com.kafka.demo.BaseKafkaSpec
 import io.confluent.examples.clients.basicavro.Payment
 import org.scalatest.{Assertion, Matchers, WordSpecLike}
 
-final class KafkaSpecificSpec extends WordSpecLike with Matchers with BaseKafkaSpec {
+final class KafkaSchemaRegistrySpecificSpec extends WordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
 
   private[this] def verifyConsumer(topic: String)
                                   (expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {
@@ -15,7 +14,7 @@ final class KafkaSpecificSpec extends WordSpecLike with Matchers with BaseKafkaS
 
   "KafkaSpecific" should {
 
-    "produce and consume Payment" in {
+    "produce and consume SpecificRecord" in {
       val topic = randomString
 
       val records: Iterable[(Option[String], Payment)] =

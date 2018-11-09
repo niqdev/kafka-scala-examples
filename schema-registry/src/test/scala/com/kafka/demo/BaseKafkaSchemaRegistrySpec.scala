@@ -11,10 +11,19 @@ import scala.collection.JavaConverters.mapAsJavaMapConverter
 import scala.util.Random
 
 /*
- * https://github.com/confluentinc/kafka-streams-examples/blob/5.0.0-post/src/test/java/io/confluent/examples/streams/kafka/EmbeddedSingleNodeKafkaCluster.java
+ * // examples
+ * https://github.com/confluentinc/kafka-streams-examples/blob/5.0.x/src/test/java/io/confluent/examples/streams/kafka/EmbeddedSingleNodeKafkaCluster.java
  * https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/test/java/io/confluent/kafka/serializers/KafkaAvroSerializerTest.java
+ *
+ * // issues
+ * https://groups.google.com/forum/#!topic/confluent-platform/_pJ1g9g1woY
+ * https://github.com/confluentinc/kafka-streams-examples/issues/26
+ *
+ * // alternatives
+ * https://github.com/manub/scalatest-embedded-kafka
+ * https://github.com/jpzk/mockedstreams
  */
-trait BaseKafkaSpec extends BeforeAndAfterAll {
+trait BaseKafkaSchemaRegistrySpec extends BeforeAndAfterAll {
   this: TestSuite =>
 
   private[this] val kafkaServer: KafkaServer = new KafkaServer()

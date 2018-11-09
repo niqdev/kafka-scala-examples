@@ -1,0 +1,33 @@
+{
+  "namespace": "com.kafka.demo",
+  "type": "record",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "name",
+      "aliases": [
+        "username"
+      ],
+      "type": "string"
+    },
+    {
+      "name": "age",
+      "type": [
+        "0",
+        "int"
+      ]
+    },
+    {
+      "type": [
+        "UNKNOWN",
+        "enum"
+      ],
+      "name": "gender",
+      "symbols": [
+        "UNKNOWN",
+        "MALE",
+        "FEMALE"
+      ]
+    }
+  ]
+}
