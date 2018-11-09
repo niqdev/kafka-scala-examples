@@ -5,9 +5,9 @@ import org.scalatest.{Assertion, Matchers, WordSpecLike}
 
 final class KafkaSchemaRegistrySpecificSpec extends WordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
 
-  private[this] def verifyConsumer(topic: String)
-                                  (expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {
-    val records = consume(topic, expectedRecords.size)
+  private[this] def verifySpecificConsumer(topic: String)
+                                          (expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {
+    val records = consume(topic, expectedRecords.size, isSpecific = true)
     records.size shouldEqual expectedRecords.size
     records shouldBe expectedRecords
   }
@@ -25,13 +25,13 @@ final class KafkaSchemaRegistrySpecificSpec extends WordSpecLike with Matchers w
             (Some(orderId), payment)
           }
 
-      verifyConsumer(topic) {
-        Seq.empty
+      verifySpecificConsumer(topic) {
+        Iterable.empty
       }
 
       produce(topic, records)
 
-      verifyConsumer(topic) {
+      verifySpecificConsumer(topic) {
         records
       }
     }

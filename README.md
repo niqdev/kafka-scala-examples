@@ -236,11 +236,11 @@ sbt "schema-registry/runMain com.kafka.demo.specific.Producer"
 sbt "schema-registry/runMain com.kafka.demo.specific.Consumer"
 
 # tests
-sbt clean schema-registry/test
+sbt "schema-registry/test:testOnly *KafkaSchemaRegistrySpecificSpec"
 ```
 
 * `GenericRecord` with [CakeSolutions](https://github.com/cakesolutions/scala-kafka-client)
-[[Producer](schema-registry/src/main/scala/com/kafka/demo/generic/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/generic/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSchemaRegistryGenericSpec.scala)] and schema evolution
+[[Producer](schema-registry/src/main/scala/com/kafka/demo/generic/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/generic/Consumer.scala)] and schema evolution [test](schema-registry/src/test/scala/com/kafka/demo/KafkaSchemaRegistryGenericSpec.scala)
 
 ```bash
 # producer example
@@ -248,6 +248,9 @@ sbt "schema-registry/runMain com.kafka.demo.generic.Producer"
 
 # consumer example
 sbt "schema-registry/runMain com.kafka.demo.generic.Consumer"
+
+# tests
+sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 ```
 
 > TODO

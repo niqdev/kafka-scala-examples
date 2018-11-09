@@ -63,10 +63,11 @@ trait BaseKafkaSchemaRegistrySpec extends BeforeAndAfterAll {
       ))
 
   private[this] def deserializer(client: SchemaRegistryClient,
+                                 isSpecific: Boolean,
                                  isKey: Boolean = false): KafkaAvroDeserializer = {
     val configs = Map(
       AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> "none",
-      KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG -> "true"
+      KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG -> isSpecific.toString
     )
     val deserializer = new KafkaAvroDeserializer(client)
     deserializer.configure(configs.asJava, isKey)
@@ -75,13 +76,14 @@ trait BaseKafkaSchemaRegistrySpec extends BeforeAndAfterAll {
 
   protected[this] def consume(topic: String,
                               size: Int = 0,
+                              isSpecific: Boolean,
                               timeoutMills: Long = 1000): Seq[(Option[AnyRef], AnyRef)] =
     kafkaServer.consume(
       topic,
       size,
       timeoutMills,
-      deserializer(schemaRegistry, isKey = true),
-      deserializer(schemaRegistry),
+      deserializer(schemaRegistry, isSpecific, isKey = true),
+      deserializer(schemaRegistry, isSpecific),
       Map(
         ConsumerConfig.GROUP_ID_CONFIG -> "test",
         ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG -> "true",

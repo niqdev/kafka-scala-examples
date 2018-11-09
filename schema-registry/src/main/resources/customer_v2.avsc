@@ -13,21 +13,24 @@
     {
       "name": "age",
       "type": [
-        "0",
+        "null",
         "int"
-      ]
+      ],
+      "default": 0
     },
     {
-      "type": [
-        "UNKNOWN",
-        "enum"
-      ],
       "name": "gender",
-      "symbols": [
-        "UNKNOWN",
-        "MALE",
-        "FEMALE"
-      ]
+      "type": {
+        "type": "enum",
+        "name": "gender",
+        "symbols": [
+          "UNKNOWN",
+          "MALE",
+          "FEMALE"
+        ],
+        "default": "UNKNOWN"
+      },
+      "default": "null"
     }
   ]
 }

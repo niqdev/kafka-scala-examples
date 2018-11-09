@@ -6,6 +6,7 @@ import cakesolutions.kafka.KafkaConsumer
 import cakesolutions.kafka.KafkaConsumer.Conf
 import com.typesafe.scalalogging.Logger
 import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroDeserializer, KafkaAvroDeserializerConfig}
+import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.consumer._
 
 import scala.collection.JavaConverters.asJavaCollectionConverter
@@ -20,7 +21,7 @@ object Consumer {
   private[this] val GROUP_ID_VALUE = "consumer-specific"
   private[this] val TIMEOUT_MILLS = 100
 
-  private[this] def newConsumer(): KafkaConsumer[AnyRef, AnyRef] =
+  private[this] def newConsumer(): KafkaConsumer[String, GenericRecord] =
     KafkaConsumer(Conf(
       new KafkaAvroDeserializer(),
       new KafkaAvroDeserializer(),
@@ -30,6 +31,7 @@ object Consumer {
       .withProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
       .withProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
       .withProperty(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "false"))
+      .asInstanceOf[KafkaConsumer[String, GenericRecord]]
 
   def main(args: Array[String]): Unit = {
     logger.info(s"Start to consume from $TOPIC_NAME")
@@ -39,8 +41,8 @@ object Consumer {
 
     Try {
       while (true) {
-        val records: ConsumerRecords[AnyRef, AnyRef] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
-        records.iterator().forEachRemaining { record: ConsumerRecord[AnyRef, AnyRef] =>
+        val records: ConsumerRecords[String, GenericRecord] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
+        records.iterator().forEachRemaining { record: ConsumerRecord[String, GenericRecord] =>
           logger.info(
             s"""
                |message
@@ -48,6 +50,7 @@ object Consumer {
                |  partition=${record.partition}
                |  key=${record.key}
                |  value=${record.value}
+               |  schema=${record.value.getSchema}
            """.stripMargin)
         }
       }
