@@ -15,14 +15,12 @@
 
 +++
 
-Data Serialization and Evolution
-
-Encode the data into bytes alternatives
+#### Alternatives to encode the data into bytes
 
 * Java serialization makes consuming the data in other languages inconvenient
-* XML and JSON have two main drawbacks
-  - allowing fields to be arbitrarily added or removed with lack of structure may cause data corruption
-  - field names and type information are redundant, verbose and add overhead reducing performances
+* XML and JSON drawbacks
+  - add or remove fields may cause data corruption
+  - field names and type information are verbose and reduce performances
 * alternatives are Avro, Thrift and Protocol Buffers
 * Avro is recommended by Confluent
 
