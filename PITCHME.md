@@ -1,4 +1,4 @@
-# Data Serialization and Evolution
+## Data Serialization and Evolution
 
 ---
 
@@ -8,16 +8,16 @@
 
 ### Alternatives to encode the data into bytes
 
-* Java serialization makes consuming the data in other languages inconvenient
-* XML and JSON drawbacks
+* @color[orange](Java serialization) makes consuming the data in other languages inconvenient
+* @color[orange](XML) and @color[orange](JSON) drawbacks
   - add or remove fields may cause data corruption
   - field names and type information are verbose and reduce performances
-* alternatives are Avro, Thrift and Protocol Buffers
+* alternatives are @color[green](Avro), @color[green](Thrift) and @color[green](Protocol Buffers)
 * Avro is recommended by Confluent
 
 +++
 
-An Avro schema defines the data structure in a JSON format
+An Avro schema defines the data structure in a JSON
 
 User.avsc
 ```
