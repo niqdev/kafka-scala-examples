@@ -39,9 +39,9 @@ User.avsc
 * Avro can be used to serialize a Java object (POJO) into bytes and viceversa
 * it requires a schema during both data serialization and deserialization
 * provides schema evolution globally or for subjects
-  - @color[purple](Backward Compatibility) (default) means that data encoded with an older schema can be read with a newer schema
-  - @color[purple](Forward Compatibility)
-  - @color[purple](Full Compatibility)
+  - @color[green](Backward Compatibility) data encoded with an older schema can be read with a newer schema
+  - @color[orange](Forward Compatibility)
+  - @color[orange](Full Compatibility)
 
 ---
 
