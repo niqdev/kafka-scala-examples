@@ -17,7 +17,7 @@
 
 +++
 
-An Avro schema defines the data structure in a JSON
+An Avro schema defines the data structure in JSON
 
 User.avsc
 ```
@@ -39,9 +39,9 @@ User.avsc
 * Avro can be used to serialize a Java object (POJO) into bytes and viceversa
 * it requires a schema during both data serialization and deserialization
 * provides schema evolution globally or for subjects
-  - Backward Compatibility (default) means that data encoded with an older schema can be read with a newer schema
-  - Forward Compatibility
-  - Full Compatibility
+  - @color[purple](Backward Compatibility) (default) means that data encoded with an older schema can be read with a newer schema
+  - @color[purple](Forward Compatibility)
+  - @color[purple](Full Compatibility)
 
 ---
 
