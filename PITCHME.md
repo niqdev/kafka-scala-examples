@@ -1,13 +1,4 @@
-## Schema Registry demo
-
----
-
-@ul[square-bullets](false)
-
-- Avro
-- Schema Registry
-
-@ulend
+# Data Serialization and Evolution
 
 ---
 
@@ -15,7 +6,7 @@
 
 +++
 
-#### Alternatives to encode the data into bytes
+### Alternatives to encode the data into bytes
 
 * Java serialization makes consuming the data in other languages inconvenient
 * XML and JSON drawbacks
