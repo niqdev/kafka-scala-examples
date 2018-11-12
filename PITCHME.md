@@ -46,3 +46,19 @@ User.avsc
 ---
 
 ## Schema Registry
+
++++
+
+* It provides a RESTful interface for storing and retrieving Avro schemas
+* It assigns globally unique ID to each registered schema
+* It uses Kafka as its underlying storage mechanism
+* It is designed to be distributed, with single-master architecture
+
++++
+
+### Demo
+
+* [ansible](https://github.com/niqdev/devops/tree/master/ansible/data/roles/schema-registry)
+* [docker](https://github.com/niqdev/kafka-demo#schema-registry)
+
+---
