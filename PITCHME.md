@@ -62,3 +62,5 @@ User.avsc
 * [docker](https://github.com/niqdev/kafka-demo#schema-registry)
 
 ---
+
+## Q&A?
