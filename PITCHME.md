@@ -58,7 +58,7 @@ User.avsc
 
 ## Demo
 
-* Ansible [role](https://github.com/niqdev/devops/tree/master/ansible/data/roles/schema-registry)
+* Ansible [role](https://github.com/niqdev/devops/tree/master/ansible/data/roles/schema-registry#schema-registry)
 * Kafka and Schema Registry [examples](https://github.com/niqdev/kafka-demo#schema-registry)
 
 ---
