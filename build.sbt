@@ -7,6 +7,7 @@ lazy val I = new {
 lazy val N = new {
   val cakeSolutions = "net.cakesolutions"
   val confluent = "io.confluent"
+  val kafka = "org.apache.kafka"
 }
 
 lazy val V = new {
@@ -17,8 +18,8 @@ lazy val V = new {
 
   val avro4s = "2.0.4"
   val cakeSolutions = "2.0.0"
-  val kafka = "2.1.0"
-  val confluent = "5.1.0"
+  val kafka = "2.0.0"
+  val confluent = "5.0.0"
 
   val scalatest = "3.0.5"
 }
@@ -62,11 +63,12 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
   .disablePlugins(SbtAvro)
   .settings(
     resolvers ++= Seq(
-      "confluent" at "https://packages.confluent.io/maven/"
+      "confluent" at "https://packages.confluent.io/maven/",
+      Resolver.bintrayRepo("cakesolutions", "maven")
     ),
 
     libraryDependencies ++= Seq(
-      "org.apache.kafka" % "kafka-clients" % V.kafka,
+      N.kafka % "kafka-clients" % V.kafka,
       N.confluent % "kafka-avro-serializer" % V.confluent,
       N.confluent % "kafka-schema-registry-client" % V.confluent,
 
@@ -82,7 +84,7 @@ lazy val streams = project.in(file("streams"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
     libraryDependencies ++= Seq(
-      // TODO
+      N.kafka % "kafka-streams" % V.kafka
     ))
 
 lazy val root = project.in(file("."))
