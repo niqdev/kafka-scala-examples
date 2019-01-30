@@ -78,8 +78,15 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
     sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
   )
 
+lazy val streams = project.in(file("streams"))
+  .dependsOn(common % "compile->compile;test->test")
+  .settings(
+    libraryDependencies ++= Seq(
+      // TODO
+    ))
+
 lazy val root = project.in(file("."))
-  .aggregate(avro, kafka, `schema-registry`)
+  .aggregate(avro, kafka, `schema-registry`, streams)
   .settings(
     inThisBuild(List(
       organization := I.organization,
