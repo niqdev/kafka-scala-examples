@@ -286,11 +286,24 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 
 * [Kafka Streams](https://kafka.apache.org/documentation/streams) documentation
 
-**Demo**
+**Demo-1**
 
 ```bash
+# create topic
+# example [example.to-upper-case-app.input|example.to-upper-case-app.output]
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
+
 # toUpperCase example
 sbt "streams/runMain com.kafka.demo.streams.ToUpperCaseApp"
+
+# produce
+kafka-console-producer.sh --broker-list kafka:9092 \
+  --topic example.to-upper-case-app.input
+
+# consume
+kafka-console-consumer.sh --bootstrap-server kafka:9092 \
+  --topic example.to-upper-case-app.output
 ```
 
 **Readings**

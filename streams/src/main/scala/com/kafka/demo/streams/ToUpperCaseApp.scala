@@ -18,10 +18,10 @@ object ToUpperCaseApp {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val APP_NAME = "to_upper_case_app"
-  private[this] val IN_TOPIC = "to_upper_case_input"
-  private[this] val OUT_TOPIC = "to_upper_case_output"
-  private[this] val TIMEOUT_SEC = 5
+  private[this] val APP_NAME = "to-upper-case-app"
+  private[this] val IN_TOPIC = s"example.$APP_NAME.input"
+  private[this] val OUT_TOPIC = s"example.$APP_NAME.output"
+  private[this] val TIMEOUT_SEC = 60
 
   def main(args: Array[String]): Unit = {
     val props = new Properties()
