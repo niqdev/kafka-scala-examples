@@ -15,7 +15,7 @@ object Consumer {
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val TOPIC_NAME = "example.no-schema.original"
   private[this] val GROUP_ID_VALUE = "consumer-original"
-  private[this] val TIMEOUT_MILLS = 100
+  private[this] val TIMEOUT_MILLIS = 100
 
   private[this] def newConsumer(): KafkaConsumer[String, String] = {
     val props = new Properties()
@@ -29,6 +29,6 @@ object Consumer {
   }
 
   def main(args: Array[String]): Unit =
-    KafkaHelper.consume(newConsumer(), TOPIC_NAME, TIMEOUT_MILLS)
+    KafkaHelper.consume(newConsumer(), TOPIC_NAME, TIMEOUT_MILLIS)
 
 }

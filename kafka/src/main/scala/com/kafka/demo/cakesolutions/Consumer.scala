@@ -14,13 +14,13 @@ object Consumer {
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
   private[this] val TOPIC_NAME = "example.no-schema.cakesolutions"
   private[this] val GROUP_ID_VALUE = "consumer-cakesolutions"
-  private[this] val TIMEOUT_MILLS = 100
+  private[this] val TIMEOUT_MILLIS = 100
 
   private[cakesolutions] def newConsumer(bootstrapServers: String,
                                          groupId: String): JKafkaConsumer[String, String] =
     KafkaConsumer(Conf(new StringDeserializer(), new StringDeserializer(), bootstrapServers, groupId))
 
   def main(args: Array[String]): Unit =
-    KafkaHelper.consume(newConsumer(BOOTSTRAP_SERVERS_VALUE, GROUP_ID_VALUE), TOPIC_NAME, TIMEOUT_MILLS)
+    KafkaHelper.consume(newConsumer(BOOTSTRAP_SERVERS_VALUE, GROUP_ID_VALUE), TOPIC_NAME, TIMEOUT_MILLIS)
 
 }

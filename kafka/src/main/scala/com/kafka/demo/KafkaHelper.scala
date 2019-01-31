@@ -20,7 +20,7 @@ object KafkaHelper {
 
   def consume[K, V](consumer: KafkaConsumer[K, V],
                     topic: String,
-                    timeoutMills: Long): Unit = {
+                    timeoutMillis: Long): Unit = {
 
     logger.info(s"Start to consume from $topic")
 
@@ -28,7 +28,7 @@ object KafkaHelper {
 
     Try {
       while (true) {
-        val records: ConsumerRecords[K, V] = consumer.poll(Duration.ofMillis(timeoutMills))
+        val records: ConsumerRecords[K, V] = consumer.poll(Duration.ofMillis(timeoutMillis))
         records.iterator().forEachRemaining { record: ConsumerRecord[K, V] =>
           logger.info(
             s"""
