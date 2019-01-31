@@ -278,11 +278,24 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 * [HTTPie](https://httpie.org)
 * [jq](https://stedolan.github.io/jq)
 
-## stream
+## streams
 
 **Description**
 
 > TODO
+
+* [Kafka Streams](https://kafka.apache.org/documentation/streams) documentation
+
+**Demo**
+
+```bash
+# toUpperCase example
+sbt "streams/runMain com.kafka.demo.streams.ToUpperCaseApp"
+```
+
+**Readings**
+
+* [Functional Programming with Kafka Streams and Scala](https://itnext.io/a-cqrs-approach-with-kafka-streams-and-scala-49bfa78e4295)
 
 ## extra
 
@@ -290,3 +303,6 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 
 * [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
 * [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
+* [What is the actual role of Zookeeper in Kafka?](https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together/answer/Gwen-Shapira)
+* [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
+* [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
