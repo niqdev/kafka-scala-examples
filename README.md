@@ -5,8 +5,6 @@
 [travis-image]: https://travis-ci.org/niqdev/kafka-demo.svg?branch=master
 [travis-url]: https://travis-ci.org/niqdev/kafka-demo
 
-> Work In Progress
-
 Examples of Avro, Kafka, Schema Registry, Kafka Stream, KSQL in Scala
 
 ## avro
@@ -280,9 +278,9 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 
 ## streams
 
-**Description**
+> TODO tests + KSQL
 
-> TODO
+**Description**
 
 * [Kafka Streams](https://kafka.apache.org/documentation/streams) documentation
 
@@ -308,14 +306,17 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 \
 
 **Readings**
 
+* [Introducing Kafka Streams: Stream Processing Made Simple](https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple)
+* [Unifying Stream Processing and Interactive Queries in Apache Kafka](https://www.confluent.io/blog/unifying-stream-processing-and-interactive-queries-in-apache-kafka)
+* [Of Streams and Tables in Kafka and Stream Processing](https://www.michael-noll.com/blog/2018/04/05/of-stream-and-tables-in-kafka-and-stream-processing-part1)
 * [Functional Programming with Kafka Streams and Scala](https://itnext.io/a-cqrs-approach-with-kafka-streams-and-scala-49bfa78e4295)
 
 ## extra
 
 **Further readings**
 
-* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
-* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
 * [What is the actual role of Zookeeper in Kafka?](https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together/answer/Gwen-Shapira)
-* [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
+* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
 * [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
+* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
+* [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
