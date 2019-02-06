@@ -85,7 +85,11 @@ lazy val streams = project.in(file("streams"))
   .settings(
     libraryDependencies ++= Seq(
       N.kafka % "kafka-streams" % V.kafka,
-      N.kafka %% "kafka-streams-scala" % V.kafka
+      N.kafka %% "kafka-streams-scala" % V.kafka,
+
+      //N.kafka % "kafka-clients" % V.kafka % Test classifier "test",
+      //N.kafka % "kafka-streams" % V.kafka % Test classifier "test",
+      N.kafka % "kafka-streams-test-utils" % V.kafka % Test
     ))
 
 lazy val root = project.in(file("."))

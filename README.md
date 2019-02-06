@@ -297,6 +297,9 @@ kafka-console-producer.sh --broker-list kafka:9092 \
 # consume
 kafka-console-consumer.sh --bootstrap-server kafka:9092 \
   --topic example.to-upper-case-app.output
+
+# test
+sbt clean streams/test
 ```
 
 **Readings**
