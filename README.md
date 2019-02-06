@@ -273,11 +273,11 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 
 ## streams
 
-> TODO tests + KSQL
-
 **Description**
 
-* [Kafka Streams](https://kafka.apache.org/documentation/streams) documentation
+[Kafka Streams](https://kafka.apache.org/documentation/streams) apis examples
+
+* `ToUpperCaseApp` [[source](streams/src/main/scala/com/kafka/demo/streams/ToUpperCaseApp.scala)|[test](streams/src/test/scala/com/kafka/demo/streams/ToUpperCaseSpec.scala)]
 
 **Demo-1**
 
@@ -308,6 +308,8 @@ sbt clean streams/test
 * [Unifying Stream Processing and Interactive Queries in Apache Kafka](https://www.confluent.io/blog/unifying-stream-processing-and-interactive-queries-in-apache-kafka)
 * [Of Streams and Tables in Kafka and Stream Processing](https://www.michael-noll.com/blog/2018/04/05/of-stream-and-tables-in-kafka-and-stream-processing-part1)
 * [Functional Programming with Kafka Streams and Scala](https://itnext.io/a-cqrs-approach-with-kafka-streams-and-scala-49bfa78e4295)
+
+> TODO KSQL
 
 ## extra
 
