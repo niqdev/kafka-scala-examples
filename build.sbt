@@ -5,9 +5,11 @@ lazy val I = new {
 }
 
 lazy val N = new {
+  val avro4s = "com.sksamuel.avro4s"
   val cakeSolutions = "net.cakesolutions"
   val confluent = "io.confluent"
   val kafka = "org.apache.kafka"
+  val circe = "io.circe"
 }
 
 lazy val V = new {
@@ -17,11 +19,15 @@ lazy val V = new {
   val scalaLogging = "3.9.0"
 
   val avro4s = "2.0.4"
+  // issues bumping kafka and confluent due to cakeSolutions compatibility
+  // streams-json-avro has latest versions
   val cakeSolutions = "2.0.0"
   val kafka = "2.0.0"
   val confluent = "5.0.0"
+  val circe = "0.11.1"
 
   val scalatest = "3.0.5"
+  val embeddedKafka = "5.1.2"
 }
 
 lazy val common = project.in(file("common"))
@@ -40,7 +46,7 @@ lazy val avro = project.in(file("avro"))
   .disablePlugins(SbtAvrohugger)
   .settings(
     libraryDependencies ++= Seq(
-      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
+      N.avro4s %% "avro4s-core" % V.avro4s
     ))
 
 lazy val kafka = project.in(file("kafka"))
@@ -90,8 +96,28 @@ lazy val streams = project.in(file("streams"))
       N.kafka % "kafka-streams-test-utils" % V.kafka % Test
     ))
 
+lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
+  .dependsOn(common % "compile->compile;test->test")
+  .settings(
+    resolvers ++= Seq(
+      "confluent" at "https://packages.confluent.io/maven/"
+    ),
+
+    libraryDependencies ++= Seq(
+      N.kafka %% "kafka-streams-scala" % "2.1.1",
+      N.confluent % "kafka-streams-avro-serde" % "5.1.2",
+
+      N.circe %% "circe-core" % V.circe,
+      N.circe %% "circe-generic" % V.circe,
+      N.circe %% "circe-parser" % V.circe,
+
+      N.avro4s %% "avro4s-core" % V.avro4s,
+
+      "io.github.embeddedkafka" %% "embedded-kafka-schema-registry" % V.embeddedKafka % Test
+    ))
+
 lazy val root = project.in(file("."))
-  .aggregate(avro, kafka, `schema-registry`, streams)
+  .aggregate(avro, kafka, `schema-registry`, streams, streamsJsonAvro)
   .settings(
     inThisBuild(List(
       organization := I.organization,
