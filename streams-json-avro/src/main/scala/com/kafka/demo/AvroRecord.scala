@@ -17,7 +17,7 @@ object AvroRecord {
   private def schemaRegistryMap(schemaRegistry: String): java.util.Map[String, String] =
     Map(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistry).asJava
 
-  private def specificAvroSerde[T <: SpecificRecord](
+  protected[demo] def specificAvroSerde[T <: SpecificRecord](
     schemaRegistry: String,
     isKey: Boolean = false
   ): SpecificAvroSerde[T] = {
@@ -26,7 +26,7 @@ object AvroRecord {
     serde
   }
 
-  private def genericAvroSerde(
+  protected[demo] def genericAvroSerde(
     schemaRegistry: String,
     isKey: Boolean = false
   ): GenericAvroSerde = {

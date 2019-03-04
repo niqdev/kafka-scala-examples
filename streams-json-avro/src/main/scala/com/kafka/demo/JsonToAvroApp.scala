@@ -19,7 +19,7 @@ object JsonToAvroApp {
   private[this] val OUTPUT_TOPIC = s"avro.$APPLICATION_NAME.output"
   private[this] val TIMEOUT_SEC = 60
 
-  protected def buildProperties(applicationName: String, bootstrapServers: String, schemaRegistryUrl: String): Properties = {
+  protected[demo] def buildProperties(applicationName: String, bootstrapServers: String, schemaRegistryUrl: String): Properties = {
     val props = new Properties()
     props.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationName)
     props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
@@ -28,7 +28,7 @@ object JsonToAvroApp {
   }
 
   // [String, JsonModel] >>> GenericRecord: [KeyAvroModel, ValueAvroModel]
-  protected def buildTopology(schemaRegistryUrl: String, inputTopic: String, outputTopic: String): Topology = {
+  protected[demo] def buildTopology(schemaRegistryUrl: String, inputTopic: String, outputTopic: String): Topology = {
     val builder = new StreamsBuilder()
 
     builder
