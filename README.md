@@ -302,6 +302,61 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 \
 sbt clean streams/test
 ```
 
+**Demo-2**
+
+```bash
+# access kafka
+docker exec -it my-local-kafka bash
+
+# create topic
+# example [json.streams-json-to-avro-app.input|avro.streams-json-to-avro-app.input]
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
+
+# console producer
+kafka-console-producer.sh \
+  --broker-list kafka:9092 \
+  --property "parse.key=true" \
+  --property "key.separator=:" \
+  --topic <TOPIC_NAME>
+
+# console consumer
+kafka-console-consumer.sh \
+  --bootstrap-server kafka:9092 \
+  --from-beginning \
+  --property print.key=true \
+  --topic <TOPIC_NAME>
+
+# access schema-registry
+docker exec -it my-local-schema-registry bash
+
+# consume avro
+kafka-avro-console-consumer --bootstrap-server kafka:9092 \
+  --property schema.registry.url=http://schema-registry:8081 \
+  --property schema.id.separator=: \
+  --property print.key=true \
+  --property print.schema.ids=true \
+  --property key.separator=, \
+  --from-beginning \
+  --topic <TOPIC_NAME>
+
+# JsonToAvroApp example
+sbt "streamsJsonAvro/runMain com.kafka.demo.JsonToAvroApp"
+
+# test
+sbt clean streamsJsonAvro/test
+```
+
+Example
+```
+# json
+mykey:{"myInt":8,"myString":"myValue"}
+
+# log
+[json.streams-json-to-avro-app.input]: mykey, JsonModel(8,myValue)
+[avro.streams-json-to-avro-app.output]: KeyAvroModel(mykey), ValueAvroModel(8,MYVALUE)
+```
+
 **Readings**
 
 * [Introducing Kafka Streams: Stream Processing Made Simple](https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple)

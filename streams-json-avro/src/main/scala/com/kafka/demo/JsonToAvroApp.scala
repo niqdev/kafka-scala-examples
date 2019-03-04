@@ -27,12 +27,13 @@ object JsonToAvroApp {
     props
   }
 
+  // [String, JsonModel] >>> GenericRecord: [KeyAvroModel, ValueAvroModel]
   protected def buildTopology(schemaRegistryUrl: String, inputTopic: String, outputTopic: String): Topology = {
     val builder = new StreamsBuilder()
 
     builder
-      .kstream[String, ExampleModel](printDebug = true)(inputTopic)
-      .mapValues(exampleModel => exampleModel.copy(myString = exampleModel.myString.toUpperCase))
+      .kstream[String, JsonModel](printDebug = true)(inputTopic)
+      .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.myInt, jsonModel.myString.toUpperCase)))
       .toAvroGenericTopic(schemaRegistryUrl, printDebug = true)(outputTopic)
 
     builder.build()

@@ -47,14 +47,12 @@ object StreamsSyntax {
         kstream.print(Printed.toSysOut[K, V].withLabel(topicName))
       }
 
-      kstream
-        .map { (key, value) =>
-          (
-            RecordFormat[K].to(key).asInstanceOf[GenericRecord],
-            RecordFormat[V].to(value).asInstanceOf[GenericRecord]
-          )
-        }
-        .to(topicName)(AvroRecord.avroGenericRecordProduced(schemaRegistry))
+      kstream.map { (key, value) =>
+        (
+          RecordFormat[K].to(key).asInstanceOf[GenericRecord],
+          RecordFormat[V].to(value).asInstanceOf[GenericRecord]
+        )
+      }.to(topicName)(AvroRecord.avroGenericRecordProduced(schemaRegistry))
     }
 
   }
