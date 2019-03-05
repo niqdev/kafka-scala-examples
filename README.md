@@ -1,9 +1,9 @@
-# kafka-demo
+# kafka-scala-examples
 
 [![Build Status][travis-image]][travis-url]
 
-[travis-image]: https://travis-ci.org/niqdev/kafka-demo.svg?branch=master
-[travis-url]: https://travis-ci.org/niqdev/kafka-demo
+[travis-image]: https://travis-ci.org/niqdev/kafka-scala-examples.svg?branch=master
+[travis-url]: https://travis-ci.org/niqdev/kafka-scala-examples
 
 Examples of Avro, Kafka, Schema Registry, Kafka Streams, KSQL in Scala
 
@@ -277,9 +277,9 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 
 [Kafka Streams](https://kafka.apache.org/documentation/streams) apis examples
 
-* `ToUpperCaseApp` [[source](streams/src/main/scala/com/kafka/demo/streams/ToUpperCaseApp.scala)|[test](streams/src/test/scala/com/kafka/demo/streams/ToUpperCaseSpec.scala)]
-
 **Demo-1**
+
+* `ToUpperCaseApp` [[source](streams/src/main/scala/com/kafka/demo/streams/ToUpperCaseApp.scala)|[test](streams/src/test/scala/com/kafka/demo/streams/ToUpperCaseSpec.scala)]
 
 ```bash
 # create topic
@@ -303,6 +303,8 @@ sbt clean streams/test
 ```
 
 **Demo-2**
+
+* `JsonToAvroApp` [[source](https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/main/scala/com/kafka/demo/JsonToAvroApp.scala)|[test](https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/test/scala/com/kafka/demo/JsonToAvroSpec.scala)]
 
 ```bash
 # access kafka
@@ -375,6 +377,7 @@ mykey:{"myInt":8,"myString":"myValue"}
 * [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
 * [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
 * [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
+*Old [presentation](https://gitpitch.com/niqdev/kafka-scala-examples)*
 
 **Tools**
 
