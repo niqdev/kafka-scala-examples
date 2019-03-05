@@ -372,12 +372,12 @@ mykey:{"myInt":8,"myString":"myValue"}
 
 **Further readings**
 
+* *Old [presentation](https://gitpitch.com/niqdev/kafka-scala-examples)*
 * [What is the actual role of Zookeeper in Kafka?](https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together/answer/Gwen-Shapira)
 * [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
 * [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
 * [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
 * [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
-*Old [presentation](https://gitpitch.com/niqdev/kafka-scala-examples)*
 
 **Tools**
 
