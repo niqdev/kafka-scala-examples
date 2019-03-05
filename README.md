@@ -304,6 +304,8 @@ sbt clean streams/test
 
 **Demo-2**
 
+Tested with [embedded-kafka](https://github.com/embeddedkafka/embedded-kafka) and [embedded-kafka-schema-registry](https://github.com/embeddedkafka/embedded-kafka-schema-registry)
+
 * `JsonToAvroApp` [[source](https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/main/scala/com/kafka/demo/JsonToAvroApp.scala)|[test](https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/test/scala/com/kafka/demo/JsonToAvroSpec.scala)]
 
 ```bash
