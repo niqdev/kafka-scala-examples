@@ -32,9 +32,9 @@ object JsonToAvroApp {
     val builder = new StreamsBuilder()
 
     builder
-      .kstream[String, JsonModel](printDebug = true)(inputTopic)
+      .kstream[String, JsonModel](inputTopic, printDebug = true)
       .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.myInt, jsonModel.myString.toUpperCase)))
-      .toAvroGenericTopic(schemaRegistryUrl, printDebug = true)(outputTopic)
+      .toAvroTopic(outputTopic, schemaRegistryUrl, printDebug = true)
 
     builder.build()
   }

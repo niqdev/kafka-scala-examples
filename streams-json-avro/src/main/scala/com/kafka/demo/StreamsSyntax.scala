@@ -1,7 +1,5 @@
 package com.kafka.demo
 
-import com.sksamuel.avro4s.{Decoder, Encoder, RecordFormat, SchemaFor}
-import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.streams.kstream.Printed
 import org.apache.kafka.streams.scala.StreamsBuilder
 import org.apache.kafka.streams.scala.kstream.KStream
@@ -16,7 +14,7 @@ object StreamsSyntax {
     */
   implicit final class StreamsBuilderOps(private val builder: StreamsBuilder) extends AnyVal {
 
-    def kstream[K, V](printDebug: Boolean = false)(topicName: String)(
+    def kstream[K, V](topicName: String, printDebug: Boolean = false)(
       implicit C: RecordConsumed[K, V]
     ): KStream[K, V] = {
       val ks = builder.stream(topicName)(C.consumed)
@@ -34,25 +32,16 @@ object StreamsSyntax {
     * @param schemaRegistry
     * @param topicName
     */
-  implicit final class KStreamOps[
-  K: Encoder : Decoder : SchemaFor,
-  V: Encoder : Decoder : SchemaFor
-  ](private val kstream: KStream[K, V]) {
-
-    def toAvroGenericTopic(
+  implicit final class KStreamOps[K, V](private val kstream: KStream[K, V]) {
+    def toAvroTopic(
+      topicName: String,
       schemaRegistry: String,
       printDebug: Boolean = false
-    )(topicName: String): Unit = {
+    )(implicit P: AvroRecordProduced[K, V]): Unit = {
       if (printDebug) {
         kstream.print(Printed.toSysOut[K, V].withLabel(topicName))
       }
-
-      kstream.map { (key, value) =>
-        (
-          RecordFormat[K].to(key).asInstanceOf[GenericRecord],
-          RecordFormat[V].to(value).asInstanceOf[GenericRecord]
-        )
-      }.to(topicName)(AvroRecord.avroGenericRecordProduced(schemaRegistry))
+      kstream.to(topicName)(P.produced(schemaRegistry))
     }
 
   }

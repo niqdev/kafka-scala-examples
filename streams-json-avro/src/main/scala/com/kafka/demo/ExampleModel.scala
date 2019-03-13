@@ -6,8 +6,8 @@ import io.circe.{Decoder, Encoder}
 final case class JsonModel(myInt: Int, myString: String)
 
 object JsonModel {
-  implicit val fooDecoder: Decoder[JsonModel] = deriveDecoder[JsonModel]
-  implicit val fooEncoder: Encoder[JsonModel] = deriveEncoder[JsonModel]
+  implicit val jsonModelDecoder: Decoder[JsonModel] = deriveDecoder[JsonModel]
+  implicit val jsonModelEncoder: Encoder[JsonModel] = deriveEncoder[JsonModel]
 }
 
 final case class KeyAvroModel(myKey: String)

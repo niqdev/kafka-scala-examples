@@ -1,9 +1,7 @@
 package com.kafka.demo
 
-import com.sksamuel.avro4s.RecordFormat
 import net.manub.embeddedkafka.schemaregistry.EmbeddedKafkaConfig
 import net.manub.embeddedkafka.schemaregistry.streams.EmbeddedKafkaStreamsAllInOne
-import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.common.serialization.{Deserializer, Serializer}
 import org.scalatest.{Matchers, WordSpecLike}
 
@@ -25,31 +23,28 @@ final class JsonToAvroSpec extends WordSpecLike with Matchers with EmbeddedKafka
   private[this] implicit val jsonSerializer: Serializer[JsonModel] =
     Codec[JsonModel].serde.serializer()
 
-  private[this] implicit val keyGenericRecordDeserializer: Deserializer[GenericRecord] =
-    AvroRecord.genericAvroSerde(schemaRegistryUrl, isKey = true).deserializer()
+  implicit private[this] val keyAvroModelDeserializer: Deserializer[KeyAvroModel] =
+    AvroCodec[KeyAvroModel].serde(schemaRegistryUrl).deserializer()
 
-  private[this] implicit val valueGenericRecordDeserializer: Deserializer[GenericRecord] =
-    AvroRecord.genericAvroSerde(schemaRegistryUrl).deserializer()
+  implicit private[this] val valueAvroModelDeserializer: Deserializer[ValueAvroModel] =
+    AvroCodec[ValueAvroModel].serde(schemaRegistryUrl).deserializer()
 
   "JsonToAvro" should {
 
     "verify topology" in {
       val messageKey = "myKeyExample"
-      val messageValue = JsonModel(8, "myString")
+      val messageValue = "{\"myInt\":\"8\",\"myString\":\"myStringExample\"}"
       val topology = JsonToAvroApp.buildTopology(schemaRegistryUrl, inputTopic, outputTopic)
-
-      val expectedKey = KeyAvroModel(messageKey)
-      val expectedValue = ValueAvroModel(messageValue.myInt, messageValue.myString.toUpperCase)
 
       runStreams(Seq(inputTopic, outputTopic), topology) {
 
         publishToKafka(inputTopic, messageKey, messageValue)
 
         val (resultKey, resultValue) = consumeFirstKeyedMessageFrom(outputTopic)(
-          embeddedKafkaConfig, keyGenericRecordDeserializer, valueGenericRecordDeserializer)
+          embeddedKafkaConfig, keyAvroModelDeserializer, valueAvroModelDeserializer)
 
-        RecordFormat[KeyAvroModel].from(resultKey) shouldBe expectedKey
-        RecordFormat[ValueAvroModel].from(resultValue) shouldBe expectedValue
+        resultKey shouldBe KeyAvroModel(messageKey)
+        resultValue shouldBe ValueAvroModel(8, "MYSTRINGEXAMPLE")
       }
     }
 

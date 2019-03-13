@@ -18,18 +18,19 @@ object RecordConsumed {
 
 }
 
-trait RecordProduced[K, V] {
-  def produced: Produced[K, V]
+trait AvroRecordProduced[K, V] {
+  def produced(schemaRegistry: String): Produced[K, V]
 }
 
-object RecordProduced {
+object AvroRecordProduced {
 
-  def apply[K, V](implicit P: RecordProduced[K, V]): RecordProduced[K, V] = P
+  def apply[K, V](implicit P: AvroRecordProduced[K, V]): AvroRecordProduced[K, V] = P
 
-  implicit def recordProduced[K: Codec, V: Codec]: RecordProduced[K, V] =
-    new RecordProduced[K, V] {
-      override def produced: Produced[K, V] =
-        Produced.`with`[K, V](implicitly[Codec[K]].serde, implicitly[Codec[V]].serde)
-    }
+  implicit def AvroRecordProduced[K: AvroCodec, V: AvroCodec]: AvroRecordProduced[K, V] =
+    (schemaRegistry: String) =>
+      Produced.`with`[K, V](
+        implicitly[AvroCodec[K]].serde(schemaRegistry),
+        implicitly[AvroCodec[V]].serde(schemaRegistry)
+      )
 
 }
