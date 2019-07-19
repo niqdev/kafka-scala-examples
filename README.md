@@ -271,7 +271,7 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 * multi-schema
 * formulation
 
-## streams
+## kafka-streams
 
 **Description**
 
