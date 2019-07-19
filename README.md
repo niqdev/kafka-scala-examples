@@ -5,7 +5,12 @@
 [travis-image]: https://travis-ci.org/niqdev/kafka-scala-examples.svg?branch=master
 [travis-url]: https://travis-ci.org/niqdev/kafka-scala-examples
 
-Examples of Avro, Kafka, Schema Registry, Kafka Streams, KSQL in Scala
+Examples in Scala of
+* [Avro](#avro)
+* [Kafka](#kafka)
+* [Schema Registry](#schema-registry)
+* [Kafka Streams](#kafka-streams)
+* [KSQL](#ksql)
 
 ## avro
 
@@ -368,7 +373,17 @@ mykey:{"myInt":8,"myString":"myValue"}
 * [Of Streams and Tables in Kafka and Stream Processing](https://www.michael-noll.com/blog/2018/04/05/of-stream-and-tables-in-kafka-and-stream-processing-part1)
 * [Functional Programming with Kafka Streams and Scala](https://itnext.io/a-cqrs-approach-with-kafka-streams-and-scala-49bfa78e4295)
 
-> TODO KSQL
+## ksql
+
+> TODO
+
+```bash
+# access ksql-server
+docker exec -it my-local-ksql-server bash
+
+# start ksql cli
+ksql http://ksql-server:8088
+```
 
 ## extra
 

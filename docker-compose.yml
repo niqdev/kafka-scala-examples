@@ -27,7 +27,7 @@ services:
 
   schema-registry:
     container_name: my-local-schema-registry
-    image: confluentinc/cp-schema-registry
+    image: confluentinc/cp-schema-registry:5.2.2
     depends_on:
       - kafka
     ports:
@@ -42,7 +42,7 @@ services:
 
   kafka-rest:
     container_name: my-local-kafka-rest
-    image: confluentinc/cp-kafka-rest
+    image: confluentinc/cp-kafka-rest:5.2.2
     depends_on:
       - kafka
       - schema-registry
@@ -59,7 +59,7 @@ services:
 
   kafka-ui:
     container_name: my-local-kafka-ui
-    image: landoop/kafka-topics-ui
+    image: landoop/kafka-topics-ui:latest
     depends_on:
       - kafka-rest
     ports:
@@ -73,7 +73,7 @@ services:
 
   schema-registry-ui:
     container_name: my-local-schema-registry-ui
-    image: landoop/schema-registry-ui
+    image: landoop/schema-registry-ui:latest
     depends_on:
       - schema-registry
     ports:
@@ -84,6 +84,23 @@ services:
     environment:
       - SCHEMAREGISTRY_URL=http://schema-registry:8081
       - PROXY=true
+
+  # TODO confluent.support.metrics.enable=false
+  # https://docs.confluent.io/current/installation/docker/config-reference.html#interactive-server-configuration
+  ksql-server:
+    container_name: my-local-ksql-server
+    image: confluentinc/cp-ksql-server:5.2.2
+    depends_on:
+      - kafka
+    ports:
+      - 8088:8088
+    hostname: ksql-server
+    networks:
+      - my_local_network
+    environment:
+      - KSQL_BOOTSTRAP_SERVERS=kafka:9092
+      - KSQL_LISTENERS=http://ksql-server:8088
+      - KSQL_KSQL_SERVICE_ID=my_local
 
 networks:
   my_local_network:
