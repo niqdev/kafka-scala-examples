@@ -375,14 +375,79 @@ mykey:{"myInt":8,"myString":"myValue"}
 
 ## ksql
 
-> TODO
+**Description**
 
+* [KSQL](https://docs.confluent.io/current/ksql/docs/index.html)
+* [Udemy Course](https://www.udemy.com/kafka-ksql)
+
+Start the containers
+```bash
+# start zookeeper + kafka + schema-registry + ksql-server
+docker-compose up
+```
+
+Setup Kafka
+```bash
+# access kafka
+docker exec -it my-local-kafka bash
+
+# create topic
+kafka-topics.sh --zookeeper zookeeper:2181 \
+  --create --if-not-exists --replication-factor 1 --partitions 1 --topic USER_PROFILE
+
+# publish sample data
+kafka-console-producer.sh --broker-list kafka:9092 --topic USER_PROFILE << EOF
+{"userid": 1000, "firstname": "Alison", "lastname": "Smith", "countrycode": "GB", "rating": 4.7}
+EOF
+
+# consume from topic
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic USER_PROFILE --from-beginning
+```
+
+Setup KSQL
 ```bash
 # access ksql-server
 docker exec -it my-local-ksql-server bash
 
 # start ksql cli
 ksql http://ksql-server:8088
+
+# alternative to connect to remote server
+docker run --rm \
+  --network=kafka-scala-examples_my_local_network \
+  -it confluentinc/cp-ksql-cli http://ksql-server:8088
+
+# create stream
+create stream user_profile (\
+  userid INT, \
+  firstname VARCHAR, \
+  lastname VARCHAR, \
+  countrycode VARCHAR, \
+  rating DOUBLE \
+  ) with (KAFKA_TOPIC = 'USER_PROFILE', VALUE_FORMAT = 'JSON');
+
+# verify stream
+list streams;
+describe user_profile;
+
+# query stream
+select userid, firstname, lastname, countrycode, rating from user_profile;
+```
+
+Expect the consumer and the query to show the generated data
+```bash
+# generate data
+docker run --rm \
+  -v $(pwd)/datagen:/datagen \
+  --network=kafka-scala-examples_my_local_network \
+  -it confluentinc/ksql-examples ksql-datagen \
+  bootstrap-server=kafka:9092 \
+  schemaRegistryUrl=http://schema-registry:8081 \
+  schema=datagen/user_profile.avro \
+  format=json topic=USER_PROFILE \
+  key=userid \
+  maxInterval=5000 \
+  iterations=100
 ```
 
 ## extra

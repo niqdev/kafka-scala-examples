@@ -1,0 +1,85 @@
+{
+  "namespace": "streams",
+  "name": "user_profile",
+  "type": "record",
+  "fields": [
+    {
+      "name": "userid",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "iteration": {
+            "start": 1000,
+            "step": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "firstname",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "Alice",
+            "Bob",
+            "Carol",
+            "Dan",
+            "Eve",
+            "Frank",
+            "Grace",
+            "Heidi",
+            "Ivan"
+          ]
+        }
+      }
+    },
+    {
+      "name": "lastname",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "Smith",
+            "Jones",
+            "Coen",
+            "Fawcett",
+            "Edison",
+            "Jones",
+            "Dotty"
+          ]
+        }
+      }
+    },
+    {
+      "name": "countrycode",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "AU",
+            "IN",
+            "GB",
+            "US"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rating",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "3.4",
+            "3.9",
+            "2.2",
+            "4.4",
+            "3.7",
+            "4.9"
+          ]
+        }
+      }
+    }
+  ]
+}
