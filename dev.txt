@@ -31,3 +31,8 @@ https://github.com/cakesolutions/scala-kafka-client
 https://github.com/lightbend/kafka-streams-scala
 https://github.com/lightbend/kafka-with-akka-streams-kafka-streams-tutorial
 https://github.com/Spinoco/fs2-kafka
+
+---
+
+# fix test java.lang.OutOfMemoryError: Metaspace
+https://medium.com/@jan______/sbtconfig-is-deprecated-650d6ff10236

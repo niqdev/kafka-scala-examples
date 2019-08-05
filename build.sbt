@@ -123,6 +123,7 @@ lazy val root = project.in(file("."))
       organization := I.organization,
       scalaVersion := V.scala,
       version := I.version,
+      parallelExecution := false
     )),
 
     name := I.name
