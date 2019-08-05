@@ -16,18 +16,18 @@ lazy val V = new {
   val scala = "2.12.8"
 
   val logback = "1.2.3"
-  val scalaLogging = "3.9.0"
+  val scalaLogging = "3.9.2"
 
   val avro4s = "2.0.4"
-  // issues bumping kafka and confluent due to cakeSolutions compatibility
-  // streams-json-avro has latest versions
+  // FIXME issues bumping kafka and confluent due to cakeSolutions compatibility
+  // only streams-json-avro uses latest versions
   val cakeSolutions = "2.0.0"
   val kafka = "2.0.0"
   val confluent = "5.0.0"
   val circe = "0.11.1"
 
-  val scalatest = "3.0.5"
-  val embeddedKafka = "5.1.2"
+  val scalatest = "3.0.8"
+  val embeddedKafka = "5.3.0"
 }
 
 lazy val common = project.in(file("common"))
@@ -104,8 +104,8 @@ lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka %% "kafka-streams-scala" % "2.1.1",
-      N.confluent % "kafka-streams-avro-serde" % "5.1.2",
+      N.kafka %% "kafka-streams-scala" % "2.3.0",
+      N.confluent % "kafka-streams-avro-serde" % "5.3.0",
 
       N.circe %% "circe-core" % V.circe,
       N.circe %% "circe-generic" % V.circe,
