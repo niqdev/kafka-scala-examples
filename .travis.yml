@@ -17,7 +17,7 @@ cache:
     - $HOME/.sbt
 
 env:
-  - LOG_LEVEL=INFO
+  - LOG_LEVEL=WARN
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION clean test
