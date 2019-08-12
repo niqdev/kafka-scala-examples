@@ -460,6 +460,7 @@ docker run --rm \
 * [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
 * [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
 * [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
+* [Docker Tips and Tricks with KSQL and Kafka](https://rmoff.net/2018/12/15/docker-tips-and-tricks-with-ksql-and-kafka)
 
 **Tools**
 
