@@ -22,7 +22,7 @@ lazy val V = new {
   // FIXME issues bumping kafka and confluent due to cakeSolutions compatibility
   // only streams-json-avro uses latest versions
   val cakeSolutions = "2.0.0"
-  val kafka = "2.0.0"
+  val kafka = "2.0.1"
   val confluent = "5.0.0"
   val circe = "0.11.1"
 
