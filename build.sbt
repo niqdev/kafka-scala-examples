@@ -104,7 +104,7 @@ lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka %% "kafka-streams-scala" % "2.3.0",
+      N.kafka %% "kafka-streams-scala" % "2.3.1",
       N.confluent % "kafka-streams-avro-serde" % "5.3.0",
 
       N.circe %% "circe-core" % V.circe,
