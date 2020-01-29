@@ -18,7 +18,7 @@ lazy val V = new {
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
 
-  val avro4s = "2.0.4"
+  val avro4s = "3.0.4"
   // FIXME issues bumping kafka and confluent due to cakeSolutions compatibility
   // only streams-json-avro uses latest versions
   val cakeSolutions = "2.0.0"
