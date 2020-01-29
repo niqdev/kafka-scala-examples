@@ -27,7 +27,7 @@ lazy val V = new {
   val circe = "0.11.1"
 
   val scalatest = "3.0.8"
-  val embeddedKafka = "5.3.0"
+  val embeddedKafka = "5.3.2"
 }
 
 lazy val common = project.in(file("common"))
@@ -105,7 +105,7 @@ lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
 
     libraryDependencies ++= Seq(
       N.kafka %% "kafka-streams-scala" % "2.3.0",
-      N.confluent % "kafka-streams-avro-serde" % "5.3.0",
+      N.confluent % "kafka-streams-avro-serde" % "5.3.2",
 
       N.circe %% "circe-core" % V.circe,
       N.circe %% "circe-generic" % V.circe,
