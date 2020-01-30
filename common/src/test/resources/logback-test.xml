@@ -2,8 +2,6 @@
 <configuration>
 
   <property name="PATTERN" value="[%date{ISO8601}][%-5level][%logger{36}] %msg%n"/>
-  <property name="BASE_PATH" value="log"/>
-  <property name="LOG_NAME" value="output"/>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
