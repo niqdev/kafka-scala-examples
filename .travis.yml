@@ -13,11 +13,10 @@ cache:
   directories:
     - $HOME/.m2/repository
     - $HOME/.ivy2/cache
-    - $HOME/.coursier/cache
     - $HOME/.sbt
 
 env:
-  - LOG_LEVEL=WARN
+  - LOG_LEVEL=ERROR
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION clean test
