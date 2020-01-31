@@ -23,7 +23,7 @@ lazy val V = new {
   // only streams-json-avro uses latest versions
   val cakeSolutions = "2.0.0"
   val kafka = "2.0.0"
-  val confluent = "5.0.0"
+  val confluent = "5.0.3"
   val circe = "0.11.2"
 
   val scalatest = "3.0.8"
