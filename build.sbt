@@ -31,7 +31,7 @@ lazy val V = new {
   }
 
   val scalatest = "3.1.0"
-  val embeddedKafka = "5.3.2"
+  val embeddedKafka = "5.4.0"
 }
 
 lazy val common = project.in(file("common"))
