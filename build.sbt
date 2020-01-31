@@ -24,7 +24,7 @@ lazy val V = new {
   val cakeSolutions = "2.0.0"
   val kafka = "2.0.0"
   val confluent = "5.0.0"
-  val circe = "0.11.1"
+  val circe = "0.11.2"
 
   val scalatest = "3.0.8"
   val embeddedKafka = "5.3.0"
