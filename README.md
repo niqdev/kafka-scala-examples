@@ -69,28 +69,28 @@ docker-compose up
 [open|xdg-open] http://localhost:8000
 
 # access kafka
-docker exec -it my-local-kafka bash
+docker exec -it local-kafka bash
 
 # create topic
 # convention <MESSAGE_TYPE>.<DATASET_NAME>.<DATA_NAME>
 # example [example.no-schema.original|example.no-schema.cakesolutions]
-kafka-topics.sh --zookeeper zookeeper:2181 \
+kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
 
 # delete topic
-kafka-topics.sh --zookeeper zookeeper:2181 \
+kafka-topics --zookeeper zookeeper:2181 \
   --delete --topic <TOPIC_NAME>
 
 # view topic
-kafka-topics.sh --zookeeper zookeeper:2181 --list 
-kafka-topics.sh --zookeeper zookeeper:2181 --describe --topic <TOPIC_NAME>
+kafka-topics --zookeeper zookeeper:2181 --list 
+kafka-topics --zookeeper zookeeper:2181 --describe --topic <TOPIC_NAME>
 
 # console producer
-kafka-console-producer.sh --broker-list kafka:9092 --topic <TOPIC_NAME>
+kafka-console-producer --broker-list kafka:9092 --topic <TOPIC_NAME>
 kafkacat -P -b 0 -t <TOPIC_NAME>
 
 # console consumer
-kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic <TOPIC_NAME> --from-beginning
+kafka-console-consumer --bootstrap-server kafka:9092 --topic <TOPIC_NAME> --from-beginning
 kafkacat -C -b 0 -t <TOPIC_NAME>
 
 # producer example
@@ -199,24 +199,24 @@ http -v POST :8081/subjects/example.with-schema.payment-value/versions \
   schema=@schema-registry/src/main/avro/Payment.avsc
 
 # access kafka
-docker exec -it my-local-kafka bash
+docker exec -it local-kafka bash
 
 # (optional) create topic
-kafka-topics.sh --zookeeper zookeeper:2181 \
+kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic example.with-schema.payment
 
 # console producer (binary)
-kafkacat -P -b 0 -t example.with-schema.payment
+kafka-console-producer --broker-list kafka:9092 --topic example.with-schema.payment
 
 # console consumer (binary)
-kafkacat -C -b 0 -t example.with-schema.payment
+kafka-console-consumer --bootstrap-server kafka:9092 --topic example.with-schema.payment
 
 # access schema-registry
-docker exec -it my-local-schema-registry bash
+docker exec -it local-schema-registry bash
 
 # avro console producer
 # example "MyKey",{"id":"MyId","amount":10}
-kafka-avro-console-producer --broker-list kafka:9092 \
+kafka-avro-console-producer --broker-list kafka:29092 \
   --topic example.with-schema.payment \
   --property schema.registry.url=http://schema-registry:8081 \
   --property parse.key=true \
@@ -225,7 +225,7 @@ kafka-avro-console-producer --broker-list kafka:9092 \
   --property value.schema='{"namespace":"io.confluent.examples.clients.basicavro","type":"record","name":"Payment","fields":[{"name":"id","type":"string"},{"name":"amount","type":"double"}]}'
 
 # avro console consumer
-kafka-avro-console-consumer --bootstrap-server kafka:9092 \
+kafka-avro-console-consumer --bootstrap-server kafka:29092 \
   --topic example.with-schema.payment \
   --property schema.registry.url=http://schema-registry:8081 \
   --property schema.id.separator=: \
@@ -288,12 +288,15 @@ sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 * `ToUpperCaseApp` [[source](streams/src/main/scala/com/kafka/demo/streams/ToUpperCaseApp.scala)|[test](streams/src/test/scala/com/kafka/demo/streams/ToUpperCaseSpec.scala)]
 
 ```bash
+# access kafka
+docker exec -it local-kafka bash
+
 # create topic
 # example [example.to-upper-case-app.input|example.to-upper-case-app.output]
-kafka-topics.sh --zookeeper zookeeper:2181 \
+kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
 
-# toUpperCase example
+# ToUpperCaseApp example (input topic required)
 sbt "streams/runMain com.kafka.demo.streams.ToUpperCaseApp"
 
 # produce
@@ -316,32 +319,36 @@ Tested with [embedded-kafka](https://github.com/embeddedkafka/embedded-kafka) an
 
 ```bash
 # access kafka
-docker exec -it my-local-kafka bash
+docker exec -it local-kafka bash
 
 # create topic
-# example [json.streams-json-to-avro-app.input|avro.streams-json-to-avro-app.input]
-kafka-topics.sh --zookeeper zookeeper:2181 \
+# example [json.streams-json-to-avro-app.input|avro.streams-json-to-avro-app.output]
+kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic <TOPIC_NAME>
 
-# console producer
-kafka-console-producer.sh \
+# produce (default StringSerializer)
+kafka-console-producer \
   --broker-list kafka:9092 \
   --property "parse.key=true" \
   --property "key.separator=:" \
+  --property "key.serializer=org.apache.kafka.common.serialization.ByteArraySerializer" \
+  --property "value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer" \
   --topic <TOPIC_NAME>
 
-# console consumer
-kafka-console-consumer.sh \
+# consume (default StringDeserializer)
+kafka-console-consumer \
   --bootstrap-server kafka:9092 \
   --from-beginning \
-  --property print.key=true \
+  --property "print.key=true" \
+  --property "key.deserializer=org.apache.kafka.common.serialization.ByteArrayDeserializer" \
+  --property "value.deserializer=org.apache.kafka.common.serialization.ByteArrayDeserializer" \
   --topic <TOPIC_NAME>
 
 # access schema-registry
-docker exec -it my-local-schema-registry bash
+docker exec -it local-schema-registry bash
 
 # consume avro
-kafka-avro-console-consumer --bootstrap-server kafka:9092 \
+kafka-avro-console-consumer --bootstrap-server kafka:29092 \
   --property schema.registry.url=http://schema-registry:8081 \
   --property schema.id.separator=: \
   --property print.key=true \
@@ -350,16 +357,22 @@ kafka-avro-console-consumer --bootstrap-server kafka:9092 \
   --from-beginning \
   --topic <TOPIC_NAME>
 
-# JsonToAvroApp example
+# JsonToAvroApp example (input topic required)
 sbt "streamsJsonAvro/runMain com.kafka.demo.JsonToAvroApp"
 
 # test
 sbt clean streamsJsonAvro/test
 ```
 
+> FIXME New schema is incompatible with an earlier schema
+
 Example
 ```
 # json
+
+# NEW
+mykey:{"valueInt":42,"valueString":"foo"}
+# OLD
 mykey:{"myInt":8,"myString":"myValue"}
 
 # log
@@ -390,25 +403,25 @@ docker-compose up
 Setup Kafka
 ```bash
 # access kafka
-docker exec -it my-local-kafka bash
+docker exec -it local-kafka bash
 
 # create topic
-kafka-topics.sh --zookeeper zookeeper:2181 \
+kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic USER_PROFILE
 
 # publish sample data
-kafka-console-producer.sh --broker-list kafka:9092 --topic USER_PROFILE << EOF
+kafka-console-producer --broker-list kafka:9092 --topic USER_PROFILE << EOF
 {"userid": 1000, "firstname": "Alison", "lastname": "Smith", "countrycode": "GB", "rating": 4.7}
 EOF
 
 # consume from topic
-kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic USER_PROFILE --from-beginning
+kafka-console-consumer --bootstrap-server kafka:9092 --topic USER_PROFILE --from-beginning
 ```
 
 Setup KSQL
 ```bash
 # access ksql-server
-docker exec -it my-local-ksql-server bash
+docker exec -it local-ksql-server bash
 
 # start ksql cli
 ksql http://ksql-server:8088
@@ -452,6 +465,11 @@ docker run --rm \
 ```
 
 ## extra
+
+```bash
+# cleanup
+docker-compose down -v
+```
 
 **Further readings**
 
