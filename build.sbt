@@ -30,7 +30,7 @@ lazy val V = new {
     val confluent = "5.0.0"
   }
 
-  val scalatest = "3.0.8"
+  val scalatest = "3.1.0"
   val embeddedKafka = "5.3.2"
 }
 

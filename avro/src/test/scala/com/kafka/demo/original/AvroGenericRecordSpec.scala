@@ -3,9 +3,10 @@ package original
 
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericData, GenericRecord}
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class AvroGenericRecordSpec extends WordSpecLike with Matchers {
+final class AvroGenericRecordSpec extends AnyWordSpecLike with Matchers {
 
   // setting a non-existent field throws AvroRuntimeException
   private[this] def getUsers(schema: Schema): List[GenericRecord] = {

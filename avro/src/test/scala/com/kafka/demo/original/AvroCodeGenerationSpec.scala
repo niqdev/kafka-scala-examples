@@ -1,9 +1,10 @@
 package com.kafka.demo
 package original
 
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class AvroCodeGenerationSpec extends WordSpecLike with Matchers {
+final class AvroCodeGenerationSpec extends AnyWordSpecLike with Matchers {
 
   private[this] def getUsers(): List[User] = {
     // Leave favorite color null

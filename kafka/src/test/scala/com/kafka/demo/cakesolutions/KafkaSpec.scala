@@ -3,9 +3,11 @@ package com.kafka.demo.cakesolutions
 import cakesolutions.kafka.KafkaProducerRecord
 import cakesolutions.kafka.testkit.KafkaServer
 import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializer}
-import org.scalatest.{Assertion, BeforeAndAfterAll, Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.{Assertion, BeforeAndAfterAll}
 
-final class KafkaSpec extends WordSpecLike with Matchers with BeforeAndAfterAll {
+final class KafkaSpec extends AnyWordSpecLike with Matchers with BeforeAndAfterAll {
 
   private[this] val kafkaServer: KafkaServer = new KafkaServer()
 

@@ -1,9 +1,11 @@
 package com.kafka.demo
 
 import io.confluent.examples.clients.basicavro.Payment
-import org.scalatest.{Assertion, Matchers, WordSpecLike}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class KafkaSchemaRegistrySpecificSpec extends WordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
+final class KafkaSchemaRegistrySpecificSpec extends AnyWordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
 
   private[this] def verifySpecificConsumer(topic: String)
                                           (expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {

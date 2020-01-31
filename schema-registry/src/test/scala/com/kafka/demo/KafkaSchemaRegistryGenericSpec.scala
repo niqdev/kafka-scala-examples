@@ -3,9 +3,11 @@ package com.kafka.demo
 import org.apache.avro.Schema
 import org.apache.avro.generic.GenericData
 import org.apache.kafka.clients.producer.ProducerRecord
-import org.scalatest.{Assertion, Matchers, WordSpecLike}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class KafkaSchemaRegistryGenericSpec extends WordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
+final class KafkaSchemaRegistryGenericSpec extends AnyWordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
 
   private[this] val SCHEMA_CUSTOMER_V1 = "/customer_v1.avsc"
   private[this] val SCHEMA_CUSTOMER_V2 = "/customer_v2.avsc"

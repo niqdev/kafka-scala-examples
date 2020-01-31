@@ -3,9 +3,10 @@ package com.kafka.demo
 import net.manub.embeddedkafka.schemaregistry.EmbeddedKafkaConfig
 import net.manub.embeddedkafka.schemaregistry.streams.EmbeddedKafkaStreamsAllInOne
 import org.apache.kafka.common.serialization.{Deserializer, Serializer}
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class JsonToAvroSpec extends WordSpecLike with Matchers with EmbeddedKafkaStreamsAllInOne {
+final class JsonToAvroSpec extends AnyWordSpecLike with Matchers with EmbeddedKafkaStreamsAllInOne {
 
   private[this] val schemaRegistryPort = 7002
   private[this] val schemaRegistryUrl = s"http://localhost:$schemaRegistryPort"

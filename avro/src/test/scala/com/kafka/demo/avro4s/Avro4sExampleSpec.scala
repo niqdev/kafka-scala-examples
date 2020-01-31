@@ -5,9 +5,10 @@ import java.io.File
 
 import com.sksamuel.avro4s.AvroSchema
 import org.apache.avro.Schema
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class Avro4sExampleSpec extends WordSpecLike with Matchers {
+final class Avro4sExampleSpec extends AnyWordSpecLike with Matchers {
 
   private[this] val userSchema: Schema = AvroSchema[avro4s.User]
 

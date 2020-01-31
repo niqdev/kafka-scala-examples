@@ -5,9 +5,10 @@ import com.kafka.demo.original.{AvroCodeGeneration, AvroGenericRecord}
 import com.sksamuel.avro4s.AvroSchema
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericData, GenericRecord}
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
-final class LibraryCompatibilitySpec extends WordSpecLike with Matchers {
+final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
 
   private[this] val userSchema: Schema = AvroSchema[avro4s.User]
 
