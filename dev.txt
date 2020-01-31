@@ -36,3 +36,7 @@ https://github.com/Spinoco/fs2-kafka
 
 # fix test java.lang.OutOfMemoryError: Metaspace
 https://medium.com/@jan______/sbtconfig-is-deprecated-650d6ff10236
+
+---
+
+https://fd4s.github.io/fs2-kafka
