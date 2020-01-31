@@ -19,15 +19,19 @@ lazy val V = new {
   val scalaLogging = "3.9.2"
 
   val avro4s = "3.0.4"
-  // FIXME issues bumping kafka and confluent due to cakeSolutions compatibility
-  // only streams-json-avro uses latest versions
-  val cakeSolutions = "2.0.0"
-  val kafka = "2.0.0"
-  val confluent = "5.0.0"
+  val kafka = "2.3.1"
+  val confluent = "5.3.2"
   val circe = "0.12.3"
 
+  // FIXME compatibility issues
+  val cakeSolutions = new {
+    val version = "2.0.0"
+    val kafka = "2.0.0"
+    val confluent = "5.0.0"
+  }
+
   val scalatest = "3.0.8"
-  val embeddedKafka = "5.3.0"
+  val embeddedKafka = "5.3.2"
 }
 
 lazy val common = project.in(file("common"))
@@ -57,9 +61,9 @@ lazy val kafka = project.in(file("kafka"))
     ),
 
     libraryDependencies ++= Seq(
-      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions,
+      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions.version,
 
-      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions % Test
+      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
     ))
 
 lazy val `schema-registry` = project.in(file("schema-registry"))
@@ -74,12 +78,12 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka % "kafka-clients" % V.kafka,
-      N.confluent % "kafka-avro-serializer" % V.confluent,
-      N.confluent % "kafka-schema-registry-client" % V.confluent,
+      N.kafka % "kafka-clients" % V.cakeSolutions.kafka,
+      N.confluent % "kafka-avro-serializer" % V.cakeSolutions.confluent,
+      N.confluent % "kafka-schema-registry-client" % V.cakeSolutions.confluent,
 
-      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions,
-      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions % Test
+      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions.version,
+      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
     ),
 
     // sbt-avrohugger: SpecificRecord
@@ -104,8 +108,8 @@ lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka %% "kafka-streams-scala" % "2.3.0",
-      N.confluent % "kafka-streams-avro-serde" % "5.3.0",
+      N.kafka %% "kafka-streams-scala" % V.kafka,
+      N.confluent % "kafka-streams-avro-serde" % V.confluent,
 
       N.circe %% "circe-core" % V.circe,
       N.circe %% "circe-generic" % V.circe,
