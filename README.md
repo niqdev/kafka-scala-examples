@@ -11,6 +11,7 @@ Examples in Scala of
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
 * [KSQL](#ksql)
+* Kafka Connect - **TODO**
 
 ## avro
 
