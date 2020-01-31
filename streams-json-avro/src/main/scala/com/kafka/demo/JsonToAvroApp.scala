@@ -33,7 +33,7 @@ object JsonToAvroApp {
 
     builder
       .kstream[String, JsonModel](inputTopic, printDebug = true)
-      .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.myInt, jsonModel.myString.toUpperCase)))
+      .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.valueInt, jsonModel.valueString.toUpperCase)))
       .toAvroTopic(outputTopic, schemaRegistryUrl, printDebug = true)
 
     builder.build()
