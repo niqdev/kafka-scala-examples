@@ -57,8 +57,8 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
   implicit val valueAvroModelCodec: AvroCodec[ValueAvroModel] =
     (schemaRegistry: String) =>
       Serdes.fromFn(
-        genericAvroSerializer[ValueAvroModel](schemaRegistry, isKey = true),
-        genericAvroDeserializer[ValueAvroModel](schemaRegistry, isKey = true),
+        genericAvroSerializer[ValueAvroModel](schemaRegistry),
+        genericAvroDeserializer[ValueAvroModel](schemaRegistry),
       )
 
 }

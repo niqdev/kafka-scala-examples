@@ -358,13 +358,11 @@ kafka-avro-console-consumer --bootstrap-server kafka:29092 \
   --topic <TOPIC_NAME>
 
 # JsonToAvroApp example (input topic required)
-sbt "streamsJsonAvro/runMain com.kafka.demo.JsonToAvroApp"
+sbt "streams-json-avro/runMain com.kafka.demo.JsonToAvroApp"
 
 # test
-sbt clean streamsJsonAvro/test
+sbt clean streams-json-avro/test
 ```
-
-> FIXME New schema is incompatible with an earlier schema
 
 Example
 ```
@@ -372,12 +370,10 @@ Example
 
 # NEW
 mykey:{"valueInt":42,"valueString":"foo"}
-# OLD
-mykey:{"myInt":8,"myString":"myValue"}
 
 # log
-[json.streams-json-to-avro-app.input]: mykey, JsonModel(8,myValue)
-[avro.streams-json-to-avro-app.output]: KeyAvroModel(mykey), ValueAvroModel(8,MYVALUE)
+[json.streams-json-to-avro-app.input]: mykey, JsonModel(42,foo)
+[avro.streams-json-to-avro-app.output]: KeyAvroModel(mykey), ValueAvroModel(42,FOO)
 ```
 
 **Readings**
