@@ -1,3 +1,5 @@
+# https://docs.confluent.io/current/installation/docker/config-reference.html
+
 version: '3'
 
 services:
@@ -91,12 +93,6 @@ services:
       - KAFKA_REST_PROXY_URL=http://kafka-rest:8082
       - PROXY=true
 
-### >>> TODO ksql + ksql-cli + connect + connect-ui + postgresql
-
-  # TODO confluent.support.metrics.enable=false
-  # https://docs.confluent.io/current/installation/docker/config-reference.html#interactive-server-configuration
-  # ksql-datagen is not working in confluentinc/cp-ksql-server and confluentinc/cp-ksql-cli
-  # https://github.com/confluentinc/ksql/issues/685
   # https://github.com/confluentinc/ksql/blob/4.1.3-post/docs/tutorials/docker-compose.yml#L85
   ksql-server:
     container_name: local-ksql-server
@@ -113,12 +109,16 @@ services:
       - KSQL_BOOTSTRAP_SERVERS=kafka:29092
       - KSQL_LISTENERS=http://ksql-server:8088
       - KSQL_KSQL_SCHEMA_REGISTRY_URL=http://schema-registry:8081
-      - KSQL_KSQL_SERVICE_ID=my_local
+      - KSQL_KSQL_SERVICE_ID=local-ksql-server
 
   ksql-cli:
+    container_name: local-ksql-cli
     image: confluentinc/cp-ksql-cli:5.4.0
     depends_on:
       - ksql-server
+    hostname: ksql-cli
+    networks:
+      - local_kafka_network
     entrypoint: /bin/sh
     tty: true
 

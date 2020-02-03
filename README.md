@@ -416,19 +416,33 @@ EOF
 kafka-console-consumer --bootstrap-server kafka:9092 --topic USER_PROFILE --from-beginning
 ```
 
-Setup KSQL
+Access KSQL CLI
+
+* using the server
+    ```bash
+    # access ksql-server
+    docker exec -it local-ksql-server bash
+    
+    # start ksql cli
+    ksql http://ksql-server:8088
+    ```
+
+* using a local instance
+    ```bash
+    # connect to local cli
+    docker exec -it local-ksql-cli ksql http://ksql-server:8088
+    ```
+
+* using a temporary instance
+    ```bash
+    # connect to remote server
+    docker run --rm \
+      --network=kafka-scala-examples_local_kafka_network \
+      -it confluentinc/cp-ksql-cli http://ksql-server:8088
+    ```
+
+Execute SQL statements
 ```bash
-# access ksql-server
-docker exec -it local-ksql-server bash
-
-# start ksql cli
-ksql http://ksql-server:8088
-
-# alternative to connect to remote server
-docker run --rm \
-  --network=kafka-scala-examples_local_kafka_network \
-  -it confluentinc/cp-ksql-cli http://ksql-server:8088
-
 # create stream
 CREATE STREAM user_profile (\
   userid INT, \
