@@ -484,8 +484,13 @@ docker run --rm \
 ## kafka-connect
 
 * [Kafka Connect](https://docs.confluent.io/current/connect/index.html)
+* Confluent's Kafka Connect [API](https://docs.confluent.io/current/connect/references/restapi.html)
+* [Udemy Course](https://www.udemy.com/course/kafka-connect)
 
 ```bash
+# list connector
+http -v :8083/connectors
+
 # TODO
 ```
 
