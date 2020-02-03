@@ -15,7 +15,7 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
   "LibraryCompatibility" should {
 
     "verify serialization with code generation and deserialization with avro4s" in {
-      val filePath = "data/users-code-generation-from.avro"
+      val filePath = "avro/target/data/users-code-generation-from.avro"
 
       val userCodeGeneration = User.newBuilder()
         .setName("userCodeGeneration")
@@ -30,7 +30,7 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
 
     "verify serialization with GenericRecord and deserialization with avro4s" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "data/users-generic-record-from.avro"
+      val filePath = "avro/target/data/users-generic-record-from.avro"
 
       val schemaGenericRecord = AvroGenericRecord.getSchema(schemaPath)
       val userGenericRecord: GenericRecord = new GenericData.Record(schemaGenericRecord)
@@ -44,7 +44,7 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
     }
 
     "verify serialization with avro4s and deserialization with code generation" in {
-      val filePath = "data/users-code-generation-to.avro"
+      val filePath = "avro/target/data/users-code-generation-to.avro"
 
       val userAvro4s = avro4s.User("user1Avro4s", Some(8), Some("green"))
       val expectedUser = User.newBuilder()
@@ -59,7 +59,7 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
 
     "verify serialization with avro4s and deserialization with GenericRecord" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "data/users-generic-record-to.avro"
+      val filePath = "avro/target/data/users-generic-record-to.avro"
 
       val userAvro4s = avro4s.User("user2Avro4s", Some(1), Some("red"))
       val schemaGenericRecord = AvroGenericRecord.getSchema(schemaPath)

@@ -27,7 +27,7 @@ final class AvroGenericRecordSpec extends AnyWordSpecLike with Matchers {
 
     "serialize and deserialize" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "data/users-generic-record.avro"
+      val filePath = "avro/target/data/users-generic-record.avro"
       val schema = AvroGenericRecord.getSchema(schemaPath)
       val users = getUsers(schema)
 
