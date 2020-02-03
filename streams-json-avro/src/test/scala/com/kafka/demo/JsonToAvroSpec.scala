@@ -34,7 +34,7 @@ final class JsonToAvroSpec extends AnyWordSpecLike with Matchers with EmbeddedKa
 
     "verify topology" in {
       val messageKey = "myKeyExample"
-      val messageValue = "{\"myInt\":\"8\",\"myString\":\"myStringExample\"}"
+      val messageValue = "{\"valueInt\":\"8\",\"valueString\":\"myStringExample\"}"
       val topology = JsonToAvroApp.buildTopology(schemaRegistryUrl, inputTopic, outputTopic)
 
       runStreams(Seq(inputTopic, outputTopic), topology) {

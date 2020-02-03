@@ -1,5 +1,3 @@
-https://gitpitch.com/niqdev/kafka-demo
-
 # comments
 https://github.com/cakesolutions/scala-kafka-client/issues/147
 https://github.com/confluentinc/schema-registry/issues/789

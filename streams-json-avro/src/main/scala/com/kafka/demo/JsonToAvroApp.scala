@@ -3,7 +3,7 @@ package com.kafka.demo
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
-import com.kafka.demo.StreamsSyntax.{KStreamOps, StreamsBuilderOps}
+import com.kafka.demo.syntax._
 import com.typesafe.scalalogging.Logger
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import org.apache.kafka.streams.scala.StreamsBuilder
@@ -32,8 +32,8 @@ object JsonToAvroApp {
     val builder = new StreamsBuilder()
 
     builder
-      .kstream[String, JsonModel](inputTopic, printDebug = true)
-      .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.myInt, jsonModel.myString.toUpperCase)))
+      .kStream[String, JsonModel](inputTopic, printDebug = true)
+      .map((keyString, jsonModel) => (KeyAvroModel(keyString), ValueAvroModel(jsonModel.valueInt, jsonModel.valueString.toUpperCase)))
       .toAvroTopic(outputTopic, schemaRegistryUrl, printDebug = true)
 
     builder.build()
