@@ -62,7 +62,7 @@ clients
 **Demo**
 
 ```bash
-# start zookeeper + kafka + kafka-rest + kafka-ui
+# start kafka locally
 docker-compose up
 
 # (mac|linux) view kafka ui
@@ -173,7 +173,7 @@ jq tostring avro/src/main/avro/user.avsc
 Setup
 
 ```bash
-# start zookeeper + kafka + kafka-rest + kafka-ui + schema-registry + schema-registry-ui
+# start kafka locally
 docker-compose up
 
 # (mac|linux) view kafka ui
@@ -367,8 +367,6 @@ sbt clean streams-json-avro/test
 Example
 ```
 # json
-
-# NEW
 mykey:{"valueInt":42,"valueString":"foo"}
 
 # log
@@ -388,11 +386,12 @@ mykey:{"valueInt":42,"valueString":"foo"}
 **Description**
 
 * [KSQL](https://docs.confluent.io/current/ksql/docs/index.html)
+* [ksqlDB](https://docs.ksqldb.io/en/latest)
 * [Udemy Course](https://www.udemy.com/kafka-ksql)
 
 Start the containers
 ```bash
-# start zookeeper + kafka + schema-registry + ksql-server
+# start kafka locally
 docker-compose up
 ```
 
@@ -405,12 +404,12 @@ docker exec -it local-kafka bash
 kafka-topics --zookeeper zookeeper:2181 \
   --create --if-not-exists --replication-factor 1 --partitions 1 --topic USER_PROFILE
 
-# publish sample data
+# produce sample data
 kafka-console-producer --broker-list kafka:9092 --topic USER_PROFILE << EOF
 {"userid": 1000, "firstname": "Alison", "lastname": "Smith", "countrycode": "GB", "rating": 4.7}
 EOF
 
-# consume from topic
+# consume
 kafka-console-consumer --bootstrap-server kafka:9092 --topic USER_PROFILE --from-beginning
 ```
 
@@ -424,24 +423,24 @@ ksql http://ksql-server:8088
 
 # alternative to connect to remote server
 docker run --rm \
-  --network=kafka-scala-examples_my_local_network \
+  --network=kafka-scala-examples_local_kafka_network \
   -it confluentinc/cp-ksql-cli http://ksql-server:8088
 
 # create stream
-create stream user_profile (\
+CREATE STREAM user_profile (\
   userid INT, \
   firstname VARCHAR, \
   lastname VARCHAR, \
   countrycode VARCHAR, \
   rating DOUBLE \
-  ) with (KAFKA_TOPIC = 'USER_PROFILE', VALUE_FORMAT = 'JSON');
+  ) WITH (KAFKA_TOPIC = 'USER_PROFILE', VALUE_FORMAT = 'JSON');
 
 # verify stream
 list streams;
 describe user_profile;
 
 # query stream
-select userid, firstname, lastname, countrycode, rating from user_profile;
+SELECT userid, firstname, lastname, countrycode, rating FROM user_profile EMIT CHANGES;
 ```
 
 Expect the consumer and the query to show the generated data
@@ -449,12 +448,13 @@ Expect the consumer and the query to show the generated data
 # generate data
 docker run --rm \
   -v $(pwd)/datagen:/datagen \
-  --network=kafka-scala-examples_my_local_network \
+  --network=kafka-scala-examples_local_kafka_network \
   -it confluentinc/ksql-examples ksql-datagen \
-  bootstrap-server=kafka:9092 \
+  bootstrap-server=kafka:29092 \
   schemaRegistryUrl=http://schema-registry:8081 \
   schema=datagen/user_profile.avro \
-  format=json topic=USER_PROFILE \
+  format=json \
+  topic=USER_PROFILE \
   key=userid \
   maxInterval=5000 \
   iterations=100
