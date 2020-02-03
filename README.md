@@ -14,7 +14,36 @@ Examples in Scala of
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
 * [KSQL](#ksql)
-* Kafka Connect - **TODO**
+* [Kafka Connect](#kafka-connect)
+
+Local environment
+
+```bash
+# start locally
+# - zookeeper
+# - kafka
+# - kafka-rest
+# - kafka-ui
+# - schema-registry
+# - schema-registry-ui
+# - ksql-server
+# - ksql-cli
+# - kafka-connect
+# - kafka-connect-ui
+docker-compose up
+
+# (mac|linux) view kafka ui
+[open|xdg-open] http://localhost:8000
+
+# (mac|linux) view schema-registry ui
+[open|xdg-open] http://localhost:8001
+
+# (mac|linux) view kafka-connect ui
+[open|xdg-open] http://localhost:8002
+
+# cleanup
+docker-compose down -v
+```
 
 ## avro
 
@@ -65,12 +94,6 @@ clients
 **Demo**
 
 ```bash
-# start kafka locally
-docker-compose up
-
-# (mac|linux) view kafka ui
-[open|xdg-open] http://localhost:8000
-
 # access kafka
 docker exec -it local-kafka bash
 
@@ -172,19 +195,6 @@ jq tostring avro/src/main/avro/user.avsc
 **Demo**
 
 * [`BaseKafkaSchemaRegistrySpec`](schema-registry/src/test/scala/com/kafka/demo/BaseKafkaSchemaRegistrySpec.scala) to test Kafka with SchemaRegistry
-
-Setup
-
-```bash
-# start kafka locally
-docker-compose up
-
-# (mac|linux) view kafka ui
-[open|xdg-open] http://localhost:8000
-
-# (mac|linux) view schema-registry ui
-[open|xdg-open] http://localhost:8001
-```
 
 * `SpecificRecord` with [sbt-avrohugger](https://github.com/julianpeeters/sbt-avrohugger)
 [[Producer](schema-registry/src/main/scala/com/kafka/demo/specific/Producer.scala)|[Consumer](schema-registry/src/main/scala/com/kafka/demo/specific/Consumer.scala)|[test](schema-registry/src/test/scala/com/kafka/demo/KafkaSchemaRegistrySpecificSpec.scala)]
@@ -303,11 +313,11 @@ kafka-topics --zookeeper zookeeper:2181 \
 sbt "streams/runMain com.kafka.demo.streams.ToUpperCaseApp"
 
 # produce
-kafka-console-producer.sh --broker-list kafka:9092 \
+kafka-console-producer --broker-list kafka:9092 \
   --topic example.to-upper-case-app.input
 
 # consume
-kafka-console-consumer.sh --bootstrap-server kafka:9092 \
+kafka-console-consumer --bootstrap-server kafka:9092 \
   --topic example.to-upper-case-app.output
 
 # test
@@ -392,12 +402,6 @@ mykey:{"valueInt":42,"valueString":"foo"}
 * [ksqlDB](https://docs.ksqldb.io/en/latest)
 * [Udemy Course](https://www.udemy.com/kafka-ksql)
 
-Start the containers
-```bash
-# start kafka locally
-docker-compose up
-```
-
 Setup Kafka
 ```bash
 # access kafka
@@ -477,12 +481,15 @@ docker run --rm \
   iterations=100
 ```
 
-## extra
+## kafka-connect
+
+* [Kafka Connect](https://docs.confluent.io/current/connect/index.html)
 
 ```bash
-# cleanup
-docker-compose down -v
+# TODO
 ```
+
+## extra
 
 **Further readings**
 

@@ -122,5 +122,50 @@ services:
     entrypoint: /bin/sh
     tty: true
 
+  # distributed mode
+  kafka-connect:
+    container_name: local-kafka-connect
+    image: confluentinc/cp-kafka-connect:5.4.0
+    depends_on:
+      - kafka
+    ports:
+      - 8083:8083
+    hostname: kafka-connect
+    networks:
+      - local_kafka_network
+    environment:
+      - CONNECT_BOOTSTRAP_SERVERS=kafka:29092
+      - CONNECT_ZOOKEEPER_CONNECT=zookeeper:2181
+      - CONNECT_REST_ADVERTISED_HOST_NAME=kafka-connect
+      - CONNECT_REST_PORT=8083
+      - CONNECT_GROUP_ID=local-connect-group
+      - CONNECT_CONFIG_STORAGE_TOPIC=local-connect-configs
+      - CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_OFFSET_FLUSH_INTERVAL_MS=10000
+      - CONNECT_OFFSET_STORAGE_TOPIC=local-connect-offsets
+      - CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_STATUS_STORAGE_TOPIC=local-connect-status
+      - CONNECT_STATUS_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_KEY_CONVERTER=io.confluent.connect.avro.AvroConverter
+      - CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+      - CONNECT_VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
+      - CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+      - CONNECT_INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_PLUGIN_PATH=/usr/share/java
+
+  kafka-connect-ui:
+    container_name: local-kafka-connect-ui
+    image: landoop/kafka-connect-ui:latest
+    depends_on:
+      - kafka-connect
+    ports:
+      - 8002:8000
+    hostname: kafka-connect-ui
+    networks:
+      - local_kafka_network
+    environment:
+      - CONNECT_URL=http://kafka-connect:8083
+
 networks:
   local_kafka_network:
