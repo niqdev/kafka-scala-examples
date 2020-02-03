@@ -30,6 +30,8 @@ Local environment
 # - ksql-cli
 # - kafka-connect
 # - kafka-connect-ui
+# - postgres
+# - postgres-ui
 docker-compose up
 
 # (mac|linux) view kafka ui
@@ -43,6 +45,16 @@ docker-compose up
 
 # cleanup
 docker-compose down -v
+```
+
+If containers are crashing, make sure you have enough resources
+
+```bash
+# verify memory and cpu usage
+docker ps -q | xargs  docker stats --no-stream
+
+# verify status
+docker inspect <CONTAINER_NAME> | jq '.[].State'
 ```
 
 ## avro
@@ -496,16 +508,6 @@ http -v --json POST :8083/connectors < connectors/source-file-connector.json
 
 # verify connector
 http -v :8083/connectors/source-file-connector
-```
-
-If `local-kafka-connect` is crashing, make sure you have enough free memory
-
-```bash
-# verify memory and cpu usage
-docker ps -q | xargs  docker stats --no-stream
-
-# inspect status
-docker inspect local-kafka-connect | jq '.[].State'
 ```
 
 ## extra
