@@ -49,7 +49,7 @@ If containers are crashing, make sure you have enough resources
 
 ```bash
 # verify memory and cpu usage
-docker ps -q | xargs  docker stats --no-stream
+docker ps -q | xargs docker stats --no-stream
 
 # verify status
 docker inspect <CONTAINER_NAME> | jq '.[].State'

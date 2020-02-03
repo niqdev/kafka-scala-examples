@@ -22,8 +22,8 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - 29092:29092
       - 9092:9092
+      - 29092:29092
     hostname: kafka
     networks:
       - local_kafka_network
