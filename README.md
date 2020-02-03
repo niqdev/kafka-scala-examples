@@ -484,14 +484,28 @@ docker run --rm \
 ## kafka-connect
 
 * [Kafka Connect](https://docs.confluent.io/current/connect/index.html)
-* Confluent's Kafka Connect [API](https://docs.confluent.io/current/connect/references/restapi.html)
+* Confluent's Kafka Connect [API](https://docs.confluent.io/current/connect/references/restapi.html) and [connectors](https://docs.confluent.io/current/connect/managing/connectors.html)
 * [Udemy Course](https://www.udemy.com/course/kafka-connect)
 
 ```bash
 # list connector
 http -v :8083/connectors
 
-# TODO
+# create connector
+http -v --json POST :8083/connectors < connectors/source-file-connector.json
+
+# verify connector
+http -v :8083/connectors/source-file-connector
+```
+
+If `local-kafka-connect` is crashing, make sure you have enough free memory
+
+```bash
+# verify memory and cpu usage
+docker ps -q | xargs  docker stats --no-stream
+
+# inspect status
+docker inspect local-kafka-connect | jq '.[].State'
 ```
 
 ## extra
@@ -505,6 +519,7 @@ http -v :8083/connectors
 * [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
 * [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
 * [Docker Tips and Tricks with KSQL and Kafka](https://rmoff.net/2018/12/15/docker-tips-and-tricks-with-ksql-and-kafka)
+* [Introduction to Topic Log Compaction in Apache Kafka](https://medium.com/swlh/introduction-to-topic-log-compaction-in-apache-kafka-3e4d4afd2262)
 
 **Tools**
 

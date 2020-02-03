@@ -38,3 +38,15 @@ https://medium.com/@jan______/sbtconfig-is-deprecated-650d6ff10236
 ---
 
 https://fd4s.github.io/fs2-kafka
+
+---
+
+version: "3.7"
+
+# https://github.com/confluentinc/cp-docker-images/blob/5.3.2-post/debian/kafka-connect-base/Dockerfile#L59
+    healthcheck:
+      test: ["CMD", "/etc/confluent/docker/healthcheck.sh"]
+      interval: 10s
+      timeout: 10s
+      retries: 100
+      start_period: 2m

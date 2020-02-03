@@ -1,7 +1,7 @@
 # https://docs.confluent.io/current/installation/docker/config-reference.html
 # https://github.com/confluentinc/cp-docker-images
 
-version: '3'
+version: "3"
 
 services:
 
@@ -131,15 +131,14 @@ services:
       - kafka
       - schema-registry
     ports:
-      - 8083:28082
+      - 8083:8083
     hostname: kafka-connect
     networks:
       - local_kafka_network
     environment:
       - CONNECT_BOOTSTRAP_SERVERS=kafka:29092
-      - CONNECT_ZOOKEEPER_CONNECT=zookeeper:2181
       - CONNECT_REST_ADVERTISED_HOST_NAME=kafka-connect
-      - CONNECT_REST_PORT=28082
+      - CONNECT_REST_PORT=8083
       - CONNECT_GROUP_ID=local-connect-group
       - CONNECT_CONFIG_STORAGE_TOPIC=local-connect-configs
       - CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR=1
@@ -155,8 +154,9 @@ services:
       - CONNECT_INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
       - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
       - CONNECT_PLUGIN_PATH=/usr/share/java
+    volumes:
+      - "./connectors/data:/data"
 
-  # FIXME
   kafka-connect-ui:
     container_name: local-kafka-connect-ui
     image: landoop/kafka-connect-ui:latest
