@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+
+  postgres:
+    container_name: local-postgres
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    hostname: postgres
+    networks:
+      - local_postgres_network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  # http://localhost:8080/?pgsql=postgres&username=postgres&db=postgres&ns=public
+  postgres-ui:
+    container_name: local-postgres-ui
+    image: adminer:latest
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    hostname: postgres-ui
+    networks:
+      - local_postgres_network
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+      - ADMINER_DESIGN=pepa-linha
+
+networks:
+  local_postgres_network:

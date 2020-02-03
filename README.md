@@ -30,8 +30,6 @@ Local environment
 # - ksql-cli
 # - kafka-connect
 # - kafka-connect-ui
-# - postgres
-# - postgres-ui
 docker-compose up
 
 # (mac|linux) view kafka ui
@@ -508,6 +506,17 @@ http -v --json POST :8083/connectors < connectors/source-file-connector.json
 
 # verify connector
 http -v :8083/connectors/source-file-connector
+```
+
+> TODO
+
+Setup PostgreSQL locally
+```bash
+# start postgres
+docker-compose -f docker-compose.postgres.yml up
+
+# cleanup
+docker-compose -f docker-compose.postgres.yml down -v
 ```
 
 ## extra
