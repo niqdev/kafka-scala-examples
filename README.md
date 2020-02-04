@@ -519,7 +519,7 @@ Setup connectors
 # list connector
 http -v :8083/connectors
 
-# init data
+# init data to generate schema
 cp local/connect/data/resources-0.txt.orig local/connect/data/resources-0.txt
 
 # setup spooldir source connector
