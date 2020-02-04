@@ -519,18 +519,22 @@ Setup connectors
 # list connector
 http -v :8083/connectors
 
+# init data
+cp local/connect/data/resources-0.txt.orig local/connect/data/resources-0.txt
+
 # setup spooldir source connector
 http -v --json POST :8083/connectors < local/connect/config/source-spooldir-connector.json
 
-# start ingesting data
-cp local/connect/data/resources-0.txt.orig local/connect/data/resources-0.txt
+# ingest data
+echo "{\"accountId\":\"123\",\"resourceType\":\"XXX\",\"value\":\"X1\"}" > local/connect/data/resources-1.txt
 
 # setup jdbc sink connector
 # topic = SCHEMA.DATABASE = "public.postgres"
 http -v --json POST :8083/connectors < local/connect/config/sink-jdbc-connector.json
 
-# access postgres
+# verify data
 docker exec -it local-postgres bash -c "psql -U postgres postgres"
+select * from public.postgres;
 
 # cleanup
 docker-compose -f docker-compose.postgres.yml down -v
