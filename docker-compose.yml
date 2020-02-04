@@ -169,7 +169,8 @@ services:
         # setup spooldir plugin
         mkdir -p /tmp/error /tmp/finished
         # start
-        sleep infinity & /etc/confluent/docker/run
+        sleep infinity &
+        /etc/confluent/docker/run
 
   kafka-connect-ui:
     container_name: local-kafka-connect-ui
