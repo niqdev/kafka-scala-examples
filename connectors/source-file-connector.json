@@ -4,6 +4,6 @@
     "connector.class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
     "tasks.max": "1",
     "file": "/data/test-source.txt",
-    "topic": "local.file"
+    "topic": "local-connector.example"
   }
 }

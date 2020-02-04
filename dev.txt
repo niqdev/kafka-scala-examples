@@ -50,3 +50,13 @@ version: "3.7"
       timeout: 10s
       retries: 100
       start_period: 2m
+
+---
+
+"key.converter.schemas.enable":"false",
+"value.converter.schemas.enable":"true",
+"value.converter":"org.apache.kafka.connect.json.JsonConverter"
+
+jdbc-sink-json-schema
+https://stackoverflow.com/questions/45928768/kafka-connect-jdbc-sink-connector-not-working/45940013#45940013
+https://github.com/apache/kafka/blob/2.4.0/connect/json/src/main/java/org/apache/kafka/connect/json/JsonSchema.java#L39-L59

@@ -512,8 +512,16 @@ http -v :8083/connectors/source-file-connector
 
 Setup PostgreSQL locally
 ```bash
+# create shared network
+docker-compose up
+
 # start postgres
 docker-compose -f docker-compose.postgres.yml up
+
+http -v --json POST :8083/connectors < connectors/sink-jdbc-connector.json
+
+# access postgres
+docker exec -it local-postgres bash -c "psql -U postgres postgres"
 
 # cleanup
 docker-compose -f docker-compose.postgres.yml down -v

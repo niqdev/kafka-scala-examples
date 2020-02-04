@@ -9,8 +9,9 @@ services:
       - 5432:5432
     hostname: postgres
     networks:
-      - local_postgres_network
+      - kafka-scala-examples_local_kafka_network
     environment:
+      # PGDATABASE=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
@@ -24,10 +25,12 @@ services:
       - 8080:8080
     hostname: postgres-ui
     networks:
-      - local_postgres_network
+      - kafka-scala-examples_local_kafka_network
     environment:
       - ADMINER_DEFAULT_SERVER=postgres
       - ADMINER_DESIGN=pepa-linha
 
 networks:
-  local_postgres_network:
+  # share same network
+  kafka-scala-examples_local_kafka_network:
+    external: true
