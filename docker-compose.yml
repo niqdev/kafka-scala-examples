@@ -155,7 +155,21 @@ services:
       - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
       - CONNECT_PLUGIN_PATH=/usr/share/java
     volumes:
-      - "./connectors/data:/data"
+      - "./local/connect/data:/data"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        # install unzip
+        apt-get update && apt-get install unzip -y
+        # install plugin
+        unzip /data/jcustenborder-kafka-connect-spooldir-*.zip 'jcustenborder-kafka-connect-spooldir-*/lib/*' -d /usr/share/java/kafka-connect-spooldir/
+        mv /usr/share/java/kafka-connect-spooldir/*/lib/* /usr/share/java/kafka-connect-spooldir
+        ls -la /usr/share/java
+        # setup spooldir plugin
+        mkdir -p /tmp/error /tmp/finished
+        # start
+        sleep infinity & /etc/confluent/docker/run
 
   kafka-connect-ui:
     container_name: local-kafka-connect-ui

@@ -1,5 +1,0 @@
-{"accountId":"123","resourceType":"AAA","value":"A1"}
-{"accountId":"123","resourceType":"BBB","value":"B1"}
-{"accountId":"123","resourceType":"CCC","value":"C1"}
-{"accountId":"123","resourceType":"DDD","value":"D1"}
-{"accountId":"123","resourceType":"EEE","value":"E1"}

@@ -478,7 +478,7 @@ Expect the consumer and the query to show the generated data
 ```bash
 # generate data
 docker run --rm \
-  -v $(pwd)/datagen:/datagen \
+  -v $(pwd)/local/ksql:/datagen \
   --network=kafka-scala-examples_local_kafka_network \
   -it confluentinc/ksql-examples ksql-datagen \
   bootstrap-server=kafka:29092 \
@@ -497,19 +497,6 @@ docker run --rm \
 * Confluent's Kafka Connect [API](https://docs.confluent.io/current/connect/references/restapi.html) and [connectors](https://docs.confluent.io/current/connect/managing/connectors.html)
 * [Udemy Course](https://www.udemy.com/course/kafka-connect)
 
-```bash
-# list connector
-http -v :8083/connectors
-
-# create connector
-http -v --json POST :8083/connectors < connectors/source-file-connector.json
-
-# verify connector
-http -v :8083/connectors/source-file-connector
-```
-
-> TODO
-
 Setup PostgreSQL locally
 ```bash
 # create shared network
@@ -518,7 +505,29 @@ docker-compose up
 # start postgres
 docker-compose -f docker-compose.postgres.yml up
 
-http -v --json POST :8083/connectors < connectors/sink-jdbc-connector.json
+# (mac|linux) view postgres ui
+# [schema=public|database=postgres|username=postgres|password=postgres]
+[open|xdg-open] http://localhost:8080
+```
+
+Setup connectors
+
+* `kafka-connect-spooldir` [[confluent](https://docs.confluent.io/current/connect/kafka-connect-spooldir/index.html) | [official](https://jcustenborder.github.io/kafka-connect-documentation/projects/kafka-connect-spooldir/index.html)]
+* `kafka-connect-jdbc` [[confluent](https://docs.confluent.io/current/connect/kafka-connect-jdbc/index.html)]
+
+```bash
+# list connector
+http -v :8083/connectors
+
+# setup spooldir source connector
+http -v --json POST :8083/connectors < local/connect/config/source-spooldir-connector.json
+
+# start ingesting data
+cp local/connect/data/resources-0.txt.orig local/connect/data/resources-0.txt
+
+# setup jdbc sink connector
+# topic = SCHEMA.DATABASE = "public.postgres"
+http -v --json POST :8083/connectors < local/connect/config/sink-jdbc-connector.json
 
 # access postgres
 docker exec -it local-postgres bash -c "psql -U postgres postgres"
