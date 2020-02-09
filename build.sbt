@@ -21,7 +21,7 @@ lazy val V = new {
   val avro4s = "3.0.6"
   val kafka = "2.3.1"
   val confluent = "5.3.2"
-  val circe = "0.12.3"
+  val circe = "0.13.0"
 
   // FIXME compatibility issues
   val cakeSolutions = new {
