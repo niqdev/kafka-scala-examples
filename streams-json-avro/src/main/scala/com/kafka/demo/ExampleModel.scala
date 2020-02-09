@@ -3,7 +3,7 @@ package com.kafka.demo
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, Encoder}
 
-final case class JsonModel(myInt: Int, myString: String)
+final case class JsonModel(valueInt: Int, valueString: String)
 
 object JsonModel {
   implicit val jsonModelDecoder: Decoder[JsonModel] = deriveDecoder[JsonModel]

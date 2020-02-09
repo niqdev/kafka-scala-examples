@@ -31,7 +31,7 @@ final class Avro4sExampleSpec extends AnyWordSpecLike with Matchers {
     }
 
     "serialize and deserialize" in {
-      val filePath = "data/users-avro4s.avro"
+      val filePath = "avro/target/data/users-avro4s.avro"
       val users = getUsers()
 
       Avro4sExample.serializeUsers(users, userSchema, filePath)

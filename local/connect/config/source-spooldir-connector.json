@@ -1,0 +1,18 @@
+{
+  "name": "source-spooldir-connector",
+  "config": {
+    "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirJsonSourceConnector",
+    "tasks.max": "1",
+    "input.path": "/data",
+    "input.file.pattern": "^resources-\\d+\\.txt$",
+    "finished.path": "/tmp/finished",
+    "error.path": "/tmp/error",
+    "topic": "public.postgres",
+    "cleanup.policy": "MOVE",
+    "timestamp.mode": "FILE_TIME",
+    "empty.poll.wait.ms": 1000,
+    "schema.generation.enabled": "true",
+    "schema.generation.key.name": "com.kafka.demo.model.ResourceKey",
+    "schema.generation.value.name": "com.kafka.demo.model.ResourceValue"
+  }
+}

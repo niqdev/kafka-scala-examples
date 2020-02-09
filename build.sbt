@@ -18,10 +18,10 @@ lazy val V = new {
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
 
-  val avro4s = "3.0.4"
-  val kafka = "2.4.0"
+  val avro4s = "3.0.6"
+  val kafka = "2.3.1"
   val confluent = "5.3.2"
-  val circe = "0.12.3"
+  val circe = "0.13.0"
 
   // FIXME compatibility issues
   val cakeSolutions = new {
@@ -30,7 +30,7 @@ lazy val V = new {
     val confluent = "5.0.0"
   }
 
-  val scalatest = "3.1.0"
+  val scalaTest = "3.1.0"
   val embeddedKafka = "5.3.2"
 }
 
@@ -40,7 +40,7 @@ lazy val common = project.in(file("common"))
       "ch.qos.logback" % "logback-classic" % V.logback,
       "com.typesafe.scala-logging" %% "scala-logging" % V.scalaLogging,
 
-      "org.scalatest" %% "scalatest" % V.scalatest % Test
+      "org.scalatest" %% "scalatest" % V.scalaTest % Test
     ))
 
 lazy val avro = project.in(file("avro"))
@@ -100,7 +100,7 @@ lazy val streams = project.in(file("streams"))
       N.kafka % "kafka-streams-test-utils" % V.kafka % Test
     ))
 
-lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
+lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
     resolvers ++= Seq(
@@ -121,7 +121,7 @@ lazy val streamsJsonAvro = project.in(file("streams-json-avro"))
     ))
 
 lazy val root = project.in(file("."))
-  .aggregate(avro, kafka, `schema-registry`, streams, streamsJsonAvro)
+  .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`)
   .settings(
     inThisBuild(List(
       organization := I.organization,

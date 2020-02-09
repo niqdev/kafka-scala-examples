@@ -28,7 +28,7 @@ final class AvroCodeGenerationSpec extends AnyWordSpecLike with Matchers {
   "AvroCodeGeneration" should {
 
     "serialize and deserialize" in {
-      val filePath = "data/users-code-generation.avro"
+      val filePath = "avro/target/data/users-code-generation.avro"
       val users = getUsers()
 
       AvroCodeGeneration.serializeUsers(users, filePath)

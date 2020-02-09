@@ -1,5 +1,3 @@
-https://gitpitch.com/niqdev/kafka-demo
-
 # comments
 https://github.com/cakesolutions/scala-kafka-client/issues/147
 https://github.com/confluentinc/schema-registry/issues/789
@@ -40,3 +38,38 @@ https://medium.com/@jan______/sbtconfig-is-deprecated-650d6ff10236
 ---
 
 https://fd4s.github.io/fs2-kafka
+
+---
+
+version: "3.7"
+
+# https://github.com/confluentinc/cp-docker-images/blob/5.3.2-post/debian/kafka-connect-base/Dockerfile#L59
+    healthcheck:
+      test: ["CMD", "/etc/confluent/docker/healthcheck.sh"]
+      interval: 10s
+      timeout: 10s
+      retries: 100
+      start_period: 2m
+
+---
+
+"key.converter.schemas.enable":"false",
+"value.converter.schemas.enable":"true",
+"value.converter":"org.apache.kafka.connect.json.JsonConverter"
+
+jdbc-sink-json-schema
+https://stackoverflow.com/questions/45928768/kafka-connect-jdbc-sink-connector-not-working/45940013#45940013
+https://github.com/apache/kafka/blob/2.4.0/connect/json/src/main/java/org/apache/kafka/connect/json/JsonSchema.java#L39-L59
+
+---
+
+# testing
+https://kafka.apache.org/11/documentation/streams/developer-guide/testing.html
+# examples
+https://github.com/confluentinc/kafka-streams-examples
+
+---
+
+# connectors
+https://softwaremill.com/import-export-through-kafka-connectors/
+https://rmoff.net/2019/05/08/when-a-kafka-connect-converter-is-not-a-_converter_/

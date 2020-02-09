@@ -11,6 +11,7 @@ import org.apache.kafka.clients.producer.{ProducerConfig, ProducerRecord}
 import scala.util.{Failure, Success}
 
 /*
+ * http://avro.apache.org/docs/current/spec.html
  * https://docs.confluent.io/current/streams/developer-guide/datatypes.html#avro
  * https://github.com/confluentinc/kafka-streams-examples/blob/5.0.x/src/test/scala/io/confluent/examples/streams/GenericAvroScalaIntegrationTest.scala
  */
@@ -57,7 +58,7 @@ object Producer {
         customer.put("name", "name-2")
         ("id-2", customer)
       },
-      // TODO
+      // FIXME org.apache.avro.AvroRuntimeException: Not a valid schema field: username
       {
         val customer = new GenericData.Record(schemaCustomerV2)
         customer.put("username", "name-3")
