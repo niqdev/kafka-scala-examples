@@ -9,6 +9,8 @@ https://github.com/ovotech/kafka-serialization
 http://vectos.net/formulation
 
 * multi-version on same topic
+- https://github.com/confluentinc/schema-registry/pull/680
+- https://softwaremill.com/schema-registry-and-topic-with-multiple-message-types/
 * tests: https://github.com/confluentinc/schema-registry/blob/master/client/src/main/java/io/confluent/kafka/schemaregistry/client/MockSchemaRegistryClient.java
 
 # TODO
