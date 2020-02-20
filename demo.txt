@@ -1,0 +1,75 @@
+demo purpose:
+- show kafka-streams, ksql, kafka-connect
+- maybe useful in other project
+
+1) show repo
+- https://github.com/niqdev/kafka-scala-examples
+- minimal configurations
+- scala/java style, no FP on purpose
+
+2) show docker-compose
+docker-compose up
+docker-compose down -v
+docker-compose -f docker-compose.postgres.yml up
+docker-compose -f docker-compose.postgres.yml down -v
+
+3) show ui
+http://localhost:8000
+http://localhost:8001
+http://localhost:8002
+http://localhost:8080
+
+4) kafka-streams JsonToAvroApp demo
+- code is self explanatory
+- https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/main/scala/com/kafka/demo/JsonToAvroApp.scala
+- https://github.com/niqdev/kafka-scala-examples/blob/master/streams-json-avro/src/test/scala/com/kafka/demo/JsonToAvroSpec.scala
+- missing pure topology test
+# example to show how to send downstream element with a custom logic: query all db + null :-(
+- https://github.com/confluentinc/kafka-streams-examples/blob/5.4.0-post/src/test/java/io/confluent/examples/streams/EventDeduplicationLambdaIntegrationTest.java
+
+docker exec -it local-kafka bash
+kafka-topics --zookeeper zookeeper:2181 --list
+kafka-topics --zookeeper zookeeper:2181 --create --if-not-exists --replication-factor 1 --partitions 1 --topic json.streams-json-to-avro-app.input
+
+kafka-console-producer \
+  --broker-list kafka:9092 \
+  --property "parse.key=true" \
+  --property "key.separator=:" \
+  --property "key.serializer=org.apache.kafka.common.serialization.ByteArraySerializer" \
+  --property "value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer" \
+  --topic json.streams-json-to-avro-app.input
+
+docker exec -it local-schema-registry bash
+
+kafka-avro-console-consumer --bootstrap-server kafka:29092 \
+  --property schema.registry.url=http://schema-registry:8081 \
+  --property schema.id.separator=: \
+  --property print.key=true \
+  --property print.schema.ids=true \
+  --property key.separator=, \
+  --from-beginning \
+  --topic avro.streams-json-to-avro-app.output
+
+sbt "streams-json-avro/runMain com.kafka.demo.JsonToAvroApp"
+
+mykey:{"valueInt":42,"valueString":"foo"}
+mykey:{"valueInt":42,"valueString":"foo","aaa":"foo"}
+
+5) ksql
+- see demo in the readme
+- https://github.com/niqdev/kafka-scala-examples/blob/master/local/ksql/user_profile.avro
+- useful for discovery data before write kafka-streams app
+- useful for development/testing
+
+6) kafka-connect
+- disclaimer: see connect case-by-case, java
+# only for development
+- https://docs.confluent.io/current/connect/filestream_connector.html
+# production support
+- https://docs.confluent.io/current/connect/kafka-connect-spooldir/index.html
+- https://docs.confluent.io/current/connect/kafka-connect-spooldir/connectors/json_source_connector.html
+# issue
+- https://github.com/jcustenborder/kafka-connect-spooldir/issues/122
+
+- demo: source from file sink to db
+- https://github.com/niqdev/kafka-scala-examples/tree/master/local/connect
