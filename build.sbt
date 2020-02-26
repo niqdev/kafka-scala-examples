@@ -19,7 +19,7 @@ lazy val V = new {
   val scalaLogging = "3.9.2"
 
   val avro4s = "3.0.8"
-  val kafka = "2.3.1"
+  val kafka = "2.4.0"
   val confluent = "5.3.2"
   val circe = "0.13.0"
 
