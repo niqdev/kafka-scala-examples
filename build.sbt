@@ -6,10 +6,10 @@ lazy val V = new {
 
   val avro4s = "3.0.9"
   val kafka = "2.4.0"
-  val confluent = "5.3.2"
+  val confluent = "5.4.1"
   val circe = "0.13.0"
 
-  // FIXME compatibility issues
+  // compatibility issues
   val cakeSolutions = new {
     val version = "2.0.0"
     val kafka = "2.0.0"
