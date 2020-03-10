@@ -1,17 +1,3 @@
-lazy val I = new {
-  val organization = "com.kafka.demo"
-  val name = "kafka-demo"
-  val version = "0.1"
-}
-
-lazy val N = new {
-  val avro4s = "com.sksamuel.avro4s"
-  val cakeSolutions = "net.cakesolutions"
-  val confluent = "io.confluent"
-  val kafka = "org.apache.kafka"
-  val circe = "io.circe"
-}
-
 lazy val V = new {
   val scala = "2.12.10"
 
@@ -50,7 +36,7 @@ lazy val avro = project.in(file("avro"))
   .disablePlugins(SbtAvrohugger)
   .settings(
     libraryDependencies ++= Seq(
-      N.avro4s %% "avro4s-core" % V.avro4s
+      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
     ))
 
 lazy val kafka = project.in(file("kafka"))
@@ -61,9 +47,9 @@ lazy val kafka = project.in(file("kafka"))
     ),
 
     libraryDependencies ++= Seq(
-      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions.version,
+      "net.cakesolutions" %% "scala-kafka-client" % V.cakeSolutions.version,
 
-      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
+      "net.cakesolutions" %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
     ))
 
 lazy val `schema-registry` = project.in(file("schema-registry"))
@@ -78,12 +64,12 @@ lazy val `schema-registry` = project.in(file("schema-registry"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka % "kafka-clients" % V.cakeSolutions.kafka,
-      N.confluent % "kafka-avro-serializer" % V.cakeSolutions.confluent,
-      N.confluent % "kafka-schema-registry-client" % V.cakeSolutions.confluent,
+      "org.apache.kafka" % "kafka-clients" % V.cakeSolutions.kafka,
+      "io.confluent" % "kafka-avro-serializer" % V.cakeSolutions.confluent,
+      "io.confluent" % "kafka-schema-registry-client" % V.cakeSolutions.confluent,
 
-      N.cakeSolutions %% "scala-kafka-client" % V.cakeSolutions.version,
-      N.cakeSolutions %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
+      "net.cakesolutions" %% "scala-kafka-client" % V.cakeSolutions.version,
+      "net.cakesolutions" %% "scala-kafka-client-testkit" % V.cakeSolutions.version % Test
     ),
 
     // sbt-avrohugger: SpecificRecord
@@ -94,10 +80,10 @@ lazy val streams = project.in(file("streams"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
     libraryDependencies ++= Seq(
-      N.kafka % "kafka-streams" % V.kafka,
-      N.kafka %% "kafka-streams-scala" % V.kafka,
+      "org.apache.kafka" % "kafka-streams" % V.kafka,
+      "org.apache.kafka" %% "kafka-streams-scala" % V.kafka,
 
-      N.kafka % "kafka-streams-test-utils" % V.kafka % Test
+      "org.apache.kafka" % "kafka-streams-test-utils" % V.kafka % Test
     ))
 
 lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
@@ -108,14 +94,14 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
     ),
 
     libraryDependencies ++= Seq(
-      N.kafka %% "kafka-streams-scala" % V.kafka,
-      N.confluent % "kafka-streams-avro-serde" % V.confluent,
+      "org.apache.kafka" %% "kafka-streams-scala" % V.kafka,
+      "io.confluent" % "kafka-streams-avro-serde" % V.confluent,
 
-      N.circe %% "circe-core" % V.circe,
-      N.circe %% "circe-generic" % V.circe,
-      N.circe %% "circe-parser" % V.circe,
+      "io.circe" %% "circe-core" % V.circe,
+      "io.circe" %% "circe-generic" % V.circe,
+      "io.circe" %% "circe-parser" % V.circe,
 
-      N.avro4s %% "avro4s-core" % V.avro4s,
+      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s,
 
       "io.github.embeddedkafka" %% "embedded-kafka-schema-registry" % V.embeddedKafka % Test
     ))
@@ -123,12 +109,9 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
 lazy val root = project.in(file("."))
   .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`)
   .settings(
-    inThisBuild(List(
-      organization := I.organization,
-      scalaVersion := V.scala,
-      version := I.version,
-      parallelExecution := false
-    )),
-
-    name := I.name
+    organization := "com.kafka.demo",
+    name := "kafka-scala-example",
+    scalaVersion := V.scala,
+    version := "0.1",
+    parallelExecution := false
   )
