@@ -11,7 +11,7 @@ lazy val V = new {
   val circe = "0.13.0"
   val catsCore = "2.1.1"
   val catsEffect = "2.1.2"
-  val zio = "1.0.0-RC18-1"
+  val zio = "1.0.0-RC18-2"
 
   // compatibility issues
   val cakeSolutions = new {
