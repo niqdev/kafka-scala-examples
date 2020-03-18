@@ -9,9 +9,9 @@ lazy val V = new {
   val confluent = "5.4.1"
 
   val circe = "0.13.0"
-  val catsCore = "2.1.1"
-  val catsEffect = "2.1.2"
   val zio = "1.0.0-RC18-2"
+  val zioLogging = "0.2.4"
+  val zioConfig = "1.0.0-RC13"
 
   // compatibility issues
   val cakeSolutions = new {
@@ -110,24 +110,26 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
       "io.github.embeddedkafka" %% "embedded-kafka-schema-registry" % V.embeddedKafka % Test
     ))
 
-/* TODO
-- cats-kafka-streams
-- zio-kafka-streams
-- codec: avro4s / avrohugger / circe
-- testing
-- sbt-avro4s
-*/
-lazy val `fp-kafka-streams` = project.in(file("fp-kafka-streams"))
+lazy val `zio-kafka-streams` = project.in(file("zio-kafka-streams"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
+    resolvers ++= Seq(
+      "confluent" at "https://packages.confluent.io/maven/"
+    ),
+
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % V.catsCore,
-      "org.typelevel" %% "cats-effect" % V.catsEffect,
-      "dev.zio" %% "zio" % V.zio
+      "dev.zio" %% "zio" % V.zio,
+      "dev.zio" %% "zio-logging" % V.zioLogging,
+      "dev.zio" %% "zio-config" % V.zioConfig,
+      "dev.zio" %% "zio-config-refined" % V.zioConfig,
+
+      "org.apache.kafka" %% "kafka-streams-scala" % V.kafka,
+      "io.confluent" % "kafka-streams-avro-serde" % V.confluent,
+      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
     ))
 
 lazy val root = project.in(file("."))
-  .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`, `fp-kafka-streams`)
+  .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`, `zio-kafka-streams`)
   .settings(
     organization := "com.kafka.demo",
     name := "kafka-scala-example",
