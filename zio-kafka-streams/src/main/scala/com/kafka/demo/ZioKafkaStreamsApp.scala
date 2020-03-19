@@ -8,7 +8,7 @@ import zio.{UIO, ZEnv, ZIO, ZLayer, App}
 
 object ZioKafkaStreamsApp extends App {
 
-  // TODO add KafkaStreamsTopology.male layer
+  // TODO add KafkaStreamsTopology.make layer
   private[this] final type AppEnv = Config[KafkaStreamsConfig] with Logging
 
   private[this] final lazy val configLayerLocal = Config.fromMap(Map(

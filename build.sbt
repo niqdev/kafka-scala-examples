@@ -3,12 +3,19 @@ lazy val V = new {
 
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
+  val logEffect = "0.12.1"
 
   val avro4s = "3.0.9"
   val kafka = "2.4.1"
   val confluent = "5.4.1"
 
   val circe = "0.13.0"
+  val ciris = "1.0.4"
+  val refined = "0.9.13"
+  val newtype = "0.4.3"
+  val cats = "2.1.1"
+  val catsEffect = "2.1.2"
+  val catsRetry = "1.1.0"
   val zio = "1.0.0-RC18-2"
   val zioLogging = "0.2.4"
   val zioConfig = "1.0.0-RC13"
@@ -110,6 +117,42 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
       "io.github.embeddedkafka" %% "embedded-kafka-schema-registry" % V.embeddedKafka % Test
     ))
 
+lazy val `cats-kafka-streams` = project.in(file("cats-kafka-streams"))
+  .dependsOn(common % "compile->compile;test->test")
+  .settings(
+    scalacOptions ++= Seq(
+      "-encoding", "UTF-8",
+      "-deprecation",
+      "-unchecked",
+      "-feature",
+      "-language:existentials",
+      "-language:higherKinds",
+      "-language:implicitConversions",
+      "-Xlint",
+      "-Xfatal-warnings",
+      "-Ypartial-unification",
+      "-language:postfixOps"
+    ),
+
+    resolvers ++= Seq(
+      "confluent" at "https://packages.confluent.io/maven/"
+    ),
+
+    libraryDependencies ++= Seq(
+      "io.laserdisc" %% "log-effect-fs2" % V.logEffect,
+      "org.typelevel" %% "cats-core" % V.cats,
+      "org.typelevel" %% "cats-effect" % V.catsEffect,
+      "com.github.cb372" %% "cats-retry" % V.catsRetry,
+      "is.cir" %% "ciris" % V.ciris,
+      "is.cir" %% "ciris-refined" % V.ciris,
+      "eu.timepit" %% "refined" % V.refined,
+      "io.estatico" %% "newtype" % V.newtype,
+
+      "org.apache.kafka" %% "kafka-streams-scala" % V.kafka,
+      "io.confluent" % "kafka-streams-avro-serde" % V.confluent,
+      "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s
+    ))
+
 lazy val `zio-kafka-streams` = project.in(file("zio-kafka-streams"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
@@ -129,7 +172,7 @@ lazy val `zio-kafka-streams` = project.in(file("zio-kafka-streams"))
     ))
 
 lazy val root = project.in(file("."))
-  .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`, `zio-kafka-streams`)
+  .aggregate(avro, kafka, `schema-registry`, streams, `streams-json-avro`, `cats-kafka-streams`, `zio-kafka-streams`)
   .settings(
     organization := "com.kafka.demo",
     name := "kafka-scala-example",
