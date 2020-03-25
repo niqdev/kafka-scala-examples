@@ -11,7 +11,7 @@ final case class Settings(
   applicationName: ApplicationName,
   bootstrapServers: BootstrapServers,
   schemaRegistry: SchemaRegistry,
-  inputTopic: InputTopics,
+  inputTopic: InputTopic,
   outputTopic: OutputTopic
 )
 
@@ -35,7 +35,7 @@ object Settings extends SettingsInstances {
       env("APPLICATION_NAME").as[ApplicationName],
       env("BOOTSTRAP_SERVERS").as[BootstrapServers],
       env("SCHEMA_REGISTRY").as[SchemaRegistry],
-      env("INPUT_TOPIC").as[InputTopics],
+      env("INPUT_TOPIC").as[InputTopic],
       env("OUTPUT_TOPIC").as[OutputTopic]
     ).parMapN(Settings.apply)
 }

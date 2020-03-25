@@ -10,6 +10,7 @@ import log.effect.LogWriter
 
 sealed abstract class KafkaStreamsRuntime[C: Show, F[_] : Async : ContextShift : LogWriter] {
 
+  // TODO
   def run(config: ConfigValue[C]): F[Unit] =
     for {
       settings <- config.load[F]

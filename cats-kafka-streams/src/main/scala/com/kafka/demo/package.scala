@@ -8,6 +8,6 @@ package object demo {
   final type ApplicationName = NonEmptyString
   final type BootstrapServers = NonEmptyString
   final type SchemaRegistry = NonEmptyString
-  final type InputTopics = NonEmptyString
+  final type InputTopic = NonEmptyString
   final type OutputTopic = NonEmptyString
 }

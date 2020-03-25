@@ -15,5 +15,6 @@ object KafkaStreamsTopology {
       override def build: RIO[KafkaStreamsConfig, Topology] = ???
     })
 
+  // TODO
   def build: RIO[KafkaStreamsConfig, Topology] = ???
 }
