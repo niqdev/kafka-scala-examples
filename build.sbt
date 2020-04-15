@@ -1,5 +1,5 @@
 lazy val V = new {
-  val scala = "2.12.10"
+  val scala = "2.12.11"
 
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
