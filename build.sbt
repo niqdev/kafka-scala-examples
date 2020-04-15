@@ -1,9 +1,9 @@
 lazy val V = new {
-  val scala = "2.12.10"
+  val scala = "2.12.11"
 
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
-  val logEffect = "0.12.1"
+  val logEffect = "0.12.2"
 
   val avro4s = "3.0.9"
   val kafka = "2.4.1"
@@ -17,8 +17,8 @@ lazy val V = new {
   val catsEffect = "2.1.2"
   val catsRetry = "1.1.0"
   val zio = "1.0.0-RC18-2"
-  val zioLogging = "0.2.4"
-  val zioConfig = "1.0.0-RC16-1"
+  val zioLogging = "0.2.7"
+  val zioConfig = "1.0.0-RC13-1"
 
   // compatibility issues
   val cakeSolutions = new {
@@ -28,7 +28,7 @@ lazy val V = new {
   }
 
   val scalaTest = "3.1.0"
-  val embeddedKafka = "5.4.1"
+  val embeddedKafka = "5.4.1.1"
 }
 
 lazy val common = project.in(file("common"))

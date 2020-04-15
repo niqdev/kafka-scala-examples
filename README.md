@@ -13,6 +13,8 @@ Examples in Scala of
 * [Kafka](#kafka)
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
+    - cats (WIP)
+    - ZIO (WIP)
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
 

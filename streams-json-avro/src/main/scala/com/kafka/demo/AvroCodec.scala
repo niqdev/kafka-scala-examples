@@ -48,7 +48,7 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
     (schemaRegistry: String) =>
       Serdes.fromFn(
         genericAvroSerializer[KeyAvroModel](schemaRegistry, isKey = true),
-        genericAvroDeserializer[KeyAvroModel](schemaRegistry, isKey = true),
+        genericAvroDeserializer[KeyAvroModel](schemaRegistry, isKey = true)
       )
 
   /**
@@ -58,7 +58,7 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
     (schemaRegistry: String) =>
       Serdes.fromFn(
         genericAvroSerializer[ValueAvroModel](schemaRegistry),
-        genericAvroDeserializer[ValueAvroModel](schemaRegistry),
+        genericAvroDeserializer[ValueAvroModel](schemaRegistry)
       )
 
 }
