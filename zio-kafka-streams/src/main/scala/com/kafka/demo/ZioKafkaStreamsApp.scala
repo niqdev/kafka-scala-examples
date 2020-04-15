@@ -3,8 +3,8 @@ package com.kafka.demo
 import zio.clock.Clock
 import zio.config.{Config, config}
 import zio.console.Console
-import zio.logging.{Logging, log}
-import zio.{UIO, ZEnv, ZIO, ZLayer, App}
+import zio.logging.{LogLevel, Logging, log}
+import zio.{App, UIO, ZEnv, ZIO, ZLayer}
 
 object ZioKafkaStreamsApp extends App {
 
@@ -26,7 +26,7 @@ object ZioKafkaStreamsApp extends App {
   final lazy val program: ZIO[AppEnv, Nothing, Unit] =
     for {
       kafkaStreamsConfig <- config[KafkaStreamsConfig]
-      _ <- log(kafkaStreamsConfig.applicationName)
+      _ <- log(LogLevel.Info)(kafkaStreamsConfig.applicationName)
     } yield ()
 
   /*
