@@ -18,7 +18,7 @@ object ZioKafkaStreamsApp extends App {
   ), KafkaStreamsConfig.descriptor)
 
   private[this] final lazy val configLayerEnv =
-    Config.fromEnv(KafkaStreamsConfig.descriptor)
+    Config.fromSystemEnv(KafkaStreamsConfig.descriptor)
 
   private[this] final lazy val loggingLayer: ZLayer[Console with Clock, Nothing, Logging] =
     Logging.console((_, logEntry) => logEntry)
