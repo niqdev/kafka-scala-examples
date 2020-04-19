@@ -18,7 +18,7 @@ lazy val V = new {
   val catsRetry = "1.1.0"
   val zio = "1.0.0-RC18-2"
   val zioLogging = "0.2.7"
-  val zioConfig = "1.0.0-RC16-1"
+  val zioConfig = "1.0.0-RC16-2"
 
   // compatibility issues
   val cakeSolutions = new {
