@@ -1,0 +1,20 @@
+@namespace("com.kafka.demo.model")
+
+protocol ExampleLogical {
+
+  record ExampleLogicalAvdl {
+    /**
+     * Example UUID
+     */
+    @logicalType("uuid")
+    string myUuid;
+
+    string myString;
+
+    @logicalType("timestamp-millis")
+    long myTimestampLogical;
+
+    timestamp_ms myTimestamp;
+  }
+
+}
