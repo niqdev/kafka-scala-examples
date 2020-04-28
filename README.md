@@ -123,6 +123,30 @@ kafka-topics --zookeeper zookeeper:2181 \
 kafka-topics --zookeeper zookeeper:2181 --list 
 kafka-topics --zookeeper zookeeper:2181 --describe --topic <TOPIC_NAME>
 
+# view topic offset
+kafka-run-class kafka.tools.GetOffsetShell \
+  --broker-list kafka:9092 \
+  --time -1 \
+  --topic <TOPIC_NAME>
+
+# list consumer groups
+kafka-consumer-groups --bootstrap-server kafka:9092 --list
+
+# view consumer group offset
+kafka-consumer-groups \
+  --bootstrap-server kafka:9092 \
+  --group <GROUP_NAME> \
+  --describe
+
+# reset consumer group offset
+kafka-consumer-groups \
+  --bootstrap-server kafka:9092 \
+  --group <GROUP_NAME> \
+  --topic <TOPIC_NAME> \
+  --reset-offsets \
+  --to-earliest \
+  --execute
+
 # console producer
 kafka-console-producer --broker-list kafka:9092 --topic <TOPIC_NAME>
 kafkacat -P -b 0 -t <TOPIC_NAME>
@@ -256,7 +280,8 @@ kafka-avro-console-consumer --bootstrap-server kafka:29092 \
   --property schema.id.separator=: \
   --property print.key=true \
   --property print.schema.ids=true \
-  --property key.separator=,
+  --property key.separator=, \
+  --from-beginning
 
 # producer example
 sbt "schema-registry/runMain com.kafka.demo.specific.Producer"
