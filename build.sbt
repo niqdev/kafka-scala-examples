@@ -17,7 +17,7 @@ lazy val V = new {
   val catsEffect = "2.1.3"
   val catsRetry = "1.1.0"
   val zio = "1.0.0-RC18-2"
-  val zioLogging = "0.2.7"
+  val zioLogging = "0.2.8"
   val zioConfig = "1.0.0-RC16-2"
 
   // compatibility issues
