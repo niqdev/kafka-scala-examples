@@ -6,8 +6,8 @@ lazy val V = new {
   val logEffect = "0.12.2"
 
   val avro4s = "3.1.0"
-  val kafka = "2.4.1"
-  val confluent = "5.4.2"
+  val kafka = "2.5.0"
+  val confluent = "5.5.0"
 
   val circe = "0.13.0"
   val ciris = "1.0.4"
@@ -28,7 +28,7 @@ lazy val V = new {
   }
 
   val scalaTest = "3.1.0"
-  val embeddedKafka = "5.4.1.2"
+  val embeddedKafka = "5.5.0"
 }
 
 lazy val common = project.in(file("common"))
@@ -101,7 +101,8 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
   .dependsOn(common % "compile->compile;test->test")
   .settings(
     resolvers ++= Seq(
-      "confluent" at "https://packages.confluent.io/maven/"
+      "confluent" at "https://packages.confluent.io/maven/",
+      "jitpack.io" at "https://jitpack.io"
     ),
 
     libraryDependencies ++= Seq(
@@ -114,7 +115,7 @@ lazy val `streams-json-avro` = project.in(file("streams-json-avro"))
 
       "com.sksamuel.avro4s" %% "avro4s-core" % V.avro4s,
 
-      "io.github.embeddedkafka" %% "embedded-kafka-schema-registry" % V.embeddedKafka % Test
+      "io.github.embeddedkafka" %% "embedded-kafka-schema-registry-streams" % V.embeddedKafka % Test
     ))
 
 lazy val `cats-kafka-streams` = project.in(file("cats-kafka-streams"))
