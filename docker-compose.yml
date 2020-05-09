@@ -97,7 +97,8 @@ services:
   # https://github.com/confluentinc/ksql/blob/4.1.3-post/docs/tutorials/docker-compose.yml#L85
   ksql-server:
     container_name: local-ksql-server
-    image: confluentinc/cp-ksql-server:5.5.0
+    # TODO update 5.5.0
+    image: confluentinc/cp-ksql-server:5.4.2
     depends_on:
       - kafka
       - schema-registry
@@ -114,7 +115,8 @@ services:
 
   ksql-cli:
     container_name: local-ksql-cli
-    image: confluentinc/cp-ksql-cli:5.5.0
+    # TODO update 5.5.0
+    image: confluentinc/cp-ksql-cli:5.4.2
     depends_on:
       - ksql-server
     hostname: ksql-cli
