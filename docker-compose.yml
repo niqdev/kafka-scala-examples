@@ -48,6 +48,14 @@ services:
       - SCHEMA_REGISTRY_HOST_NAME=schema-registry
       - SCHEMA_REGISTRY_LISTENERS=http://schema-registry:8081
       - SCHEMA_REGISTRY_DEBUG=true
+    command:
+      - /bin/bash
+      - -c
+      - |
+        # install jq
+        curl -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/local/bin/jq && chmod u+x /usr/local/bin/jq
+        # start
+        /etc/confluent/docker/run
 
   schema-registry-ui:
     container_name: local-schema-registry-ui
