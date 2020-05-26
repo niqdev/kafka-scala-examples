@@ -75,3 +75,6 @@ https://github.com/confluentinc/kafka-streams-examples
 # connectors
 https://softwaremill.com/import-export-through-kafka-connectors/
 https://rmoff.net/2019/05/08/when-a-kafka-connect-converter-is-not-a-_converter_/
+
+# kafka manager
+https://github.com/yahoo/CMAK
