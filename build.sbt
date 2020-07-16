@@ -11,7 +11,7 @@ lazy val V = new {
 
   val circe = "0.13.0"
   val ciris = "1.1.0"
-  val refined = "0.9.14"
+  val refined = "0.9.15"
   val newtype = "0.4.4"
   val cats = "2.1.1"
   val catsEffect = "2.1.3"
