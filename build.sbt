@@ -3,7 +3,7 @@ lazy val V = new {
 
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
-  val logEffect = "0.13.0"
+  val logEffect = "0.13.1"
 
   val avro4s = "3.1.0"
   val kafka = "2.5.1"
