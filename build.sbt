@@ -3,18 +3,18 @@ lazy val V = new {
 
   val logback = "1.2.3"
   val scalaLogging = "3.9.2"
-  val logEffect = "0.13.0"
+  val logEffect = "0.13.1"
 
   val avro4s = "3.1.0"
-  val kafka = "2.6.0"
+  val kafka = "2.5.1"
   val confluent = "5.5.0"
 
   val circe = "0.13.0"
-  val ciris = "1.1.0"
+  val ciris = "1.1.2"
   val refined = "0.9.14"
   val newtype = "0.4.4"
   val cats = "2.1.1"
-  val catsEffect = "2.1.3"
+  val catsEffect = "2.1.4"
   val catsRetry = "1.1.1"
   val zio = "1.0.0-RC19-2"
   val zioLogging = "0.2.9"
