@@ -5,13 +5,13 @@ lazy val V = new {
   val scalaLogging = "3.9.2"
   val logEffect = "0.13.1"
 
-  val avro4s = "3.1.0"
+  val avro4s = "3.0.9"
   val kafka = "2.5.1"
-  val confluent = "5.5.0"
+  val confluent = "5.5.1"
 
   val circe = "0.13.0"
   val ciris = "1.1.2"
-  val refined = "0.9.14"
+  val refined = "0.9.15"
   val newtype = "0.4.4"
   val cats = "2.1.1"
   val catsEffect = "2.1.4"
@@ -28,7 +28,7 @@ lazy val V = new {
   }
 
   val scalaTest = "3.1.0"
-  val embeddedKafka = "5.5.0"
+  val embeddedKafka = "5.5.1"
 }
 
 lazy val common = project.in(file("common"))
