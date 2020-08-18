@@ -135,6 +135,9 @@ lazy val `cats-kafka-streams` = project.in(file("cats-kafka-streams"))
       "-language:postfixOps"
     ),
 
+    // required by newtype: on 2.13.x use "-Ymacro-annotations"
+    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
+
     resolvers ++= Seq(
       "confluent" at "https://packages.confluent.io/maven/"
     ),
