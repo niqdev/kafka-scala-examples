@@ -13,7 +13,7 @@ object Avro4sExample {
   def serializeUsers(users: List[User], schema: Schema, filePath: String): Unit = {
     val file: File = Files.initFile(filePath)
 
-    val os = AvroOutputStream.data[User].to(file).build(schema)
+    val os = AvroOutputStream.data[User].to(file).build()
     os.write(users)
     users.foreach { user =>
       logger.debug(s"serialize user=[$user]")

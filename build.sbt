@@ -5,7 +5,7 @@ lazy val V = new {
   val scalaLogging = "3.9.2"
   val logEffect = "0.13.1"
 
-  val avro4s = "3.0.9"
+  val avro4s = "4.0.0-RC2"
   val kafka = "2.5.1"
   val confluent = "5.5.1"
 
@@ -16,7 +16,8 @@ lazy val V = new {
   val cats = "2.1.1"
   val catsEffect = "2.1.4"
   val catsRetry = "1.1.1"
-  val zio = "1.0.1"
+  // TODO zio
+  val zio = "1.0.0-RC19-2"
   val zioLogging = "0.2.9"
   val zioConfig = "1.0.0-RC16-2"
 
@@ -33,6 +34,7 @@ lazy val V = new {
 
 lazy val common = project.in(file("common"))
   .settings(
+    javacOptions ++= Seq("-source", "11"),
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % V.logback,
       "com.typesafe.scala-logging" %% "scala-logging" % V.scalaLogging,
@@ -134,6 +136,9 @@ lazy val `cats-kafka-streams` = project.in(file("cats-kafka-streams"))
       "-Ypartial-unification",
       "-language:postfixOps"
     ),
+
+    // required by newtype: on 2.13.x use "-Ymacro-annotations"
+    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
 
     resolvers ++= Seq(
       "confluent" at "https://packages.confluent.io/maven/"

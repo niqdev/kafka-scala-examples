@@ -1,13 +1,11 @@
 package com.kafka
 
+import eu.timepit.refined.api.Refined
+import eu.timepit.refined.string.Url
 import eu.timepit.refined.types.string.NonEmptyString
 
 package object demo {
 
-  // TODO newtype + refined
-  final type ApplicationName = NonEmptyString
-  final type BootstrapServers = NonEmptyString
-  final type SchemaRegistry = NonEmptyString
-  final type InputTopic = NonEmptyString
-  final type OutputTopic = NonEmptyString
+  final type UrlString = String Refined Url
+  final type Topic = NonEmptyString
 }
