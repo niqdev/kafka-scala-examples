@@ -14,7 +14,7 @@ Examples in Scala of
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
     - cats (WIP)
-    - ZIO (WIP)
+    - ZIO (TODO)
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
 
@@ -422,6 +422,15 @@ mykey:{"valueInt":42,"valueString":"foo"}
 # log
 [json.streams-json-to-avro-app.input]: mykey, JsonModel(42,foo)
 [avro.streams-json-to-avro-app.output]: KeyAvroModel(mykey), ValueAvroModel(42,FOO)
+```
+
+#### Demo-3
+
+> TODO
+
+```bash
+# run app
+sbt -jvm-debug 5005 "cats-kafka-streams/runMain com.kafka.demo.CatsKafkaStreamsApp"
 ```
 
 **Readings**

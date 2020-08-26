@@ -8,10 +8,12 @@ import cats.syntax.parallel._
 import cats.syntax.show._
 import ciris.refined._
 import ciris.{ConfigDecoder, ConfigValue, env}
+import com.kafka.demo.streams.LogAndFailProductionExceptionHandler
 import eu.timepit.refined.types.all.NonEmptyString
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import io.estatico.newtype.macros.newtype
 import org.apache.kafka.streams.StreamsConfig
+import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
 
 object settings {
 
@@ -22,11 +24,21 @@ object settings {
     sourceTopic: SourceTopic,
     sinkTopic: SinkTopic
   ) {
+    // https://docs.confluent.io/current/streams/developer-guide/config-streams.html
     def properties: Properties = {
       val props = new Properties()
       props.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId.string.value)
       props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers.string.value)
       props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl.url.value)
+      // https://docs.confluent.io/current/streams/faq.html#failure-and-exception-handling
+      props.put(
+        StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
+        classOf[LogAndContinueExceptionHandler]
+      )
+      props.put(
+        StreamsConfig.DEFAULT_PRODUCTION_EXCEPTION_HANDLER_CLASS_CONFIG,
+        classOf[LogAndFailProductionExceptionHandler]
+      )
       props
     }
   }
