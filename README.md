@@ -13,8 +13,8 @@ Examples in Scala of
 * [Kafka](#kafka)
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
-    - cats (WIP)
-    - ZIO (TODO)
+    - with [cats](https://github.com/niqdev/kafka-scala-examples#demo-3) (WIP)
+    - with ZIO (TODO)
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
 
@@ -427,6 +427,8 @@ mykey:{"valueInt":42,"valueString":"foo"}
 #### Demo-3
 
 > TODO
+
+* `CatsKafkaStreamsApp` [[source](https://github.com/niqdev/kafka-scala-examples/blob/master/cats-kafka-streams/src/main/scala/com/kafka/demo/CatsKafkaStreamsApp.scala)]
 
 ```bash
 # run app
