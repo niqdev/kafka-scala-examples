@@ -4,7 +4,7 @@ import java.util.concurrent.{ ExecutorService, Executors, TimeUnit }
 
 import cats.Monad
 import cats.effect._
-import cats.syntax.flatMap.{ catsSyntaxFlatMapOps, _ }
+import cats.syntax.flatMap._
 import cats.syntax.functor._
 import cats.syntax.show._
 import com.kafka.demo.settings.Settings

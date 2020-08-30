@@ -1,4 +1,5 @@
 package com.kafka.demo
+package streams
 
 import org.apache.kafka.streams.Topology
 import zio.{ Has, RIO, ZLayer }

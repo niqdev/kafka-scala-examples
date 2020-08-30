@@ -1,7 +1,8 @@
 package com.kafka.demo
 package serialization
 
-import org.apache.kafka.streams.scala.kstream.{ Consumed, Produced }
+import org.apache.kafka.streams.processor.StateStore
+import org.apache.kafka.streams.scala.kstream.{ Consumed, Materialized, Produced }
 
 /**
   * See org.apache.kafka.streams.kstream.Consumed
@@ -35,4 +36,23 @@ object AvroRecordProduced {
     V: AvroCodec[V]
   ): AvroRecordProduced[K, V] =
     schemaRegistry => Produced.`with`[K, V](K.serde(schemaRegistry), V.serde(schemaRegistry))
+}
+
+/**
+  * See org.apache.kafka.streams.kstream.Materialized
+  */
+trait AvroRecordMaterialized[K, V, S <: StateStore] {
+  def materialize(schemaRegistry: UrlString): Materialized[K, V, S]
+}
+
+object AvroRecordMaterialized {
+  def apply[K, V, S <: StateStore](
+    implicit ev: AvroRecordMaterialized[K, V, S]
+  ): AvroRecordMaterialized[K, V, S] = ev
+
+  implicit def avroRecordMaterialized[K, V, S <: StateStore](
+    implicit K: AvroCodec[K],
+    V: AvroCodec[V]
+  ): AvroRecordMaterialized[K, V, S] =
+    schemaRegistry => Materialized.`with`[K, V, S](K.serde(schemaRegistry), V.serde(schemaRegistry))
 }

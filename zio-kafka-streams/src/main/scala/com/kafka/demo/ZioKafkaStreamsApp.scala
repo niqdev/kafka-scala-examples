@@ -1,14 +1,12 @@
 package com.kafka.demo
 
-import zio.clock.Clock
 import zio.config.{ ZConfig, config }
-import zio.console.Console
 import zio.logging.{ LogLevel, Logging, log }
-import zio.{ App, ExitCode, URIO, ZIO, ZLayer }
+import zio.{ App, ExitCode, URIO, ZIO }
 
+// sbt "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
 object ZioKafkaStreamsApp extends App {
 
-  // TODO add KafkaStreamsTopology.make layer
   private[this] final type AppEnv = ZConfig[KafkaStreamsConfig] with Logging
 
   private[this] final lazy val configLayerLocal = ZConfig.fromMap(
@@ -23,7 +21,7 @@ object ZioKafkaStreamsApp extends App {
   private[this] final lazy val configLayerEnv =
     ZConfig.fromSystemEnv(KafkaStreamsConfig.descriptor)
 
-  private[this] final lazy val loggingLayer: ZLayer[Console with Clock, Nothing, Logging] =
+  private[this] final lazy val loggingLayer =
     Logging.console((_, logEntry) => logEntry)
 
   final lazy val program: ZIO[AppEnv, Nothing, Unit] =
@@ -32,7 +30,6 @@ object ZioKafkaStreamsApp extends App {
       _                  <- log(LogLevel.Info)(kafkaStreamsConfig.applicationName)
     } yield ()
 
-  // sbt "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
   override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] =
     program.provideLayer(configLayerLocal ++ loggingLayer).exitCode
 }
