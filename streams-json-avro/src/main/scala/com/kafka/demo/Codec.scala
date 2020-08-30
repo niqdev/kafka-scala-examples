@@ -4,13 +4,10 @@ import java.nio.charset.StandardCharsets
 
 import io.circe.parser.decode
 import io.circe.syntax.EncoderOps
-import io.circe.{Decoder, Encoder}
+import io.circe.{ Decoder, Encoder }
 import org.apache.kafka.common.serialization.Serde
 import org.apache.kafka.streams.scala.Serdes
 
-/**
-  *
-  */
 trait Codec[T] {
   def serde: Serde[T]
 }
@@ -23,9 +20,6 @@ object Codec extends CodecInstances {
 
 sealed trait CodecInstances {
 
-  /**
-    *
-    */
   implicit val stringCodec: Codec[String] =
     new Codec[String] {
       override def serde: Serde[String] =
@@ -38,10 +32,7 @@ sealed trait CodecInstances {
   private def jsonDeserializer[T: Decoder]: Array[Byte] => Option[T] =
     bytes => decode[T](new String(bytes, StandardCharsets.UTF_8)).toOption
 
-  /**
-    *
-    */
-  implicit def jsonCodec[T >: Null : Encoder : Decoder]: Codec[T] =
+  implicit def jsonCodec[T >: Null: Encoder: Decoder]: Codec[T] =
     new Codec[T] {
       override def serde: Serde[T] =
         Serdes.fromFn(jsonSerializer, jsonDeserializer)

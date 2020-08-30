@@ -5,7 +5,7 @@ import com.kafka.demo.settings.Settings
 import org.apache.kafka.streams.Topology
 import org.apache.kafka.streams.scala.StreamsBuilder
 
-sealed abstract class KafkaStreamsTopology[F[_] : Sync] {
+sealed abstract class KafkaStreamsTopology[F[_]: Sync] {
 
   def build: Settings => F[Topology] =
     settings =>
@@ -17,6 +17,6 @@ sealed abstract class KafkaStreamsTopology[F[_] : Sync] {
 }
 
 object KafkaStreamsTopology {
-  def apply[F[_] : Sync]: KafkaStreamsTopology[F] =
+  def apply[F[_]: Sync]: KafkaStreamsTopology[F] =
     new KafkaStreamsTopology[F] {}
 }

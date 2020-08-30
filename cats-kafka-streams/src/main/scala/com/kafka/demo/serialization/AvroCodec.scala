@@ -2,7 +2,7 @@ package com.kafka.demo
 package serialization
 
 import cats.syntax.either._
-import com.sksamuel.avro4s.{Decoder, Encoder, RecordFormat}
+import com.sksamuel.avro4s.{ Decoder, Encoder, RecordFormat }
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
 import org.apache.kafka.common.serialization.Serde
@@ -17,12 +17,12 @@ trait AvroCodec[T] {
 object AvroCodec {
   def apply[T](implicit ev: AvroCodec[T]): AvroCodec[T] = ev
 
-  def generic[T >: Null : Encoder : Decoder](isKey: Boolean): AvroCodec[T] =
+  def generic[T >: Null: Encoder: Decoder](isKey: Boolean): AvroCodec[T] =
     schemaRegistry => {
 
       val recordFormat = RecordFormat[T]
-      val props = Map(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistry.value).asJava
-      val serde = new GenericAvroSerde()
+      val props        = Map(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistry.value).asJava
+      val serde        = new GenericAvroSerde()
       serde.configure(props, isKey)
 
       val serializer: (String, T) => Array[Byte] =

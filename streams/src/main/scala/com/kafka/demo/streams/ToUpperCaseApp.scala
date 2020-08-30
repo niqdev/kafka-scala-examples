@@ -6,10 +6,10 @@ import java.util.concurrent.TimeUnit
 
 import com.typesafe.scalalogging.Logger
 import org.apache.kafka.streams.kstream.Printed
-import org.apache.kafka.streams.scala.ImplicitConversions.{consumedFromSerde, producedFromSerde}
+import org.apache.kafka.streams.scala.ImplicitConversions.{ consumedFromSerde, producedFromSerde }
 import org.apache.kafka.streams.scala.Serdes.String
 import org.apache.kafka.streams.scala.StreamsBuilder
-import org.apache.kafka.streams.{KafkaStreams, StreamsConfig, Topology}
+import org.apache.kafka.streams.{ KafkaStreams, StreamsConfig, Topology }
 
 /*
  * https://github.com/bbejeck/kafka-streams-in-action/blob/master/src/main/java/bbejeck/chapter_3/KafkaStreamsYellingApp.java
@@ -18,10 +18,10 @@ object ToUpperCaseApp {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val APP_NAME = "to-upper-case-app"
-  protected[streams] val IN_TOPIC = s"example.$APP_NAME.input"
-  protected[streams] val OUT_TOPIC = s"example.$APP_NAME.output"
-  private[this] val TIMEOUT_SEC = 60
+  private[this] val APP_NAME                = "to-upper-case-app"
+  protected[streams] val IN_TOPIC           = s"example.$APP_NAME.input"
+  protected[streams] val OUT_TOPIC          = s"example.$APP_NAME.output"
+  private[this] val TIMEOUT_SEC             = 60
 
   protected[streams] def properties: Properties = {
     val props = new Properties()

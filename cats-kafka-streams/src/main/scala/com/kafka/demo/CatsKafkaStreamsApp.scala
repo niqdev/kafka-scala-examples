@@ -1,10 +1,10 @@
 package com.kafka.demo
 
-import java.util.concurrent.{ExecutorService, Executors, TimeUnit}
+import java.util.concurrent.{ ExecutorService, Executors, TimeUnit }
 
 import cats.Monad
 import cats.effect._
-import cats.syntax.flatMap.{catsSyntaxFlatMapOps, _}
+import cats.syntax.flatMap.{ catsSyntaxFlatMapOps, _ }
 import cats.syntax.functor._
 import cats.syntax.show._
 import com.kafka.demo.settings.Settings
@@ -18,25 +18,25 @@ import scala.concurrent.ExecutionContext
 object CatsKafkaStreamsApp extends IOApp.WithContext {
 
   /**
-   * Run Kafka Streams application
-   */
+    * Run Kafka Streams application
+    */
   override def run(args: List[String]): IO[ExitCode] =
     log4sLog[IO](getClass)
       .flatMap(implicit logger => app[IO].redeemWith(onError[IO], onSuccess[IO]))
 
-  private[this] final def onSuccess[F[_] : Monad : LogWriter]: Unit => F[ExitCode] =
+  private[this] final def onSuccess[F[_]: Monad: LogWriter]: Unit => F[ExitCode] =
     _ => LogWriter.info("Application succeeded") >> Monad[F].pure(ExitCode.Success)
 
-  private[this] final def onError[F[_] : Monad : LogWriter](e: Throwable): F[ExitCode] =
+  private[this] final def onError[F[_]: Monad: LogWriter](e: Throwable): F[ExitCode] =
     LogWriter.error("Application failed", e) >> Monad[F].pure(ExitCode.Error)
 
-  private[this] final def app[F[_] : Async : ContextShift : Timer : LogWriter]: F[Unit] =
+  private[this] final def app[F[_]: Async: ContextShift: Timer: LogWriter]: F[Unit] =
     for {
       settings <- Settings.config.load[F]
-      _ <- LogWriter.info("Load settings ...")
-      _ <- LogWriter.info(settings.show)
-      _ <- LogWriter.info("Start application ...")
-      _ <- KafkaStreamsRuntime[F].run(settings)
+      _        <- LogWriter.info("Load settings ...")
+      _        <- LogWriter.info(settings.show)
+      _        <- LogWriter.info("Start application ...")
+      _        <- KafkaStreamsRuntime[F].run(settings)
     } yield ()
 
   override protected def executionContextResource: Resource[SyncIO, ExecutionContext] = {

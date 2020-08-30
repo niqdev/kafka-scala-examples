@@ -1,6 +1,6 @@
 package com.kafka.demo
 
-import org.apache.kafka.streams.scala.kstream.{Consumed, Produced}
+import org.apache.kafka.streams.scala.kstream.{ Consumed, Produced }
 
 trait RecordConsumed[K, V] {
   def consumed: Consumed[K, V]

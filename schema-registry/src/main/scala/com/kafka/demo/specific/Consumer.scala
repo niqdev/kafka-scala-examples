@@ -4,11 +4,15 @@ import java.time.Duration
 import java.util.Properties
 
 import com.typesafe.scalalogging.Logger
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroDeserializer, KafkaAvroDeserializerConfig}
+import io.confluent.kafka.serializers.{
+  AbstractKafkaAvroSerDeConfig,
+  KafkaAvroDeserializer,
+  KafkaAvroDeserializerConfig
+}
 import org.apache.kafka.clients.consumer._
 
 import scala.collection.JavaConverters.asJavaCollectionConverter
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 /*
  * https://github.com/confluentinc/examples/blob/5.0.x/clients/avro/src/main/java/io/confluent/examples/clients/basicavro/ConsumerExample.java
@@ -16,11 +20,11 @@ import scala.util.{Failure, Success, Try}
 object Consumer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
-  private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
+  private[this] val BOOTSTRAP_SERVERS_VALUE   = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
-  private[this] val TOPIC_NAME = "example.with-schema.payment"
-  private[this] val GROUP_ID_VALUE = "consumer-specific"
-  private[this] val TIMEOUT_MILLS = 100
+  private[this] val TOPIC_NAME                = "example.with-schema.payment"
+  private[this] val GROUP_ID_VALUE            = "consumer-specific"
+  private[this] val TIMEOUT_MILLS             = 100
 
   private[this] def newConsumer(): KafkaConsumer[String, KafkaAvroDeserializer] = {
     val props = new Properties()
@@ -45,10 +49,10 @@ object Consumer {
 
     Try {
       while (true) {
-        val records: ConsumerRecords[String, KafkaAvroDeserializer] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
+        val records: ConsumerRecords[String, KafkaAvroDeserializer] =
+          consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
         records.iterator().forEachRemaining { record: ConsumerRecord[String, KafkaAvroDeserializer] =>
-          logger.info(
-            s"""
+          logger.info(s"""
                |message
                |  offset=${record.offset}
                |  partition=${record.partition}

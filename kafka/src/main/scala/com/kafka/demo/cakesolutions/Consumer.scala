@@ -3,7 +3,7 @@ package com.kafka.demo.cakesolutions
 import cakesolutions.kafka.KafkaConsumer
 import cakesolutions.kafka.KafkaConsumer.Conf
 import com.kafka.demo.KafkaHelper
-import org.apache.kafka.clients.consumer.{KafkaConsumer => JKafkaConsumer}
+import org.apache.kafka.clients.consumer.{ KafkaConsumer => JKafkaConsumer }
 import org.apache.kafka.common.serialization.StringDeserializer
 
 /*
@@ -12,12 +12,14 @@ import org.apache.kafka.common.serialization.StringDeserializer
 object Consumer {
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "example.no-schema.cakesolutions"
-  private[this] val GROUP_ID_VALUE = "consumer-cakesolutions"
-  private[this] val TIMEOUT_MILLIS = 100
+  private[this] val TOPIC_NAME              = "example.no-schema.cakesolutions"
+  private[this] val GROUP_ID_VALUE          = "consumer-cakesolutions"
+  private[this] val TIMEOUT_MILLIS          = 100
 
-  private[cakesolutions] def newConsumer(bootstrapServers: String,
-                                         groupId: String): JKafkaConsumer[String, String] =
+  private[cakesolutions] def newConsumer(
+    bootstrapServers: String,
+    groupId: String
+  ): JKafkaConsumer[String, String] =
     KafkaConsumer(Conf(new StringDeserializer(), new StringDeserializer(), bootstrapServers, groupId))
 
   def main(args: Array[String]): Unit =

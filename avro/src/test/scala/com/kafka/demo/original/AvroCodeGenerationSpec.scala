@@ -16,7 +16,8 @@ final class AvroCodeGenerationSpec extends AnyWordSpecLike with Matchers {
     val user2 = new User("Ben", 7, "red")
 
     // Construct via builder
-    val user3 = User.newBuilder()
+    val user3 = User
+      .newBuilder()
       .setName("Charlie")
       .setFavoriteColor("blue")
       .setFavoriteNumber(null)
@@ -29,7 +30,7 @@ final class AvroCodeGenerationSpec extends AnyWordSpecLike with Matchers {
 
     "serialize and deserialize" in {
       val filePath = "avro/target/data/users-code-generation.avro"
-      val users = getUsers()
+      val users    = getUsers()
 
       AvroCodeGeneration.serializeUsers(users, filePath)
       AvroCodeGeneration.deserializeUsers(filePath) shouldBe users

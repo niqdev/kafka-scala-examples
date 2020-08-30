@@ -21,7 +21,7 @@ final class Avro4sExampleSpec extends AnyWordSpecLike with Matchers {
   "Avro4sExample" should {
 
     "verify schema" in {
-      val schemaPath = "avro/src/main/avro/user.avsc"
+      val schemaPath     = "avro/src/main/avro/user.avsc"
       val originalSchema = new Schema.Parser().parse(new File(schemaPath))
 
       // "doc" field comparison is ignored
@@ -32,7 +32,7 @@ final class Avro4sExampleSpec extends AnyWordSpecLike with Matchers {
 
     "serialize and deserialize" in {
       val filePath = "avro/target/data/users-avro4s.avro"
-      val users = getUsers()
+      val users    = getUsers()
 
       Avro4sExample.serializeUsers(users, userSchema, filePath)
       Avro4sExample.deserializeUsers(userSchema, filePath) shouldBe users

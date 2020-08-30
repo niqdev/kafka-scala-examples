@@ -2,7 +2,7 @@ package com.kafka.demo
 package original
 
 import org.apache.avro.Schema
-import org.apache.avro.generic.{GenericData, GenericRecord}
+import org.apache.avro.generic.{ GenericData, GenericRecord }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
@@ -27,9 +27,9 @@ final class AvroGenericRecordSpec extends AnyWordSpecLike with Matchers {
 
     "serialize and deserialize" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "avro/target/data/users-generic-record.avro"
-      val schema = AvroGenericRecord.getSchema(schemaPath)
-      val users = getUsers(schema)
+      val filePath   = "avro/target/data/users-generic-record.avro"
+      val schema     = AvroGenericRecord.getSchema(schemaPath)
+      val users      = getUsers(schema)
 
       AvroGenericRecord.serialize(users, schemaPath, filePath)
       AvroGenericRecord.deserialize(schemaPath, filePath) shouldBe users

@@ -5,32 +5,34 @@ import java.time.Duration
 import cakesolutions.kafka.KafkaConsumer
 import cakesolutions.kafka.KafkaConsumer.Conf
 import com.typesafe.scalalogging.Logger
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroDeserializer, KafkaAvroDeserializerConfig}
+import io.confluent.kafka.serializers.{
+  AbstractKafkaAvroSerDeConfig,
+  KafkaAvroDeserializer,
+  KafkaAvroDeserializerConfig
+}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.consumer._
 
 import scala.collection.JavaConverters.asJavaCollectionConverter
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 object Consumer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
-  private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
+  private[this] val BOOTSTRAP_SERVERS_VALUE   = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
-  private[this] val TOPIC_NAME = "example.with-schema.customer"
-  private[this] val GROUP_ID_VALUE = "consumer-generic"
-  private[this] val TIMEOUT_MILLS = 100
+  private[this] val TOPIC_NAME                = "example.with-schema.customer"
+  private[this] val GROUP_ID_VALUE            = "consumer-generic"
+  private[this] val TIMEOUT_MILLS             = 100
 
   private[this] def newConsumer(): KafkaConsumer[String, GenericRecord] =
-    KafkaConsumer(Conf(
-      new KafkaAvroDeserializer(),
-      new KafkaAvroDeserializer(),
-      BOOTSTRAP_SERVERS_VALUE,
-      GROUP_ID_VALUE)
-      .withProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
-      .withProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
-      .withProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
-      .withProperty(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "false"))
+    KafkaConsumer(
+      Conf(new KafkaAvroDeserializer(), new KafkaAvroDeserializer(), BOOTSTRAP_SERVERS_VALUE, GROUP_ID_VALUE)
+        .withProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
+        .withProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[KafkaAvroDeserializer].getName)
+        .withProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
+        .withProperty(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "false")
+    )
       .asInstanceOf[KafkaConsumer[String, GenericRecord]]
 
   def main(args: Array[String]): Unit = {
@@ -43,8 +45,7 @@ object Consumer {
       while (true) {
         val records: ConsumerRecords[String, GenericRecord] = consumer.poll(Duration.ofMillis(TIMEOUT_MILLS))
         records.iterator().forEachRemaining { record: ConsumerRecord[String, GenericRecord] =>
-          logger.info(
-            s"""
+          logger.info(s"""
                |message
                |  offset=${record.offset}
                |  partition=${record.partition}

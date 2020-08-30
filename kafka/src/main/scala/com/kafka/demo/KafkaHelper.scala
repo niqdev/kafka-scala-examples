@@ -1,12 +1,12 @@
 package com.kafka.demo
 
-import java.time.{Duration, LocalDateTime}
+import java.time.{ Duration, LocalDateTime }
 
 import com.typesafe.scalalogging.Logger
-import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.consumer.{ ConsumerRecord, ConsumerRecords, KafkaConsumer }
 
 import scala.collection.JavaConverters.asJavaCollectionConverter
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 object KafkaHelper {
   private[this] val logger = Logger(getClass.getSimpleName)
@@ -18,9 +18,7 @@ object KafkaHelper {
       }
       .map(f)
 
-  def consume[K, V](consumer: KafkaConsumer[K, V],
-                    topic: String,
-                    timeoutMillis: Long): Unit = {
+  def consume[K, V](consumer: KafkaConsumer[K, V], topic: String, timeoutMillis: Long): Unit = {
 
     logger.info(s"Start to consume from $topic")
 
@@ -30,8 +28,7 @@ object KafkaHelper {
       while (true) {
         val records: ConsumerRecords[K, V] = consumer.poll(Duration.ofMillis(timeoutMillis))
         records.iterator().forEachRemaining { record: ConsumerRecord[K, V] =>
-          logger.info(
-            s"""
+          logger.info(s"""
                |message
                |  offset=${record.offset}
                |  partition=${record.partition}

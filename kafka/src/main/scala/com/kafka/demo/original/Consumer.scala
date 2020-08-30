@@ -3,7 +3,7 @@ package com.kafka.demo.original
 import java.util.Properties
 
 import com.kafka.demo.KafkaHelper
-import org.apache.kafka.clients.consumer.ConsumerConfig.{BOOTSTRAP_SERVERS_CONFIG, _}
+import org.apache.kafka.clients.consumer.ConsumerConfig.{ BOOTSTRAP_SERVERS_CONFIG, _ }
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.serialization.StringDeserializer
 
@@ -13,9 +13,9 @@ import org.apache.kafka.common.serialization.StringDeserializer
 object Consumer {
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "example.no-schema.original"
-  private[this] val GROUP_ID_VALUE = "consumer-original"
-  private[this] val TIMEOUT_MILLIS = 100
+  private[this] val TOPIC_NAME              = "example.no-schema.original"
+  private[this] val GROUP_ID_VALUE          = "consumer-original"
+  private[this] val TIMEOUT_MILLIS          = 100
 
   private[this] def newConsumer(): KafkaConsumer[String, String] = {
     val props = new Properties()

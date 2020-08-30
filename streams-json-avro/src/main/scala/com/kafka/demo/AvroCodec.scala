@@ -1,9 +1,9 @@
 package com.kafka.demo
 
 import cats.syntax.either.catsSyntaxEitherObject
-import com.sksamuel.avro4s.{Decoder, Encoder, RecordFormat, SchemaFor}
+import com.sksamuel.avro4s.{ Decoder, Encoder, RecordFormat, SchemaFor }
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
-import io.confluent.kafka.streams.serdes.avro.{GenericAvroSerde, SpecificAvroSerde}
+import io.confluent.kafka.streams.serdes.avro.{ GenericAvroSerde, SpecificAvroSerde }
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.common.serialization.Serde
 import org.apache.kafka.streams.scala.Serdes
@@ -22,7 +22,7 @@ object AvroCodec extends GenericAvroCodec {
 
 sealed trait GenericAvroCodec extends BaseAvroCodec {
 
-  private def genericAvroSerializer[T: Encoder : Decoder : SchemaFor](
+  private def genericAvroSerializer[T: Encoder: Decoder: SchemaFor](
     schemaRegistry: String,
     isKey: Boolean = false
   ): (String, T) => Array[Byte] =
@@ -31,7 +31,7 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
         .serializer()
         .serialize(topic, RecordFormat[T].to(data))
 
-  private def genericAvroDeserializer[T: Encoder : Decoder : SchemaFor](
+  private def genericAvroDeserializer[T: Encoder: Decoder: SchemaFor](
     schemaRegistry: String,
     isKey: Boolean = false
   ): (String, Array[Byte]) => Option[T] =
@@ -41,9 +41,6 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
         .map(RecordFormat[T].from)
         .toOption
 
-  /**
-    *
-    */
   implicit val keyAvroModelCodec: AvroCodec[KeyAvroModel] =
     (schemaRegistry: String) =>
       Serdes.fromFn(
@@ -51,9 +48,6 @@ sealed trait GenericAvroCodec extends BaseAvroCodec {
         genericAvroDeserializer[KeyAvroModel](schemaRegistry, isKey = true)
       )
 
-  /**
-    *
-    */
   implicit val valueAvroModelCodec: AvroCodec[ValueAvroModel] =
     (schemaRegistry: String) =>
       Serdes.fromFn(

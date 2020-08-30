@@ -3,12 +3,12 @@ package com.kafka.demo.generic
 import cakesolutions.kafka.KafkaProducer
 import cakesolutions.kafka.KafkaProducer.Conf
 import com.typesafe.scalalogging.Logger
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer}
+import io.confluent.kafka.serializers.{ AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer }
 import org.apache.avro.Schema
-import org.apache.avro.generic.{GenericData, GenericEnumSymbol, GenericRecord}
-import org.apache.kafka.clients.producer.{ProducerConfig, ProducerRecord}
+import org.apache.avro.generic.{ GenericData, GenericEnumSymbol, GenericRecord }
+import org.apache.kafka.clients.producer.{ ProducerConfig, ProducerRecord }
 
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 
 /*
  * http://avro.apache.org/docs/current/spec.html
@@ -18,9 +18,9 @@ import scala.util.{Failure, Success}
 object Producer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
-  private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
+  private[this] val BOOTSTRAP_SERVERS_VALUE   = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
-  private[this] val TOPIC_NAME = "example.with-schema.customer"
+  private[this] val TOPIC_NAME                = "example.with-schema.customer"
 
   private[this] val SCHEMA_CUSTOMER_V1 = "/customer_v1.avsc"
   private[this] val SCHEMA_CUSTOMER_V2 = "/customer_v2.avsc"
@@ -31,13 +31,12 @@ object Producer {
     new Schema.Parser().parse(getClass.getResourceAsStream(SCHEMA_CUSTOMER_V2))
 
   private[this] def newProducer(): KafkaProducer[String, GenericRecord] =
-    KafkaProducer(Conf(
-      new KafkaAvroSerializer(),
-      new KafkaAvroSerializer(),
-      BOOTSTRAP_SERVERS_VALUE)
-      .withProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, classOf[KafkaAvroSerializer].getName)
-      .withProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, classOf[KafkaAvroSerializer].getName)
-      .withProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE))
+    KafkaProducer(
+      Conf(new KafkaAvroSerializer(), new KafkaAvroSerializer(), BOOTSTRAP_SERVERS_VALUE)
+        .withProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, classOf[KafkaAvroSerializer].getName)
+        .withProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, classOf[KafkaAvroSerializer].getName)
+        .withProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL_VALUE)
+    )
       .asInstanceOf[KafkaProducer[String, GenericRecord]]
 
   // prefer avro4s approach
@@ -67,19 +66,22 @@ object Producer {
           new GenericData.EnumSymbol(schemaCustomerV2.getField("gender").schema(), "MALE")
         customer.put("gender", enumSymbol)
         ("id-3", customer)
-      })
+      }
+    )
       .map {
         case (key: String, customer: GenericRecord) =>
           new ProducerRecord[String, GenericRecord](TOPIC_NAME, key, customer)
       }
       .foreach { record =>
         logger.info(s"record: $record")
-        producer.send(record).onComplete {
-          case Success(recordMetadata) =>
-            logger.info(s"recordMetadata timestamp: ${recordMetadata.timestamp()}")
-          case Failure(exception) =>
-            logger.error(s"error: $exception")
-        }(scala.concurrent.ExecutionContext.global)
+        producer
+          .send(record)
+          .onComplete {
+            case Success(recordMetadata) =>
+              logger.info(s"recordMetadata timestamp: ${recordMetadata.timestamp()}")
+            case Failure(exception) =>
+              logger.error(s"error: $exception")
+          }(scala.concurrent.ExecutionContext.global)
       }
 
     producer.close()

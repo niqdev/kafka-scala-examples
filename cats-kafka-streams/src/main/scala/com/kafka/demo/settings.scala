@@ -7,7 +7,7 @@ import cats.instances.string._
 import cats.syntax.parallel._
 import cats.syntax.show._
 import ciris.refined._
-import ciris.{ConfigDecoder, ConfigValue, env}
+import ciris.{ ConfigDecoder, ConfigValue, env }
 import com.kafka.demo.streams.LogAndFailProductionExceptionHandler
 import eu.timepit.refined.types.all.NonEmptyString
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
@@ -45,8 +45,7 @@ object settings {
 
   object Settings {
     implicit val settingsShow: Show[Settings] =
-      settings =>
-        s"""\n
+      settings => s"""\n
            |APPLICATION_ID=${settings.applicationId.string.value.show}
            |BOOTSTRAP_SERVERS=${settings.bootstrapServers.string.value.show}
            |SCHEMA_REGISTRY_URL=${settings.schemaRegistryUrl.url.value.show}
@@ -61,7 +60,7 @@ object settings {
         env("SCHEMA_REGISTRY_URL").as[SchemaRegistryUrl],
         env("SOURCE_TOPIC").as[SourceTopic],
         env("SINK_TOPIC").as[SinkTopic]
-        ).parMapN(Settings.apply)
+      ).parMapN(Settings.apply)
   }
 
   @newtype case class ApplicationId(string: NonEmptyString)

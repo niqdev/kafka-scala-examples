@@ -5,9 +5,9 @@ import java.io.File
 
 import com.typesafe.scalalogging.Logger
 import org.apache.avro.Schema
-import org.apache.avro.file.{DataFileReader, DataFileWriter}
-import org.apache.avro.generic.{GenericDatumReader, GenericDatumWriter, GenericRecord}
-import org.apache.avro.io.{DatumReader, DatumWriter}
+import org.apache.avro.file.{ DataFileReader, DataFileWriter }
+import org.apache.avro.generic.{ GenericDatumReader, GenericDatumWriter, GenericRecord }
+import org.apache.avro.io.{ DatumReader, DatumWriter }
 
 import scala.collection.JavaConverters.asScalaIteratorConverter
 
@@ -24,9 +24,9 @@ object AvroGenericRecord {
 
   def serialize(genericRecords: List[GenericRecord], schemaPath: String, filePath: String): Unit = {
     val schema: Schema = getSchema(schemaPath)
-    val file: File = Files.initFile(filePath)
+    val file: File     = Files.initFile(filePath)
 
-    val datumWriter: DatumWriter[GenericRecord] = new GenericDatumWriter[GenericRecord](schema)
+    val datumWriter: DatumWriter[GenericRecord]       = new GenericDatumWriter[GenericRecord](schema)
     val dataFileWriter: DataFileWriter[GenericRecord] = new DataFileWriter[GenericRecord](datumWriter)
     dataFileWriter.create(schema, file)
     genericRecords.foreach { genericRecord =>
@@ -38,11 +38,11 @@ object AvroGenericRecord {
 
   def deserialize(schemaPath: String, filePath: String): List[GenericRecord] = {
     val schema: Schema = getSchema(schemaPath)
-    val file: File = Files.initFile(filePath)
+    val file: File     = Files.initFile(filePath)
 
-    val datumReader: DatumReader[GenericRecord] = new GenericDatumReader[GenericRecord](schema)
+    val datumReader: DatumReader[GenericRecord]       = new GenericDatumReader[GenericRecord](schema)
     val dataFileReader: DataFileReader[GenericRecord] = new DataFileReader[GenericRecord](file, datumReader)
-    val genericRecords = dataFileReader.iterator().asScala.toList
+    val genericRecords                                = dataFileReader.iterator().asScala.toList
     dataFileReader.close()
 
     genericRecords.foreach { genericRecord =>

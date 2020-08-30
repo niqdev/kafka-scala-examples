@@ -7,7 +7,10 @@ import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
-final class KafkaSchemaRegistryGenericSpec extends AnyWordSpecLike with Matchers with BaseKafkaSchemaRegistrySpec {
+final class KafkaSchemaRegistryGenericSpec
+    extends AnyWordSpecLike
+    with Matchers
+    with BaseKafkaSchemaRegistrySpec {
 
   private[this] val SCHEMA_CUSTOMER_V1 = "/customer_v1.avsc"
   private[this] val SCHEMA_CUSTOMER_V2 = "/customer_v2.avsc"
@@ -16,8 +19,9 @@ final class KafkaSchemaRegistryGenericSpec extends AnyWordSpecLike with Matchers
   private[this] val schemaCustomerV2 =
     new Schema.Parser().parse(getClass.getResourceAsStream(SCHEMA_CUSTOMER_V2))
 
-  private[this] def verifyGenericConsumer(topic: String)
-                                         (expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {
+  private[this] def verifyGenericConsumer(
+    topic: String
+  )(expectedRecords: => Iterable[(Option[AnyRef], AnyRef)]): Assertion = {
     val records = consume(topic, expectedRecords.size, isSpecific = false)
     records.size shouldEqual expectedRecords.size
     records shouldBe expectedRecords

@@ -1,11 +1,11 @@
 package com.kafka.demo
 package serialization
 
-import org.apache.kafka.streams.scala.kstream.{Consumed, Produced}
+import org.apache.kafka.streams.scala.kstream.{ Consumed, Produced }
 
 /**
- * See org.apache.kafka.streams.kstream.Consumed
- */
+  * See org.apache.kafka.streams.kstream.Consumed
+  */
 trait AvroRecordConsumed[K, V] {
   def consumed(schemaRegistry: UrlString): Consumed[K, V]
 }
@@ -21,8 +21,8 @@ object AvroRecordConsumed {
 }
 
 /**
- * See org.apache.kafka.streams.kstream.Produced
- */
+  * See org.apache.kafka.streams.kstream.Produced
+  */
 trait AvroRecordProduced[K, V] {
   def produced(schemaRegistry: UrlString): Produced[K, V]
 }

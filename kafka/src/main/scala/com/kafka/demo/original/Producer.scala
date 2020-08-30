@@ -5,7 +5,7 @@ import java.util.Properties
 import com.kafka.demo.KafkaHelper
 import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.producer.ProducerConfig._
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerRecord }
 import org.apache.kafka.common.serialization.StringSerializer
 
 /*
@@ -15,7 +15,7 @@ object Producer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
   private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
-  private[this] val TOPIC_NAME = "example.no-schema.original"
+  private[this] val TOPIC_NAME              = "example.no-schema.original"
 
   private[this] def newProducer(): KafkaProducer[String, String] = {
     val props = new Properties()

@@ -4,8 +4,8 @@ import java.util.Properties
 
 import com.typesafe.scalalogging.Logger
 import io.confluent.examples.clients.basicavro.Payment
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer}
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
+import io.confluent.kafka.serializers.{ AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer }
+import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerConfig, ProducerRecord }
 
 /*
  * https://github.com/confluentinc/examples/blob/5.0.x/clients/avro/src/main/java/io/confluent/examples/clients/basicavro/ProducerExample.java
@@ -13,9 +13,9 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, Produce
 object Producer {
   private[this] val logger = Logger(getClass.getSimpleName)
 
-  private[this] val BOOTSTRAP_SERVERS_VALUE = "localhost:9092"
+  private[this] val BOOTSTRAP_SERVERS_VALUE   = "localhost:9092"
   private[this] val SCHEMA_REGISTRY_URL_VALUE = "http://localhost:8081"
-  private[this] val TOPIC_NAME = "example.with-schema.payment"
+  private[this] val TOPIC_NAME                = "example.with-schema.payment"
 
   private[this] def newProducer(): KafkaProducer[String, Payment] = {
     val props = new Properties()
@@ -37,7 +37,7 @@ object Producer {
       .map { i =>
         val orderId = s"id-$i"
         val payment = Payment(orderId, 100d + i)
-        val record = new ProducerRecord[String, Payment](TOPIC_NAME, payment.id, payment)
+        val record  = new ProducerRecord[String, Payment](TOPIC_NAME, payment.id, payment)
         record
       }
       .foreach(producer.send)

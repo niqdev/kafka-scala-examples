@@ -1,10 +1,10 @@
 package com.kafka.demo
 
 import com.kafka.demo.avro4s.Avro4sExample
-import com.kafka.demo.original.{AvroCodeGeneration, AvroGenericRecord}
+import com.kafka.demo.original.{ AvroCodeGeneration, AvroGenericRecord }
 import com.sksamuel.avro4s.AvroSchema
 import org.apache.avro.Schema
-import org.apache.avro.generic.{GenericData, GenericRecord}
+import org.apache.avro.generic.{ GenericData, GenericRecord }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
@@ -17,7 +17,8 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
     "verify serialization with code generation and deserialization with avro4s" in {
       val filePath = "avro/target/data/users-code-generation-from.avro"
 
-      val userCodeGeneration = User.newBuilder()
+      val userCodeGeneration = User
+        .newBuilder()
         .setName("userCodeGeneration")
         .setFavoriteNumber(null)
         .setFavoriteColor("blue")
@@ -30,9 +31,9 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
 
     "verify serialization with GenericRecord and deserialization with avro4s" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "avro/target/data/users-generic-record-from.avro"
+      val filePath   = "avro/target/data/users-generic-record-from.avro"
 
-      val schemaGenericRecord = AvroGenericRecord.getSchema(schemaPath)
+      val schemaGenericRecord              = AvroGenericRecord.getSchema(schemaPath)
       val userGenericRecord: GenericRecord = new GenericData.Record(schemaGenericRecord)
       userGenericRecord.put("name", "userGenericRecord")
       userGenericRecord.put("favorite_number", 8)
@@ -47,7 +48,8 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
       val filePath = "avro/target/data/users-code-generation-to.avro"
 
       val userAvro4s = avro4s.User("user1Avro4s", Some(8), Some("green"))
-      val expectedUser = User.newBuilder()
+      val expectedUser = User
+        .newBuilder()
         .setName("user1Avro4s")
         .setFavoriteNumber(8)
         .setFavoriteColor("green")
@@ -59,10 +61,10 @@ final class LibraryCompatibilitySpec extends AnyWordSpecLike with Matchers {
 
     "verify serialization with avro4s and deserialization with GenericRecord" in {
       val schemaPath = "avro/src/main/avro/user.avsc"
-      val filePath = "avro/target/data/users-generic-record-to.avro"
+      val filePath   = "avro/target/data/users-generic-record-to.avro"
 
-      val userAvro4s = avro4s.User("user2Avro4s", Some(1), Some("red"))
-      val schemaGenericRecord = AvroGenericRecord.getSchema(schemaPath)
+      val userAvro4s                  = avro4s.User("user2Avro4s", Some(1), Some("red"))
+      val schemaGenericRecord         = AvroGenericRecord.getSchema(schemaPath)
       val expectedUser: GenericRecord = new GenericData.Record(schemaGenericRecord)
       expectedUser.put("name", "user2Avro4s")
       expectedUser.put("favorite_number", 1)

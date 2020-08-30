@@ -25,7 +25,7 @@ object Avro4sExample {
   def deserializeUsers(schema: Schema, filePath: String): List[User] = {
     val file: File = Files.initFile(filePath)
 
-    val is = AvroInputStream.data[User].from(file).build(schema)
+    val is    = AvroInputStream.data[User].from(file).build(schema)
     val users = is.iterator.toList
     is.close()
 

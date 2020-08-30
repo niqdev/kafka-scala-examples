@@ -2,7 +2,7 @@ package com.kafka.demo
 package streams
 
 import cats.effect.Sync
-import com.kafka.demo.serialization.{AvroRecordConsumed, AvroRecordProduced}
+import com.kafka.demo.serialization.{ AvroRecordConsumed, AvroRecordProduced }
 import org.apache.kafka.streams.kstream.Printed
 import org.apache.kafka.streams.scala.StreamsBuilder
 import org.apache.kafka.streams.scala.kstream.KStream
@@ -33,4 +33,3 @@ final class KStreamOps[F[_], K, V](private val kStream: KStream[K, V]) extends A
       kStream.to(topic.value)(P.produced(schemaRegistry))
     }
 }
-

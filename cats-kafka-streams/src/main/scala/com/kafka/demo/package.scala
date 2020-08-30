@@ -7,5 +7,5 @@ import eu.timepit.refined.types.string.NonEmptyString
 package object demo {
 
   final type UrlString = String Refined Url
-  final type Topic = NonEmptyString
+  final type Topic     = NonEmptyString
 }

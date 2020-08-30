@@ -1,7 +1,7 @@
 package com.kafka.demo
 
 import org.apache.kafka.streams.Topology
-import zio.{Has, RIO, ZLayer}
+import zio.{ Has, RIO, ZLayer }
 
 object KafkaStreamsTopology {
   type KafkaStreamsTopology = Has[KafkaStreamsTopology.Service]

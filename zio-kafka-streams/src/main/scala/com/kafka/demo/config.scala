@@ -28,7 +28,7 @@ object KafkaStreamsConfig {
   val descriptor =
     (string("APPLICATION_NAME") |@|
       string("BOOTSTRAP_SERVERS") |@|
-      string("SCHEMA_REGISTRY_URL")) (
+      string("SCHEMA_REGISTRY_URL"))(
       KafkaStreamsConfig.apply,
       KafkaStreamsConfig.unapply
     )

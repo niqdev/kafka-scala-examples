@@ -1,20 +1,20 @@
 package com.kafka.demo.streams
 
-import cats.effect.{Async, Resource, Sync, Timer}
+import cats.effect.{ Async, Resource, Sync, Timer }
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.kafka.demo.settings.Settings
 import log.effect.LogWriter
 import org.apache.kafka.streams.KafkaStreams
-import retry.RetryDetails.{GivingUp, WillDelayAndRetry}
+import retry.RetryDetails.{ GivingUp, WillDelayAndRetry }
 import retry.syntax.all._
-import retry.{RetryDetails, RetryPolicies}
+import retry.{ RetryDetails, RetryPolicies }
 
 import scala.concurrent.duration._
 
 // https://docs.confluent.io/current/streams/developer-guide/write-streams.html
 // https://github.com/confluentinc/kafka-streams-examples
-sealed abstract class KafkaStreamsRuntime[F[_] : Async : Timer](implicit log: LogWriter[F]) {
+sealed abstract class KafkaStreamsRuntime[F[_]: Async: Timer](implicit log: LogWriter[F]) {
 
   def run(settings: Settings): F[Unit] =
     Resource.make[F, KafkaStreams](setup(settings))(stop()).use(start)
@@ -22,9 +22,9 @@ sealed abstract class KafkaStreamsRuntime[F[_] : Async : Timer](implicit log: Lo
   private[this] def setup: Settings => F[KafkaStreams] =
     settings =>
       for {
-        _ <- log.info("Build topology ...")
+        _        <- log.info("Build topology ...")
         topology <- KafkaStreamsTopology[F].build(settings)
-        streams <- Sync[F].delay(new KafkaStreams(topology, settings.properties))
+        streams  <- Sync[F].delay(new KafkaStreams(topology, settings.properties))
       } yield streams
 
   private[this] def start: KafkaStreams => F[Unit] =
@@ -70,10 +70,10 @@ sealed abstract class KafkaStreamsRuntime[F[_] : Async : Timer](implicit log: Lo
       def onError(error: Throwable, details: RetryDetails): F[Unit] =
         details match {
           case WillDelayAndRetry(
-          nextDelay: FiniteDuration,
-          retriesSoFar: Int,
-          cumulativeDelay: FiniteDuration
-          ) =>
+                nextDelay: FiniteDuration,
+                retriesSoFar: Int,
+                cumulativeDelay: FiniteDuration
+              ) =>
             log.warn(
               s"Stop streams: attempt [$retriesSoFar] of [$maxAttempts], retry in [$nextDelay] after [$cumulativeDelay]",
               error
@@ -93,6 +93,6 @@ sealed abstract class KafkaStreamsRuntime[F[_] : Async : Timer](implicit log: Lo
 }
 
 object KafkaStreamsRuntime {
-  def apply[F[_] : Async : LogWriter : Timer]: KafkaStreamsRuntime[F] =
+  def apply[F[_]: Async: LogWriter: Timer]: KafkaStreamsRuntime[F] =
     new KafkaStreamsRuntime {}
 }
