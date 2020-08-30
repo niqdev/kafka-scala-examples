@@ -78,3 +78,5 @@ https://rmoff.net/2019/05/08/when-a-kafka-connect-converter-is-not-a-_converter_
 
 # kafka manager
 https://github.com/yahoo/CMAK
+
+https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s/

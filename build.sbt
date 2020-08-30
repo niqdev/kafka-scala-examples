@@ -5,12 +5,12 @@ lazy val V = new {
   val scalaLogging = "3.9.2"
   val logEffect = "0.13.1"
 
-  val avro4s = "4.0.0-RC2"
+  val avro4s = "4.0.0"
   val kafka = "2.5.1"
   val confluent = "5.5.1"
 
   val circe = "0.13.0"
-  val ciris = "1.1.2"
+  val ciris = "1.2.0"
   val refined = "0.9.15"
   val newtype = "0.4.4"
   val cats = "2.1.1"
