@@ -2,7 +2,6 @@ package com.kafka.demo
 
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import org.apache.kafka.streams.StreamsConfig
-import zio.config.ConfigDescriptor
 import zio.config.ConfigDescriptor.string
 
 // TODO nested
@@ -26,7 +25,7 @@ final case class KafkaStreamsConfig(
 }
 
 object KafkaStreamsConfig {
-  val descriptor: ConfigDescriptor[String, String, KafkaStreamsConfig] =
+  val descriptor =
     (string("APPLICATION_NAME") |@|
       string("BOOTSTRAP_SERVERS") |@|
       string("SCHEMA_REGISTRY_URL")) (
