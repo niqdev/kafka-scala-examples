@@ -1,35 +1,41 @@
 package com.kafka.demo
 
+import com.kafka.demo.settings.Settings
+import com.kafka.demo.streams.{ KafkaStreamsRuntime, KafkaStreamsTopology }
+import zio._
 import zio.config.{ ZConfig, config }
-import zio.logging.{ LogLevel, Logging, log }
-import zio.{ App, ExitCode, URIO, ZIO }
+import zio.logging._
 
 // sbt "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
 object ZioKafkaStreamsApp extends App {
 
-  private[this] final type AppEnv = ZConfig[KafkaStreamsConfig] with Logging
-
-  private[this] final lazy val configLayerLocal = ZConfig.fromMap(
+  private[this] final val configLocalLayer = ZConfig.fromMap(
     Map(
       "APPLICATION_NAME"    -> "zio-kafka-streams",
       "BOOTSTRAP_SERVERS"   -> "localhost:9092",
-      "SCHEMA_REGISTRY_URL" -> "http://localhost:8081"
+      "SCHEMA_REGISTRY_URL" -> "http://localhost:8081",
+      "SOURCE_TOPIC"        -> "zio.source.v1",
+      "SINK_TOPIC"          -> "zio.sink.v1"
     ),
-    KafkaStreamsConfig.descriptor
+    Settings.descriptor
   )
 
-  private[this] final lazy val configLayerEnv =
-    ZConfig.fromSystemEnv(KafkaStreamsConfig.descriptor)
+  // TODO
+  private[this] final val configEnvLayer =
+    ZConfig.fromSystemEnv(Settings.descriptor)
 
-  private[this] final lazy val loggingLayer =
-    Logging.console((_, logEntry) => logEntry)
+  // ZLayer[Any with Console with Clock, ReadError[String], ZConfig[Settings] with Logging with KafkaStreamsTopology with ZConfig[KafkaStreamsRuntime.Service]]
+  private[this] final val env =
+    ((configLocalLayer ++ Logging.console()) >+> KafkaStreamsTopology.live) >+> KafkaStreamsRuntime.live
 
-  final lazy val program: ZIO[AppEnv, Nothing, Unit] =
+  // ZIO[KafkaStreamsRuntime with Logging with ZConfig[Settings], Nothing, Unit]
+  private[this] final lazy val program =
     for {
-      kafkaStreamsConfig <- config[KafkaStreamsConfig]
-      _                  <- log(LogLevel.Info)(kafkaStreamsConfig.applicationName)
+      settings <- config[Settings]
+      _        <- log.info(settings.applicationId)
+      _        <- KafkaStreamsRuntime.run
     } yield ()
 
-  override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] =
-    program.provideLayer(configLayerLocal ++ loggingLayer).exitCode
+  override def run(args: List[String]): URIO[ZEnv, ExitCode] =
+    program.provideLayer(env).exitCode
 }

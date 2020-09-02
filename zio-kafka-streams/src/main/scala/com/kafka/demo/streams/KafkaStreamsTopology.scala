@@ -1,21 +1,29 @@
 package com.kafka.demo
 package streams
 
-import org.apache.kafka.streams.Topology
-import zio.{ Has, RIO, ZLayer }
+import zio._
+import zio.logging.{ Logger, Logging }
 
 object KafkaStreamsTopology {
   type KafkaStreamsTopology = Has[KafkaStreamsTopology.Service]
 
   trait Service {
-    def build: RIO[KafkaStreamsConfig, Topology]
+    // TODO return org.apache.kafka.streams.Topology
+    def build: UIO[Unit]
+  }
+  object Service {
+    val live: Logger[String] => Service =
+      log =>
+        new Service {
+          override def build: UIO[Unit] =
+            log.info("TODO topology")
+        }
   }
 
-  def make: ZLayer[Nothing, Nothing, KafkaStreamsTopology] =
-    ZLayer.succeed(new Service {
-      override def build: RIO[KafkaStreamsConfig, Topology] = ???
-    })
+  val live: ZLayer[Logging, Nothing, KafkaStreamsTopology] =
+    ZLayer.fromService(Service.live)
 
-  // TODO
-  def build: RIO[KafkaStreamsConfig, Topology] = ???
+  def build: URIO[KafkaStreamsTopology, Unit] =
+    ZIO.accessM[KafkaStreamsTopology](_.get.build)
+
 }
