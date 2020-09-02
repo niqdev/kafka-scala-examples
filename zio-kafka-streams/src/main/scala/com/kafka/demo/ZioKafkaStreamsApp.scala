@@ -3,7 +3,7 @@ package com.kafka.demo
 import com.kafka.demo.settings.Settings
 import com.kafka.demo.streams.{ KafkaStreamsRuntime, KafkaStreamsTopology }
 import zio._
-import zio.config.{ ZConfig, config }
+import zio.config.{ ZConfig, config, generateReport, write }
 import zio.logging._
 
 // sbt "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
@@ -24,16 +24,15 @@ object ZioKafkaStreamsApp extends App {
   private[this] final val configEnvLayer =
     ZConfig.fromSystemEnv(Settings.descriptor)
 
-  // ZLayer[Any with Console with Clock, ReadError[String], ZConfig[Settings] with Logging with KafkaStreamsTopology with ZConfig[KafkaStreamsRuntime.Service]]
   private[this] final val env =
-    ((configLocalLayer ++ Logging.console()) >+> KafkaStreamsTopology.live) >+> KafkaStreamsRuntime.live
+    (Logging.console() ++ configLocalLayer) >+> KafkaStreamsTopology.live >+> KafkaStreamsRuntime.live
 
-  // ZIO[KafkaStreamsRuntime with Logging with ZConfig[Settings], Nothing, Unit]
-  private[this] final lazy val program =
+  private[this] final val program: ZIO[Logging with ZConfig[Settings], Nothing, Unit] =
     for {
       settings <- config[Settings]
-      _        <- log.info(settings.applicationId)
-      _        <- KafkaStreamsRuntime.run
+      _        <- log.info(s"${generateReport(Settings.descriptor, settings).map(_.toTable.asMarkdownContent)}")
+      _        <- log.info(s"${write(Settings.descriptor, settings).map(_.flattenString())}")
+      //_        <- KafkaStreamsRuntime.run
     } yield ()
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] =
