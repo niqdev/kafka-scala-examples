@@ -9,51 +9,28 @@ import zio.config.{ ZConfig, config }
 import zio.logging.{ Logging, log }
 
 object KafkaStreamsRuntime {
-  type KafkaStreamsRuntime = Has[KafkaStreamsRuntime.Service]
 
-  trait Service {
-    def run: Task[Unit]
-  }
-  object Service {
-    val live2 = new Service {
-      override def run: Task[Unit] = ???
-      //ZIO.bracket(setup)(stop)(start)
-    }
-    val live: ZIO[Logging with ZConfig[Settings] with KafkaStreamsTopology, Throwable, Unit] =
-      ZManaged.make(setup)(stop).use(start)
-  }
-
-  private[this] def setup
+  private[this] def start
     : ZIO[Logging with ZConfig[Settings] with KafkaStreamsTopology, Throwable, KafkaStreams] =
     for {
       _            <- log.info("Setup runtime ...")
       settings     <- config[Settings]
       topology     <- KafkaStreamsTopology.build
       kafkaStreams <- ZIO.effect(new KafkaStreams(topology, settings.properties))
+      _            <- log.info("Start runtime ...")
+      _            <- ZIO.effect(kafkaStreams.start())
     } yield kafkaStreams
-
-  // TODO effectAsync
-  private[this] def start: KafkaStreams => RIO[Logging, Unit] =
-    kafkaStreams =>
-      for {
-        _ <- log.info("Start runtime ...")
-        _ <- ZIO.effect(kafkaStreams.start())
-      } yield ()
 
   // TODO retry
   // TODO catchAll ??? release accepts URIO i.e. convert Throwable to Nothing
+  // effectTotal ??? https://github.com/zio/zio-kafka/blob/master/src/main/scala/zio/kafka/admin/AdminClient.scala#L206
   private[this] def stop: KafkaStreams => URIO[Logging, Unit] =
     kafkaStreams =>
-      (for {
+      for {
         _ <- log.info("Stop runtime ...")
-        _ <- ZIO.effect(kafkaStreams.close(java.time.Duration.ofSeconds(1)))
-      } yield ()).catchAll(_ => ZIO.succeed())
+        _ <- ZIO.effectTotal(kafkaStreams.close(java.time.Duration.ofSeconds(1)))
+      } yield ()
 
-  val live: ZLayer[Logging with ZConfig[Settings] with KafkaStreamsTopology, Throwable, ZConfig[Unit]] =
-    ZLayer.fromEffect(Service.live)
-  val live2 = ZLayer.succeed(Service.live2)
-
-  def run: RIO[KafkaStreamsRuntime, Unit] =
-    ZIO.accessM[KafkaStreamsRuntime](_.get.run)
-
+  def make: ZManaged[Logging with ZConfig[Settings] with KafkaStreamsTopology, Throwable, KafkaStreams] =
+    ZManaged.make(start)(stop)
 }

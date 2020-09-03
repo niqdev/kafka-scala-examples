@@ -24,15 +24,16 @@ object ZioKafkaStreamsApp extends App {
   private[this] final val configEnvLayer =
     ZConfig.fromSystemEnv(Settings.descriptor)
 
+  // option 1: use as layer
   private[this] final val env =
-    (Logging.console() ++ configLocalLayer) >+> KafkaStreamsTopology.live >+> KafkaStreamsRuntime.live
+    (Logging.console() ++ configLocalLayer) >+> KafkaStreamsTopology.live // >+> ZLayer.fromManaged(KafkaStreamsRuntime.make)
 
-  private[this] final val program: ZIO[Logging with ZConfig[Settings], Nothing, Unit] =
+  private[this] final val program =
     for {
       settings <- config[Settings]
       _        <- log.info(s"${generateReport(Settings.descriptor, settings).map(_.toTable.asMarkdownContent)}")
       _        <- log.info(s"${write(Settings.descriptor, settings).map(_.flattenString())}")
-      //_        <- KafkaStreamsRuntime.run
+      _        <- KafkaStreamsRuntime.make.use(_ => ZIO.succeed()) // option 2
     } yield ()
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] =
