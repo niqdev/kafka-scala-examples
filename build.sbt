@@ -188,7 +188,7 @@ lazy val root = project
   )
   .settings(
     organization := "com.kafka.demo",
-    name := "kafka-scala-example",
+    name := "kafka-scala-examples",
     scalaVersion := V.scala,
     version := "0.1",
     parallelExecution := false,
