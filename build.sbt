@@ -10,7 +10,7 @@ lazy val V = new {
   val confluent = "5.5.1"
 
   val circe      = "0.13.0"
-  val ciris      = "1.2.0"
+  val ciris      = "1.2.1"
   val refined    = "0.9.15"
   val newtype    = "0.4.4"
   val cats       = "2.1.1"
