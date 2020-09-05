@@ -3,7 +3,6 @@ package com.kafka.demo
 import java.util.Properties
 
 import cats.Show
-import cats.instances.string._
 import cats.syntax.parallel._
 import cats.syntax.show._
 import ciris.refined._
