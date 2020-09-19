@@ -5,7 +5,7 @@ import com.kafka.demo.settings.Settings
 import com.kafka.demo.streams.KafkaStreamsTopology.KafkaStreamsTopology
 import org.apache.kafka.streams.KafkaStreams
 import zio._
-import zio.config.{ ZConfig, config }
+import zio.config.{ ZConfig, getConfig }
 import zio.logging.{ Logging, log }
 
 object KafkaStreamsRuntime {
@@ -14,7 +14,7 @@ object KafkaStreamsRuntime {
     : ZIO[Logging with ZConfig[Settings] with KafkaStreamsTopology, Throwable, KafkaStreams] =
     for {
       _            <- log.info("Setup runtime ...")
-      settings     <- config[Settings]
+      settings     <- getConfig[Settings]
       topology     <- KafkaStreamsTopology.build
       kafkaStreams <- ZIO.effect(new KafkaStreams(topology, settings.properties))
       _            <- log.info("Start runtime ...")

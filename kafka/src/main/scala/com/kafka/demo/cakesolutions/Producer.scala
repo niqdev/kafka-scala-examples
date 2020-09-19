@@ -24,8 +24,8 @@ object Producer {
     val producer = newProducer(BOOTSTRAP_SERVERS_VALUE)
 
     KafkaHelper
-      .produceMessages {
-        case (i, message) => KafkaProducerRecord(TOPIC_NAME, s"$i", message)
+      .produceMessages { case (i, message) =>
+        KafkaProducerRecord(TOPIC_NAME, s"$i", message)
       }
       .foreach(producer.send)
 

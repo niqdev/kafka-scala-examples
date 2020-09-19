@@ -68,9 +68,8 @@ object Producer {
         ("id-3", customer)
       }
     )
-      .map {
-        case (key: String, customer: GenericRecord) =>
-          new ProducerRecord[String, GenericRecord](TOPIC_NAME, key, customer)
+      .map { case (key: String, customer: GenericRecord) =>
+        new ProducerRecord[String, GenericRecord](TOPIC_NAME, key, customer)
       }
       .foreach { record =>
         logger.info(s"record: $record")

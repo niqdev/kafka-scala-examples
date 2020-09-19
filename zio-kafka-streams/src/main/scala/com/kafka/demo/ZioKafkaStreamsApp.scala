@@ -3,7 +3,7 @@ package com.kafka.demo
 import com.kafka.demo.settings.Settings
 import com.kafka.demo.streams.{ KafkaStreamsRuntime, KafkaStreamsTopology }
 import zio._
-import zio.config.{ ZConfig, config, generateReport, write }
+import zio.config._
 import zio.logging._
 
 // sbt "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
@@ -30,10 +30,12 @@ object ZioKafkaStreamsApp extends App {
 
   private[this] final val program =
     for {
-      settings <- config[Settings]
-      _        <- log.info(s"${generateReport(Settings.descriptor, settings).map(_.toTable.asMarkdownContent)}")
-      _        <- log.info(s"${write(Settings.descriptor, settings).map(_.flattenString())}")
-      _        <- KafkaStreamsRuntime.make.use(_ => ZIO.succeed()) // option 2
+      settings <- getConfig[Settings]
+      _ <- log.info(
+        s"${generateReport(Settings.descriptor, settings).map(_.toTable.asGithubFlavouredMarkdown)}"
+      )
+      _ <- log.info(s"${write(Settings.descriptor, settings).map(_.flattenString())}")
+      _ <- KafkaStreamsRuntime.make.use(_ => ZIO.succeed()) // option 2
     } yield ()
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] =

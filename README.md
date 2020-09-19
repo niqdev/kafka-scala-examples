@@ -14,7 +14,7 @@ Examples in Scala of
 * [Schema Registry](#schema-registry)
 * [Kafka Streams](#kafka-streams)
     - with [cats](https://github.com/niqdev/kafka-scala-examples#demo-3)
-    - with [ZIO](https://github.com/niqdev/kafka-scala-examples#demo-4)
+    - with [ZIO](https://github.com/niqdev/kafka-scala-examples#demo-4), see also [zio-kafka-streams](https://github.com/niqdev/zio-kafka-streams)
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
 
