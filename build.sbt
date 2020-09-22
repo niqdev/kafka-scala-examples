@@ -175,6 +175,17 @@ lazy val `zio-kafka-streams` = project
     )
   )
 
+lazy val `interactive-queries` = project
+  .in(file("interactive-queries"))
+  .dependsOn(common % "compile->compile;test->test")
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.apache.kafka"  % "kafka-streams"            % V.kafka,
+      "org.apache.kafka" %% "kafka-streams-scala"      % V.kafka,
+      "org.apache.kafka"  % "kafka-streams-test-utils" % V.kafka % Test
+    )
+  )
+
 lazy val root = project
   .in(file("."))
   .aggregate(

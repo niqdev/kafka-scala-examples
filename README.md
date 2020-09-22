@@ -15,6 +15,9 @@ Examples in Scala of
 * [Kafka Streams](#kafka-streams)
     - with [cats](https://github.com/niqdev/kafka-scala-examples#demo-3)
     - with [ZIO](https://github.com/niqdev/kafka-scala-examples#demo-4), see also [zio-kafka-streams](https://github.com/niqdev/zio-kafka-streams)
+* Interactive Queries *TODO*
+    - with REST/http4s
+    - with GraphQl/Caliban
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
 
