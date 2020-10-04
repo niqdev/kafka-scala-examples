@@ -63,14 +63,16 @@ jdbc-sink-json-schema
 https://stackoverflow.com/questions/45928768/kafka-connect-jdbc-sink-connector-not-working/45940013#45940013
 https://github.com/apache/kafka/blob/2.4.0/connect/json/src/main/java/org/apache/kafka/connect/json/JsonSchema.java#L39-L59
 
----
+--- 
 
 # testing
 https://kafka.apache.org/11/documentation/streams/developer-guide/testing.html
 # examples
 https://github.com/confluentinc/kafka-streams-examples
+# ZIO
+https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s/
 
----
+--- OLD
 
 # connectors
 https://softwaremill.com/import-export-through-kafka-connectors/
@@ -79,4 +81,40 @@ https://rmoff.net/2019/05/08/when-a-kafka-connect-converter-is-not-a-_converter_
 # kafka manager
 https://github.com/yahoo/CMAK
 
-https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s/
+# kafka
+https://hevodata.com/blog/how-to-set-up-kafka-on-ubuntu-16-04/
+https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85
+https://medium.com/bakdata/queryable-kafka-topics-with-kafka-streams-8d2cca9de33f
+
+# mirror maker
+https://engineering.salesforce.com/mirrormaker-performance-tuning-63afaed12c21
+https://community.hortonworks.com/articles/79891/kafka-mirror-maker-best-practices.html
+https://www.instaclustr.com/support/documentation/kafka/kafka-cluster-management/setting-up-mirror-maker
+https://blog.newrelic.com/engineering/kafka-best-practices/
+
+# kafka streams
+https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple
+https://www.confluent.io/blog/hello-world-kafka-connect-kafka-streams
+https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams
+
+# avro
+https://github.com/akka/alpakka-kafka/issues/342
+http://rick-hightower.blogspot.com/2017/05/apache-avro-tutorial.html
+https://medium.com/@mykidong/howto-implement-avro-schema-inheritance-757d2897c1ad
+https://gist.github.com/cmilfont/2466a4272adcf0d5d20a309002df6799
+https://dzone.com/articles/kafka-avro-scala-example
+
+# avro + schema registry
+https://docs.confluent.io/current/schema-registry/docs/index.html
+https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with-apache-avro-and-dealing-with-a-schema-registry
+https://web.archive.org/web/20180321112249/https://cloudurable.com/blog/kafka-avro-schema-registry/index.html
+https://msayag.github.io/Kafka
+http://bytepadding.com/big-data/spark/avro/avro-serialization-de-serialization-using-confluent-schema-registry
+https://github.com/sachabarber/KafkaAvroExamples
+
+https://www.madewithtea.com/kafka-streams-in-scala-with-schema-registry.html
+https://github.com/lagom/lagom/issues/668
+https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html
+https://gist.github.com/avpatel257/0a88d20200661b31ab5f5df7adc42e6f
+https://groups.google.com/forum/#!topic/akka-user/42SHwSIM1Xw
+http://subprotocol.com/system/apache-spark-ec2-avro.html
