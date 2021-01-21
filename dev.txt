@@ -90,12 +90,13 @@ https://medium.com/bakdata/queryable-kafka-topics-with-kafka-streams-8d2cca9de33
 https://engineering.salesforce.com/mirrormaker-performance-tuning-63afaed12c21
 https://community.hortonworks.com/articles/79891/kafka-mirror-maker-best-practices.html
 https://www.instaclustr.com/support/documentation/kafka/kafka-cluster-management/setting-up-mirror-maker
-https://blog.newrelic.com/engineering/kafka-best-practices/
+https://blog.newrelic.com/engineering/kafka-best-practices
 
 # kafka streams
 https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple
 https://www.confluent.io/blog/hello-world-kafka-connect-kafka-streams
 https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams
+https://www.confluent.io/blog/crossing-streams-joins-apache-kafka
 
 # avro
 https://github.com/akka/alpakka-kafka/issues/342
