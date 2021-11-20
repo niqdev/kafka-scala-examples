@@ -63,7 +63,7 @@ jdbc-sink-json-schema
 https://stackoverflow.com/questions/45928768/kafka-connect-jdbc-sink-connector-not-working/45940013#45940013
 https://github.com/apache/kafka/blob/2.4.0/connect/json/src/main/java/org/apache/kafka/connect/json/JsonSchema.java#L39-L59
 
---- 
+---
 
 # testing
 https://kafka.apache.org/11/documentation/streams/developer-guide/testing.html
@@ -77,9 +77,6 @@ https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s/
 # connectors
 https://softwaremill.com/import-export-through-kafka-connectors/
 https://rmoff.net/2019/05/08/when-a-kafka-connect-converter-is-not-a-_converter_/
-
-# kafka manager
-https://github.com/yahoo/CMAK
 
 # kafka
 https://hevodata.com/blog/how-to-set-up-kafka-on-ubuntu-16-04/
