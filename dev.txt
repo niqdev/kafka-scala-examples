@@ -69,8 +69,9 @@ https://github.com/apache/kafka/blob/2.4.0/connect/json/src/main/java/org/apache
 https://kafka.apache.org/11/documentation/streams/developer-guide/testing.html
 # examples
 https://github.com/confluentinc/kafka-streams-examples
+https://softwaremill.com/hands-on-kafka-streams-in-scala
 # ZIO
-https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s/
+https://blog.univalence.io/des-microservices-kafka-streams-avec-zio-et-http4s
 
 --- OLD
 
