@@ -20,6 +20,7 @@ Examples in Scala of
     - with GraphQl/Caliban
 * [KSQL](#ksql)
 * [Kafka Connect](#kafka-connect)
+* [Extra](#extra)
 
 Local environment
 
@@ -614,7 +615,7 @@ docker-compose -f docker-compose.postgres.yml down -v
 * [Docker Tips and Tricks with KSQL and Kafka](https://rmoff.net/2018/12/15/docker-tips-and-tricks-with-ksql-and-kafka)
 * [Introduction to Topic Log Compaction in Apache Kafka](https://medium.com/swlh/introduction-to-topic-log-compaction-in-apache-kafka-3e4d4afd2262)
 
-**Tools**
+### Tools
 
 * [Kafka Streams Topology Visualizer](https://zz85.github.io/kafka-streams-viz) (online)
 * [kafkacat](https://github.com/edenhill/kafkacat)
@@ -625,3 +626,9 @@ docker-compose -f docker-compose.postgres.yml down -v
 * [UI for Apache Kafka](https://github.com/provectus/kafka-ui)
 * [Cruise Control](https://github.com/linkedin/cruise-control)
 * [CMAK](https://github.com/yahoo/CMAK)
+
+### Companies
+
+* [Confluent](https://www.confluent.io)
+* [Lenses](https://lenses.io)
+* [Conduktor](https://www.conduktor.io)
