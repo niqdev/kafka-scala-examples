@@ -84,7 +84,7 @@ sbt clean avro/compile
 sbt clean avro/test
 ```
 
-**Readings**
+### Resources
 
 * [Data Serialization and Evolution](https://docs.confluent.io/current/avro.html)
 * [Three Reasons Why Apache Avro Data Serialization is a Good Choice](https://blog.cloudera.com/blog/2011/05/three-reasons-why-apache-avro-data-serialization-is-a-good-choice-for-openrtb)
@@ -171,10 +171,16 @@ sbt clean kafka/test
 sbt "test:testOnly *KafkaSpec"
 ```
 
-**Readings**
+### Resources
 
 * DevOps [Kafka](https://niqdev.github.io/devops/kafka)
 * [Kafka topic naming conventions](https://medium.com/@criccomini/how-to-paint-a-bike-shed-kafka-topic-naming-conventions-1b7259790073)
+* [Should you put several event types in the same Kafka topic?](http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html)
+* [How to choose the number of topics/partitions in a Kafka cluster?](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster)
+* [Kafka Partitioning](https://simplydistributed.wordpress.com/2016/12/13/kafka-partitioning)
+* [The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)
+* [Apache Kafka: 8 things to check before going live](https://ariskk.com/kafka-8-things)
+* [Apache Kafka vs Apache Pulsar](https://digitalis.io/blog/kafka/apache-kafka-vs-apache-pulsar)
 
 ## schema-registry
 
@@ -310,7 +316,7 @@ sbt "schema-registry/runMain com.kafka.demo.generic.Consumer"
 sbt "schema-registry/test:testOnly *KafkaSchemaRegistryGenericSpec"
 ```
 
-**Readings**
+### Resources
 
 * [Serializing data efficiently with Apache Avro and dealing with a Schema Registry](https://www.sderosiaux.com/articles/2017/03/02/serializing-data-efficiently-with-apache-avro-and-dealing-with-a-schema-registry)
 * [Kafka, Avro Serialization and the Schema Registry](http://cloudurable.com/blog/kafka-avro-schema-registry/index.html)
@@ -449,12 +455,14 @@ sbt -jvm-debug 5005 "cats-kafka-streams/runMain com.kafka.demo.CatsKafkaStreamsA
 sbt -jvm-debug 5005 "zio-kafka-streams/runMain com.kafka.demo.ZioKafkaStreamsApp"
 ```
 
-**Readings**
+### Resources
 
 * [Introducing Kafka Streams: Stream Processing Made Simple](https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple)
 * [Unifying Stream Processing and Interactive Queries in Apache Kafka](https://www.confluent.io/blog/unifying-stream-processing-and-interactive-queries-in-apache-kafka)
 * [Of Streams and Tables in Kafka and Stream Processing](https://www.michael-noll.com/blog/2018/04/05/of-stream-and-tables-in-kafka-and-stream-processing-part1)
+* [How to use Apache Kafka to transform a batch pipeline into a real-time one](https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85)
 * [Functional Programming with Kafka Streams and Scala](https://itnext.io/a-cqrs-approach-with-kafka-streams-and-scala-49bfa78e4295)
+* [Enabling Exactly-Once in Kafka Streams](https://www.confluent.io/blog/enabling-exactly-kafka-streams)
 
 ## ksql
 
@@ -548,6 +556,7 @@ docker run --rm \
 * [Kafka Connect](https://docs.confluent.io/current/connect/index.html)
 * Confluent's Kafka Connect [API](https://docs.confluent.io/current/connect/references/restapi.html) and [connectors](https://docs.confluent.io/current/connect/managing/connectors.html)
 * [Udemy Course](https://www.udemy.com/course/kafka-connect)
+* [Kafka Connect Fundamentals](https://www.confluent.io/blog/kafka-connect-tutorial)
 
 Setup PostgreSQL locally
 ```bash
@@ -594,7 +603,7 @@ docker-compose -f docker-compose.postgres.yml down -v
 
 ## extra
 
-**Further readings**
+### Resources
 
 * *Old [presentation](https://gitpitch.com/niqdev/kafka-scala-examples)*
 * [What is the actual role of Zookeeper in Kafka?](https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together/answer/Gwen-Shapira)
@@ -607,7 +616,12 @@ docker-compose -f docker-compose.postgres.yml down -v
 
 **Tools**
 
+* [Kafka Streams Topology Visualizer](https://zz85.github.io/kafka-streams-viz) (online)
 * [kafkacat](https://github.com/edenhill/kafkacat)
 * [Kafka-Utils](https://github.com/Yelp/kafka-utils)
-* [HTTPie](https://httpie.org)
-* [jq](https://stedolan.github.io/jq)
+* [Insulator](https://andrewinci.github.io/Insulator) (GUI)
+* [KLoadGen](https://github.com/corunet/kloadgen)
+* [Kowl](https://github.com/cloudhut/kowl)
+* [UI for Apache Kafka](https://github.com/provectus/kafka-ui)
+* [Cruise Control](https://github.com/linkedin/cruise-control)
+* [CMAK](https://github.com/yahoo/CMAK)
