@@ -7,7 +7,7 @@ lazy val V = new {
 
   val avro4s    = "4.0.0"
   val kafka     = "2.5.1"
-  val confluent = "5.5.1"
+  val confluent = "5.5.15"
 
   val circe      = "0.13.0"
   val ciris      = "1.2.1"
