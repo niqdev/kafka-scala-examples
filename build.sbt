@@ -86,7 +86,7 @@ lazy val `schema-registry` = project
       "net.cakesolutions" %% "scala-kafka-client-testkit"   % V.cakeSolutions.version % Test
     ),
     // sbt-avrohugger: SpecificRecord
-    sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
+    (Compile / sourceGenerators) += ((Compile / avroScalaGenerateSpecific)).taskValue
   )
 
 lazy val streams = project
